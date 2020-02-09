@@ -2,6 +2,8 @@
 
 source /home/joseph/emsdk/emsdk_env.sh
 
+echo "Building for emscripten wasm"
+
 mkdir -p cmake-build-web
 #rm -rf cmake-build-web/*
 cd cmake-build-web
