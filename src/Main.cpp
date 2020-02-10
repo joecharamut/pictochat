@@ -7,6 +7,7 @@
 #include "state/State.h"
 #include "state/TestState.h"
 #include "state/StateManager.h"
+#include "Network.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -63,7 +64,6 @@ bool Main::initSDL() {
     printf("init mixer\n");
     int flags = MIX_INIT_OGG;
     int got = Mix_Init(flags);
-    printf("fl: %d, got: %d, and: %d\n", flags, got, (got&flags));
     if ((got & flags) != flags) {
         printf("error init mixer: %s\n", SDL_GetError());
         return false;
@@ -87,6 +87,8 @@ bool Main::load() {
         error = true;
     }
 
+    Network::test();
+
     return !error;
 }
 
@@ -100,7 +102,7 @@ void Main::loop() {
     frames++;
     long long int time = Util::getMilliTime();
 
-    if (time - lastTime > 500) {
+    if (time - lastTime > 1000) {
         float fps = frames / ((time - lastTime) / 1000.f);
         lastTime = time;
         frames = 0;

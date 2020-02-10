@@ -13,4 +13,3 @@ emconfigure cmake \
     ..
 
 emmake make
-
