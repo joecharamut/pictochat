@@ -1,8 +1,8 @@
 #include "Graphics.h"
 #include "Main.h"
+#include "state/StateManager.h"
 
 SDL_Window *Graphics::window;
-SDL_Surface *Graphics::surface;
 SDL_Renderer *Graphics::renderer;
 
 bool Graphics::initGraphics() {
@@ -14,7 +14,6 @@ bool Graphics::initGraphics() {
         return false;
     }
 
-    surface = SDL_GetWindowSurface(window);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     return true;
@@ -25,7 +24,8 @@ void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *de
 }
 
 void Graphics::update() {
-//    SDL_UpdateWindowSurface(window);
+    StateManager::update();
+
     SDL_RenderPresent(renderer);
 }
 

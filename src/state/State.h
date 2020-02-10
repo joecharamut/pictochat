@@ -7,8 +7,9 @@ using namespace std;
 
 class State {
 public:
+    State() { };
+    virtual ~State() = 0;
     virtual string getName() = 0;
-    virtual void load() = 0;
     virtual void update() = 0;
 };
 

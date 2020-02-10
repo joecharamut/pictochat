@@ -11,7 +11,14 @@ set(SRCS
         src/types/Text.cpp src/types/Text.h
         src/ResourceManager.cpp src/ResourceManager.h
         src/Util.cpp src/Util.h
-        src/state/StateManager.cpp src/state/StateManager.h src/state/State.cpp src/state/State.h src/state/TestState.cpp src/state/TestState.h src/Input.cpp src/Input.h src/types/Vector2.cpp src/types/Vector2.h src/types/Texture.cpp src/types/Texture.h src/types/Font.cpp src/types/Font.h)
+        src/state/StateManager.cpp src/state/StateManager.h
+        src/state/State.cpp src/state/State.h
+        src/state/TestState.cpp src/state/TestState.h
+        src/Input.cpp src/Input.h
+        src/types/Vector2.cpp src/types/Vector2.h
+        src/types/Texture.cpp src/types/Texture.h
+        src/types/Font.cpp src/types/Font.h
+        src/types/Color.cpp src/types/Color.h)
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
 

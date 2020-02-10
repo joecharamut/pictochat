@@ -8,7 +8,6 @@
 class Graphics {
 private:
     static SDL_Window *window;
-    static SDL_Surface *surface;
     static SDL_Renderer *renderer;
 
 public:

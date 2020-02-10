@@ -4,6 +4,9 @@
 #include "ResourceManager.h"
 #include "Input.h"
 #include "Util.h"
+#include "state/State.h"
+#include "state/TestState.h"
+#include "state/StateManager.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -12,8 +15,6 @@
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
 #endif
-
-shared_ptr<Texture> tex;
 
 bool Main::quit_flag = false;
 
@@ -30,7 +31,7 @@ bool Main::programMain(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    if (!loadFiles()) {
+    if (!load()) {
         return EXIT_FAILURE;
     }
 
@@ -61,24 +62,16 @@ bool Main::initSDL() {
     return true;
 }
 
-
-
-bool Main::loadFiles() {
+bool Main::load() {
     bool error = false;
 
-    printf("loading images\n");
-    tex = ResourceManager::loadTexture("res/test.bmp");
-
-    printf("loading test audio\n");
+    StateManager::setState(std::static_pointer_cast<State>(std::make_shared<TestState>()));
 
     return !error;
 }
 
-Text *textInst = nullptr;
-
 int frames = 0;
 long long int lastTime = 0;
-
 
 void Main::loop() {
     Graphics::update();
@@ -93,24 +86,6 @@ void Main::loop() {
         frames = 0;
         printf("fps: %f\n", fps);
     }
-
-
-    if (!textInst) {
-        textInst = new Text("sans", Font("res/bios.ttf"), 24, Text::Solid,
-                {0xff, 0x00, 0xff}, {0x00, 0xff, 0x00});
-    }
-
-    SDL_Rect rect;
-    rect.x = (Main::SCREEN_WIDTH/2)-16;
-    rect.y = (Main::SCREEN_HEIGHT/2)-16;
-    rect.w = 32;
-    rect.h = 32;
-
-    Vector2 size = textInst->getSize();
-    SDL_Rect rect2 = {0, 0, size.x, size.y};
-
-    textInst->draw(&rect2);
-    tex->draw(nullptr, &rect);
 
     SDL_Event event;
     while(SDL_PollEvent(&event)){

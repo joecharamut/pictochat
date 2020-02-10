@@ -11,7 +11,7 @@ public:
     static bool programMain(int argc, char **argv);
 
     static bool initSDL();
-    static bool loadFiles();
+    static bool load();
     static void loop();
     static void quit();
 

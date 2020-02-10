@@ -3,17 +3,17 @@
 
 
 #include "State.h"
+#include <memory>
 
 class StateManager {
 private:
-    State *currentState = nullptr;
-    State *nextState = nullptr;
+    static std::shared_ptr<State> currentState;
+    static std::shared_ptr<State> nextState;
 
 public:
-    void setState(State *newState);
-    State *getState();
-    void load();
-    void update();
+    static void setState(std::shared_ptr<State> newState);
+    static std::shared_ptr<State> getState();
+    static void update();
 };
 
 

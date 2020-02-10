@@ -2,11 +2,21 @@
 #define PROJECT_TESTSTATE_H
 
 #include "State.h"
+#include <memory>
+#include "../types/Texture.h"
+#include "../types/Text.h"
 
-class TestState : State {
+using namespace std;
+
+class TestState : public State {
+private:
+    shared_ptr<Texture> image;
+    shared_ptr<Text>    text;
+
 public:
+    TestState();
+    ~TestState() override;
     string getName() override;
-    void load() override;
     void update() override;
 };
 
