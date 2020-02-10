@@ -5,12 +5,14 @@
 std::shared_ptr<State> StateManager::currentState = nullptr;
 std::shared_ptr<State> StateManager::nextState = nullptr;
 
-void StateManager::setState(std::shared_ptr<State> newState) {
+bool StateManager::setState(std::shared_ptr<State> newState) {
     if (nextState) {
-        printf("setting state too fast!");
-    } else {
-        nextState = std::move(newState);
+        printf("already trying to set a new state");
+        return false;
     }
+
+    nextState = std::move(newState);
+    return true;
 }
 
 std::shared_ptr<State> StateManager::getState() {

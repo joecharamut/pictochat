@@ -29,7 +29,7 @@ string TestState::getName() {
 void TestState::update() {
     Vector2 imageSize = image->getSize();
     SDL_Rect rect = {
-            (Main::SCREEN_WIDTH / 2) - (imageSize.x / 2),
+            (Main::SCREEN_WIDTH  / 2) - (imageSize.x / 2),
             (Main::SCREEN_HEIGHT / 2) - (imageSize.y / 2),
             imageSize.x,
             imageSize.y

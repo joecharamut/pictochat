@@ -15,6 +15,7 @@ Text::Text(const std::string &text, Font font, int size, FontMode mode, SDL_Colo
             break;
     }
     texture = Graphics::createTexture(surface);
+    SDL_FreeSurface(surface);
 }
 
 

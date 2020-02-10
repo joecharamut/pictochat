@@ -11,7 +11,8 @@ private:
     static SDL_Renderer *renderer;
 
 public:
-    static bool initGraphics();
+    static bool init();
+    static void unload();
     static void drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *destrect);
     static std::shared_ptr<Texture> createTexture(SDL_Surface *surface);
     static void update();

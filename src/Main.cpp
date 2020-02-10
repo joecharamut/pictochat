@@ -28,7 +28,7 @@ bool Main::programMain(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    if (!Graphics::initGraphics()) {
+    if (!Graphics::init()) {
         return EXIT_FAILURE;
     }
 
@@ -81,7 +81,11 @@ bool Main::initSDL() {
 bool Main::load() {
     bool error = false;
 
-    StateManager::setState(std::static_pointer_cast<State>(std::make_shared<TestState>()));
+    std::shared_ptr<State> testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
+    if (!StateManager::setState(testState)) {
+        printf("error setting state\n");
+        error = true;
+    }
 
     return !error;
 }
@@ -126,6 +130,9 @@ void Main::loop() {
 
 void Main::quit() {
     printf("quitting\n");
+
+    Graphics::unload();
+
     Mix_Quit();
     TTF_Quit();
     SDL_Quit();

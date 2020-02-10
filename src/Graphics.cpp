@@ -5,7 +5,7 @@
 SDL_Window *Graphics::window;
 SDL_Renderer *Graphics::renderer;
 
-bool Graphics::initGraphics() {
+bool Graphics::init() {
     printf("creating window\n");
     window = SDL_CreateWindow("hello", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
@@ -14,9 +14,19 @@ bool Graphics::initGraphics() {
         return false;
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    printf("creating renderer\n");
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (!renderer) {
+        printf("error creating renderer: %s\n", SDL_GetError());
+        return false;
+    }
 
     return true;
+}
+
+void Graphics::unload() {
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
 }
 
 void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *destrect) {

@@ -11,7 +11,7 @@ private:
     static std::shared_ptr<State> nextState;
 
 public:
-    static void setState(std::shared_ptr<State> newState);
+    static bool setState(std::shared_ptr<State> newState);
     static std::shared_ptr<State> getState();
     static void update();
 };
