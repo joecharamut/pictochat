@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -56,6 +57,21 @@ bool Main::initSDL() {
     printf("init ttf\n");
     if (TTF_Init() < 0) {
         printf("error init ttf: %s\n", SDL_GetError());
+        return false;
+    }
+
+    printf("init mixer\n");
+    int flags = MIX_INIT_OGG;
+    int got = Mix_Init(flags);
+    printf("fl: %d, got: %d, and: %d\n", flags, got, (got&flags));
+    if ((got & flags) != flags) {
+        printf("error init mixer: %s\n", SDL_GetError());
+        return false;
+    }
+
+    printf("open audio\n");
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+        printf("error open audio: %s\n", SDL_GetError());
         return false;
     }
 
@@ -110,6 +126,7 @@ void Main::loop() {
 
 void Main::quit() {
     printf("quitting\n");
+    Mix_Quit();
     TTF_Quit();
     SDL_Quit();
     quit_flag = true;

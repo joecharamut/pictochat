@@ -7,9 +7,20 @@ TestState::TestState() {
     image = ResourceManager::loadTexture("res/test.bmp");
     text = make_shared<Text>("sand undertall", Font("res/bios.ttf"), 24, Text::Shaded,
             COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00));
+    music = Mix_LoadWAV("res/output.ogg");
+    if (!music) {
+        printf("error loading music: %s\n", SDL_GetError());
+    }
+    Mix_ReserveChannels(1);
+
+    if (Mix_PlayChannel(-1, music, -1) < 0) {
+        printf("error playing music: %s\n", SDL_GetError());
+    }
 }
 
-TestState::~TestState() { }
+TestState::~TestState() {
+    Mix_FreeChunk(music);
+}
 
 string TestState::getName() {
     return "TestState";

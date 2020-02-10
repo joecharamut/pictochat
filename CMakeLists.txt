@@ -30,10 +30,13 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     message(STATUS "Compiling for emscripten")
     set_target_properties(project PROPERTIES SUFFIX ".html")
     add_definitions(-DEMSCRIPTEN)
-    set(EMSCRIPTEN_FEATURES "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 --no-heap-copy --preload-file res")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EMSCRIPTEN_FEATURES}")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_FEATURES}")
-    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_FEATURES}")
+    set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2")
+    set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s ALLOW_MEMORY_GROWTH=1 -s EXIT_RUNTIME=1 --emrun")
+    set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 --source-map-base http://localhost:8080/")
+    set(EMSCRIPTEN_OPTS "${EMSCRIPTEN_USE} ${EMSCRIPTEN_FLAGS} ${EMSCRIPTEN_DEBUG}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EMSCRIPTEN_OPTS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_OPTS}")
+    set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_OPTS}")
 else()
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
 
@@ -41,7 +44,9 @@ else()
     find_package(SDL2_ttf REQUIRED)
     find_package(SDL2_image REQUIRED)
 
-    target_link_libraries(project SDL2::Main SDL2::TTF SDL2::Image)
+    find_package(SDL2_mixer REQUIRED)
+
+    target_link_libraries(project SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
 
 add_custom_target(project_wasm
