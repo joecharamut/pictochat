@@ -17,17 +17,14 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="zoop">
-      <change afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/cpp-httplib" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/net/Request.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/net/Request.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Network.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Network.h" beforeDir="false" />
+    <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2_gfx.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2_image.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2_mixer.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2_net.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/FindSDL2_ttf.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake/sdl2/README.md" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -48,11 +45,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+            <state relative-caret-position="218">
+              <caret line="62" column="44" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -104,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/net/Request.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="165">
+              <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#440#1051#0" expanded="true" />
@@ -198,8 +195,8 @@
         <option value="$PROJECT_DIR$/cmake-build-web/piss.txt" />
         <option value="$PROJECT_DIR$/src/Main.cpp" />
         <option value="$PROJECT_DIR$/src/net/Request.h" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/net/Request.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -226,24 +223,7 @@
             <path>
               <item name="project" type="b2602c69:ProjectViewProjectNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake" type="462c0819:PsiDirectoryNode" />
-              <item name="sdl2" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="cpp-httplib" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -324,7 +304,7 @@
       <workItem from="1581281889067" duration="1226000" />
       <workItem from="1581283142920" duration="8910000" />
       <workItem from="1581354714239" duration="12289000" />
-      <workItem from="1581440049264" duration="15855000" />
+      <workItem from="1581440049264" duration="16109000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1581280872973</created>
@@ -354,11 +334,25 @@
       <option name="project" value="LOCAL" />
       <updated>1581356647100</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="working on network">
+      <created>1581536633679</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1581536633679</updated>
+    </task>
+    <task id="LOCAL-00006" summary="?">
+      <created>1581536690038</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1581536690038</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="89853000" />
+    <option name="totallyTimeSpent" value="90107000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -446,7 +440,9 @@
     <MESSAGE value="move test code out of main" />
     <MESSAGE value="beans" />
     <MESSAGE value="zoop" />
-    <option name="LAST_COMMIT_MESSAGE" value="zoop" />
+    <MESSAGE value="working on network" />
+    <MESSAGE value="?" />
+    <option name="LAST_COMMIT_MESSAGE" value="?" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -471,16 +467,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Util.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/FPS.h" />
     <entry file="file://$PROJECT_DIR$/src/FPS.cpp" />
     <entry file="file:///usr/include/SDL2/SDL_events.h">
@@ -834,17 +820,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/Request.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        <state relative-caret-position="165">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <element signature="e#440#1051#0" expanded="true" />
@@ -853,6 +832,16 @@
             <element signature="e#1965#2008#0" expanded="true" />
             <element signature="e#2096#2989#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake/sdl2/FindSDL2.cmake">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="62" column="44" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
         </state>
       </provider>
     </entry>
