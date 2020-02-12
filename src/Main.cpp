@@ -7,6 +7,7 @@
 #include "state/State.h"
 #include "state/TestState.h"
 #include "state/StateManager.h"
+#include "types/Color.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -79,6 +80,7 @@ bool Main::initSDL() {
     return true;
 }
 
+std::shared_ptr<State> testState;
 void Main::callback(Network::Response *resp) {
     std::string dataStr;
     for(int i = 0; i < resp->size; i++) {
@@ -91,12 +93,15 @@ void Main::callback(Network::Response *resp) {
               ", statusText: " << resp->statusText <<
               ", size: " << resp->size <<
               ", data: \n" << dataStr << std::endl;
+
+    std::static_pointer_cast<TestState>(testState)->text = make_shared<Text>(dataStr, Font("res/bios.ttf"), 14,
+            Text::Blended_Wrapped, COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), 640);
 }
 
 bool Main::load() {
     bool error = false;
 
-    std::shared_ptr<State> testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
+    testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
     if (!StateManager::setState(testState)) {
         printf("error setting state\n");
         error = true;

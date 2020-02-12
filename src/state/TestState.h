@@ -10,16 +10,17 @@
 using namespace std;
 
 class TestState : public State {
-private:
-    shared_ptr<Texture> image;
-    shared_ptr<Text>    text;
-    Mix_Chunk *music;
-
 public:
     TestState();
     ~TestState() override;
     string getName() override;
     void update() override;
+
+    shared_ptr<Text>    text;
+
+private:
+    shared_ptr<Texture> image;
+    Mix_Chunk *music;
 };
 
 
