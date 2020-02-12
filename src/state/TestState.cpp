@@ -6,7 +6,7 @@
 TestState::TestState() {
     image = ResourceManager::loadTexture("res/test.bmp");
     text = make_shared<Text>("sand undertall", Font("res/bios.ttf"), 24, Text::Shaded,
-            COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00));
+            COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), 0);
     music = Mix_LoadWAV("res/output.ogg");
     if (!music) {
         printf("error loading music: %s\n", SDL_GetError());

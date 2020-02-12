@@ -13,3 +13,6 @@
 [submodule "cmake/sdl2-cmake-modules"]
 	path = cmake/sdl2-cmake-modules
 	url = https://gitlab.com/aminosbh/sdl2-cmake-modules.git
+[submodule "lib/CxxUrl"]
+	path = lib/CxxUrl
+	url = https://github.com/chmike/CxxUrl

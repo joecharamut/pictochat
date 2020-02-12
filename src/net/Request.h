@@ -14,7 +14,7 @@
 #ifdef __EMSCRIPTEN__
 #include <emscripten/fetch.h>
 #else
-#include <httplib.h>
+#include <cpp-httplib/httplib.h>
 #endif
 
 namespace Network {
@@ -48,7 +48,6 @@ namespace Network {
     public:
         Request(std::string url, Method method, std::function<void(Response *)> callback);
         void setHeaders(const std::map<std::string, std::string> &headers);
-        void setRequestData(const std::string &requestData);
         void execute();
 
     private:

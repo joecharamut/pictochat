@@ -1,6 +1,10 @@
 #include <utility>
+
+#include <utility>
 #include <cstring>
 #include <iostream>
+
+#include <CxxUrl/url.hpp>
 
 #include "Request.h"
 
@@ -30,8 +34,6 @@ Network::Request::Request(std::string url, Network::Method method, std::function
     fetch_attr.userData = (void *) str;
     fetch_attr.onsuccess = request_success_callback;
     fetch_attr.onerror = request_fail_callback;
-#else
-    printf("Network::Request::Request() stub\n");
 #endif
 }
 
@@ -57,25 +59,40 @@ void Network::Request::setHeaders(const std::map<std::string, std::string> &head
 #endif
 }
 
-void Network::Request::setRequestData(const std::string &requestData) {
-#ifdef __EMSCRIPTEN__
-    fetch_attr.requestData = requestData.c_str();
-#else
-    printf("Network::Request::setRequestData() stub\n");
-#endif
-}
-
 void Network::Request::execute() {
 #ifdef __EMSCRIPTEN__
     emscripten_fetch(&fetch_attr, url.c_str());
 #else
-    printf("Network::Request::execute() stub\n");
-//    httplib::Client cli("localhost", 8080);
-//    auto res = cli.Get("/piss.txt");
-//    if (res) {
-//        std::cout << res->status << std::endl;
-//        std::cout << res->body << std::endl;
-//    }
+    Url parsed(url);
+
+    std::unique_ptr<httplib::Client> client = nullptr;
+    if (parsed.port().empty()) {
+        client = std::make_unique<httplib::Client>(parsed.host());
+    } else {
+        client = std::make_unique<httplib::Client>(parsed.host(), std::stoi(parsed.port()));
+    }
+
+    auto res = client->Get(url.c_str());
+    if (res) {
+        byte *data = nullptr;
+        if (res->body.length() > 0) {
+            data = new byte[res->body.length()];
+            for (int i = 0; i < res->body.length(); i++) {
+                data[i] = res->body[i];
+            }
+        }
+
+        Response *resp = new Response(
+                res->body.length(),
+                data,
+                SUCCESS,
+                res->status,
+                "");
+        callback(resp);
+    } else {
+        Response *resp = new Response(0, nullptr, FAILURE, 0, "");
+        callback(resp);
+    }
 #endif
 }
 

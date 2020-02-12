@@ -5,9 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
-include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
-include_directories(lib/cpp-httplib)
-
 set(SRCS
         src/Main.cpp src/Main.h
         src/Graphics.cpp src/Graphics.h
@@ -27,11 +24,23 @@ add_executable(project ${SRCS})
 add_dependencies(project copy-files)
 
 add_custom_target(copy-files ALL
-#        COMMAND cmake -E remove_directory ${CMAKE_BINARY_DIR}/res
-#        COMMAND cmake -E copy_directory ${CMAKE_SOURCE_DIR}/res ${CMAKE_BINARY_DIR}/res
         COMMAND rm -rf ${CMAKE_BINARY_DIR}/res
-        COMMAND cp -R ${CMAKE_SOURCE_DIR}/res ${CMAKE_BINARY_DIR}/res
-        )
+        COMMAND cp -R ${CMAKE_SOURCE_DIR}/res ${CMAKE_BINARY_DIR}/res)
+
+add_custom_target(project_wasm
+        COMMAND bash ${CMAKE_SOURCE_DIR}/build.sh
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+add_library(CxxUrl STATIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
+
+set(COMMON_LIBRARIES CxxUrl)
+include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
+#include_directories(lib/cpp-httplib)
+#include_directories(lib/CxxUrl)
+include_directories(lib)
 
 if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     message(STATUS "Compiling for emscripten")
@@ -47,11 +56,13 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     else()
         set(EMSCRIPTEN_DEBUG "")
     endif()
-    set(EMSCRIPTEN_OPTS "${EMSCRIPTEN_USE} ${EMSCRIPTEN_FLAGS} ${EMSCRIPTEN_DEBUG}")
 
+    set(EMSCRIPTEN_OPTS "${EMSCRIPTEN_USE} ${EMSCRIPTEN_FLAGS} ${EMSCRIPTEN_DEBUG}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EMSCRIPTEN_OPTS}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_OPTS}")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_OPTS}")
+
+    target_link_libraries(project ${COMMON_LIBRARIES})
 else()
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/sdl2-cmake-modules)
 
@@ -60,9 +71,5 @@ else()
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
 
-    target_link_libraries(project SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
+    target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
-
-add_custom_target(project_wasm
-        COMMAND bash ${CMAKE_SOURCE_DIR}/build.sh
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
