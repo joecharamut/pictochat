@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
 include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
-include_directories(./lib/cpp-httplib)
+include_directories(lib/cpp-httplib)
 
 set(SRCS
         src/Main.cpp src/Main.h
@@ -36,7 +36,7 @@ add_custom_target(copy-files ALL
 if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     message(STATUS "Compiling for emscripten")
     set_target_properties(project PROPERTIES SUFFIX ".html")
-#    add_definitions(-DEMSCRIPTEN)
+
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
         -s ENVIRONMENT='web'")
@@ -53,14 +53,14 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_OPTS}")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_OPTS}")
 else()
-    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/sdl2-cmake-modules)
 
     find_package(SDL2 REQUIRED)
     find_package(SDL2_ttf REQUIRED)
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
 
-    target_link_libraries(project SDL2::SDL2 SDL2::TTF SDL2::Image SDL2::Mixer)
+    target_link_libraries(project SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
 
 add_custom_target(project_wasm
