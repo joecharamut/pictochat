@@ -7,16 +7,17 @@
 #include "state/State.h"
 #include "state/TestState.h"
 #include "state/StateManager.h"
-#include "Network.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
+
+#include <iostream>
 
 bool Main::quit_flag = false;
 
@@ -37,7 +38,7 @@ bool Main::programMain(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     emscripten_set_main_loop(loop, 0, true);
 #else
     while (!quit_flag) {
@@ -78,6 +79,20 @@ bool Main::initSDL() {
     return true;
 }
 
+void Main::callback(Network::Response *resp) {
+    std::string dataStr;
+    for(int i = 0; i < resp->size; i++) {
+        dataStr += resp->data[i];
+    }
+
+    std::cout <<
+              "status: " << resp->status <<
+              ", statusCode: " << resp->statusCode <<
+              ", statusText: " << resp->statusText <<
+              ", size: " << resp->size <<
+              ", data: \n" << dataStr << std::endl;
+}
+
 bool Main::load() {
     bool error = false;
 
@@ -87,7 +102,8 @@ bool Main::load() {
         error = true;
     }
 
-    Network::test();
+    Network::Request *request = new Network::Request("http://www.spaghetti.rocks/form.php?view=1", Network::GET, Main::callback);
+    request->execute();
 
     return !error;
 }
@@ -139,7 +155,7 @@ void Main::quit() {
     TTF_Quit();
     SDL_Quit();
     quit_flag = true;
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
     emscripten_force_exit(EXIT_SUCCESS);
 #endif
 }

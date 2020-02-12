@@ -2,6 +2,7 @@
 #define PROJECT_MAIN_H
 
 #include <SDL_ttf.h>
+#include "net/Request.h"
 
 class Main {
 public:
@@ -14,6 +15,7 @@ public:
     static bool load();
     static void loop();
     static void quit();
+    static void callback(Network::Response *resp);
 
 private:
     static bool quit_flag;
