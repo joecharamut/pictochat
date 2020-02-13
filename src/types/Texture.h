@@ -9,10 +9,12 @@ private:
     SDL_Texture *texture = nullptr;
 
 public:
+    int w = -1;
+    int h = -1;
+
     explicit Texture(SDL_Texture *texture);
     ~Texture();
     void draw(SDL_Rect *srcRect, SDL_Rect *destRect);
-    Vector2 getSize();
 };
 
 

@@ -16,7 +16,7 @@ public:
     string getName() override;
     void update() override;
 
-    shared_ptr<Text>    text;
+    shared_ptr<Text> text;
 
 private:
     shared_ptr<Texture> image;

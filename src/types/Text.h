@@ -9,20 +9,30 @@
 #include "Texture.h"
 
 class Text {
-
-
 public:
     enum FontMode {
         Solid, Shaded, Blended, Blended_Wrapped
     };
 
-    Text(const std::string &text, Font font, int size, FontMode mode, SDL_Color fgColor, SDL_Color bgColor, int wrap);
-    ~Text() = default;
-    Vector2 getSize();
+    Text(const std::string &text, std::shared_ptr<Font> font, int size, FontMode mode, SDL_Color fgColor,
+            SDL_Color bgColor, int wrap);
+    ~Text();
     void draw(SDL_Rect *destRect);
+    void setText(const std::string& newText);
+
+    int w = -1;
+    int h = -1;
 
 private:
     std::shared_ptr<Texture> texture;
+
+    std::string text;
+    std::shared_ptr<Font> font;
+    int size;
+    FontMode mode;
+    SDL_Color fgColor;
+    SDL_Color bgColor;
+    int wrap;
 };
 
 

@@ -20,6 +20,8 @@
 
 #include <iostream>
 
+const int Main::SCREEN_WIDTH = 640;
+const int Main::SCREEN_HEIGHT = 480;
 bool Main::quit_flag = false;
 
 int main(int argc, char **argv) {
@@ -81,21 +83,22 @@ bool Main::initSDL() {
 }
 
 std::shared_ptr<State> testState;
-void Main::callback(Network::Response *resp) {
+void Main::callback(Network::Response resp) {
     std::string dataStr;
-    for(int i = 0; i < resp->size; i++) {
-        dataStr += resp->data[i];
+    for(int i = 0; i < resp.size; i++) {
+        dataStr += resp.data.get()->at(i);
     }
 
     std::cout <<
-              "status: " << resp->status <<
-              ", statusCode: " << resp->statusCode <<
-              ", statusText: " << resp->statusText <<
-              ", size: " << resp->size <<
+              "status: " << resp.status <<
+              ", statusCode: " << resp.statusCode <<
+              ", statusText: " << resp.statusText <<
+              ", size: " << resp.size <<
               ", data: \n" << dataStr << std::endl;
 
-    std::static_pointer_cast<TestState>(testState)->text = make_shared<Text>(dataStr, Font("res/bios.ttf"), 14,
-            Text::Blended_Wrapped, COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), 640);
+//    std::static_pointer_cast<TestState>(testState)->text = make_shared<Text>(dataStr, Font("res/bios.ttf"), 14,
+//            Text::Blended_Wrapped, COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), 640);
+    std::static_pointer_cast<TestState>(testState)->text->setText(dataStr);
 }
 
 bool Main::load() {

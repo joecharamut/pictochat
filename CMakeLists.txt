@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(project)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 #set(CMAKE_VERBOSE_MAKEFILE on)
 
@@ -48,7 +48,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
 
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
-        -s ENVIRONMENT='web'")
+        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \

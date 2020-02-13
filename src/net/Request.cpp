@@ -9,10 +9,10 @@
 #include "Request.h"
 
 int Network::Request::requestIndex = -1;
-std::vector<Network::Request *> Network::Request::requestBuffer;
+std::vector<std::function<void(Network::Response)>> Network::Request::callbacks;
 
-Network::Request::Request(std::string url, Network::Method method, std::function<void(Response *)> callback) {
-    this->callback = std::move(callback);
+Network::Request::Request(std::string url, Network::Method method, std::function<void(Response)> callback) {
+    this->callback = callback;
     this->url = std::move(url);
     requestIndex++;
 
@@ -26,7 +26,7 @@ Network::Request::Request(std::string url, Network::Method method, std::function
     }
 
     fetch_attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
-    requestBuffer.push_back(this);
+    callbacks.push_back(callback);
 
     std::string num = std::to_string(requestIndex);
     char *str = (char *) malloc((num.length() + 1) * sizeof(char));
@@ -74,55 +74,52 @@ void Network::Request::execute() {
 
     auto res = client->Get(url.c_str());
     if (res) {
-        byte *data = nullptr;
+        std::shared_ptr<std::vector<byte>> bytes = std::make_shared<std::vector<byte>>();
+
         if (res->body.length() > 0) {
-            data = new byte[res->body.length()];
-            for (int i = 0; i < res->body.length(); i++) {
-                data[i] = res->body[i];
+            for (char c : res->body) {
+                bytes->push_back(c);
             }
         }
 
-        Response *resp = new Response(
-                res->body.length(),
-                data,
-                SUCCESS,
-                res->status,
-                "");
+        Response resp = Response(res->body.length(), bytes, SUCCESS, res->status, "");
         callback(resp);
     } else {
-        Response *resp = new Response(0, nullptr, FAILURE, 0, "");
+        Response resp = Response(0, nullptr, FAILURE, 0, "");
         callback(resp);
     }
 #endif
 }
 
 #ifdef __EMSCRIPTEN__
-void Network::Request::request_callback(emscripten_fetch_t *fetch, Network::Status status) {
-    byte *data = new byte[fetch->numBytes];
+void Network::Request::request_callback(emscripten_fetch_t *fetch, Network::Status status, int index) {
+    std::shared_ptr<std::vector<byte>> bytes = std::make_shared<std::vector<byte>>();
+
     if (status == SUCCESS) {
         for (unsigned long long i = 0; i < fetch->numBytes; i++) {
-            data[i] = fetch->data[i];
+            bytes->push_back(fetch->data[i]);
         }
     }
 
-    Response *resp = new Response(
+    Response resp = Response(
             fetch->numBytes,
-            data,
+            bytes,
             status,
             fetch->status,
             fetch->statusText
     );
     emscripten_fetch_close(fetch);
-    callback(resp);
+
+    callbacks[index](resp);
 }
 
 void Network::Request::request_success_callback(emscripten_fetch_t *fetch) {
     int index = std::stoi((char *) fetch->userData);
-    requestBuffer[index]->request_callback(fetch, SUCCESS);
+    request_callback(fetch, SUCCESS, index);
 }
 
 void Network::Request::request_fail_callback(emscripten_fetch_t *fetch) {
     int index = std::stoi((char *) fetch->userData);
-    requestBuffer[index]->request_callback(fetch, FAILURE);
+    request_callback(fetch, FAILURE, index);
 }
 #endif

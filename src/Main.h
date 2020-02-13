@@ -6,8 +6,8 @@
 
 class Main {
 public:
-    static const int SCREEN_WIDTH = 640;
-    static const int SCREEN_HEIGHT = 480;
+    static const int SCREEN_WIDTH;
+    static const int SCREEN_HEIGHT;
 
     static bool programMain(int argc, char **argv);
 
@@ -15,7 +15,7 @@ public:
     static bool load();
     static void loop();
     static void quit();
-    static void callback(Network::Response *resp);
+    static void callback(Network::Response resp);
 
 private:
     static bool quit_flag;

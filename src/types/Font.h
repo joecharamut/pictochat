@@ -6,15 +6,14 @@
 #include <map>
 
 class Font {
-private:
-    std::string filename;
-    std::map<int, TTF_Font *> fonts;
-
 public:
     explicit Font(std::string filename);
     ~Font();
     TTF_Font *requestFont(int size);
 
+private:
+    std::string filename;
+    std::map<int, TTF_Font *> fonts;
 };
 
 

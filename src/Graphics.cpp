@@ -40,5 +40,6 @@ void Graphics::update() {
 }
 
 std::shared_ptr<Texture> Graphics::createTexture(SDL_Surface *surface) {
+    printf("creating texture\n");
     return std::make_shared<Texture>(SDL_CreateTextureFromSurface(renderer, surface));
 }
