@@ -15,7 +15,7 @@ Font::~Font() {
             iter++;
         }
     } else {
-        printf("ttf already closed oh well\n");
+        printf("ttf already closed oh gosh oh heck looks like were wasting memory now\n");
     }
 }
 
