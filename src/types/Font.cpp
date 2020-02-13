@@ -8,10 +8,14 @@ Font::Font(std::string filename) {
 
 Font::~Font() {
     printf("deleting font\n");
-    auto iter = fonts.begin();
-    while (iter != fonts.end()) {
-        TTF_CloseFont(iter->second);
-        iter++;
+    if (TTF_WasInit()) {
+        auto iter = fonts.begin();
+        while (iter != fonts.end()) {
+            TTF_CloseFont(iter->second);
+            iter++;
+        }
+    } else {
+        printf("ttf already closed oh well\n");
     }
 }
 

@@ -159,6 +159,7 @@ void Main::quit() {
 
     Graphics::unload();
 
+    Mix_CloseAudio();
     Mix_Quit();
     TTF_Quit();
     SDL_Quit();
