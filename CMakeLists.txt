@@ -19,7 +19,9 @@ set(SRCS
         src/types/Texture.cpp src/types/Texture.h
         src/types/Font.cpp src/types/Font.h
         src/types/Color.cpp src/types/Color.h
-        src/net/Request.cpp src/net/Request.h src/font/Atlas.cpp src/font/Atlas.h)
+        src/net/Request.cpp src/net/Request.h
+        src/font/Atlas.cpp src/font/Atlas.h
+        src/font/Font.cpp src/font/Font.h)
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
 

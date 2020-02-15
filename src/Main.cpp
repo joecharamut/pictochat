@@ -8,6 +8,7 @@
 #include "state/TestState.h"
 #include "state/StateManager.h"
 #include "types/Color.h"
+#include "font/Font.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
