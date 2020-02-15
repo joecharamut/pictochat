@@ -8,12 +8,13 @@
 class Font {
 public:
     explicit Font(std::string filename);
-    ~Font();
     TTF_Font *requestFont(int size);
+
+    static void unload();
 
 private:
     std::string filename;
-    std::map<int, TTF_Font *> fonts;
+    static std::map<std::string, std::map<int, TTF_Font *>> fonts;
 };
 
 

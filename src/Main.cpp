@@ -111,8 +111,8 @@ bool Main::load() {
         error = true;
     }
 
-    Network::Request *request = new Network::Request("http://www.spaghetti.rocks/form.php?view=1", Network::GET, Main::callback);
-    request->execute();
+//    Network::Request *request = new Network::Request("http://www.spaghetti.rocks/form.php?view=1", Network::GET, Main::callback);
+//    request->execute();
 
     return !error;
 }
@@ -159,6 +159,7 @@ void Main::quit() {
     printf("quitting\n");
 
     Graphics::unload();
+    Font::unload();
 
     Mix_CloseAudio();
     Mix_Quit();
