@@ -34,12 +34,12 @@ void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *de
 }
 
 void Graphics::update() {
+    SDL_RenderClear(renderer);
     StateManager::update();
-
     SDL_RenderPresent(renderer);
 }
 
 std::shared_ptr<Texture> Graphics::createTexture(SDL_Surface *surface) {
-    printf("creating texture\n");
+//    printf("creating texture\n");
     return std::make_shared<Texture>(SDL_CreateTextureFromSurface(renderer, surface));
 }

@@ -34,9 +34,7 @@ void TestState::update() {
             image->h
     };
 
-    SDL_Rect rect2 = {0, 0, text->w, text->h};
-
-    text->draw(&rect2);
+    text->draw(0, 0);
     image->draw(nullptr, &rect);
 }
 

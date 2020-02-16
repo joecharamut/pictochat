@@ -7,7 +7,7 @@ Texture::Texture(SDL_Texture *texture) {
 }
 
 Texture::~Texture() {
-    printf("destroying texture\n");
+//    printf("destroying texture\n");
     SDL_DestroyTexture(texture);
 }
 

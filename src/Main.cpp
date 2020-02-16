@@ -6,9 +6,9 @@
 #include "Util.h"
 #include "state/State.h"
 #include "state/TestState.h"
+#include "state/BootState.h"
 #include "state/StateManager.h"
 #include "types/Color.h"
-#include "font/Font.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -105,8 +105,14 @@ void Main::callback(Network::Response resp) {
 bool Main::load() {
     bool error = false;
 
-    testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
-    if (!StateManager::setState(testState)) {
+//    testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
+//    if (!StateManager::setState(testState)) {
+//        printf("error setting state\n");
+//        error = true;
+//    }
+
+    std::shared_ptr<State> st = std::static_pointer_cast<State>(std::make_shared<BootState>());
+    if (!StateManager::setState(st)) {
         printf("error setting state\n");
         error = true;
     }

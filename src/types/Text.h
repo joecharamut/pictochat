@@ -7,6 +7,7 @@
 #include <memory>
 #include "Font.h"
 #include "Texture.h"
+#include "Color.h"
 
 class Text {
 public:
@@ -15,9 +16,10 @@ public:
     };
 
     Text(const std::string &text, std::shared_ptr<Font> font, int size, FontMode mode, SDL_Color fgColor,
-            SDL_Color bgColor, int wrap);
+            SDL_Color bgColor = COLOR_BLACK, int wrap = -1);
     ~Text();
-    void draw(SDL_Rect *destRect);
+    void draw(SDL_Rect destRect);
+    void draw(int x, int y);
     void setText(const std::string& newText);
 
     int w = -1;

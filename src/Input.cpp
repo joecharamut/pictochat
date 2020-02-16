@@ -2,6 +2,9 @@
 
 Input::State Input::state[128];
 
+bool Input::keyBufferEnabled;
+std::string Input::keyBuffer;
+
 void Input::event(SDL_Event *event) {
     switch (event->type) {
         case SDL_KEYDOWN: {
@@ -43,4 +46,26 @@ bool Input::getKeyUp(SDL_Keycode keycode) {
 
 bool Input::getKeyDown(SDL_Keycode keycode) {
     return state[keycode] == Down;
+}
+
+void Input::enableKeyBuffer() {
+    keyBufferEnabled = true;
+}
+
+void Input::disableKeyBuffer() {
+    keyBufferEnabled = false;
+}
+
+std::string Input::popBuffer(int chars) {
+    if (!keyBufferEnabled) return "";
+
+    if (chars == -1 || chars > keyBuffer.size()) {
+        std::string tmp = keyBuffer;
+        keyBuffer = "";
+        return tmp;
+    }
+
+    std::string tmp = keyBuffer.substr(0, chars);
+    keyBuffer = keyBuffer.substr(chars);
+    return tmp;
 }
