@@ -20,12 +20,14 @@ public:
 
 private:
     enum State {
-        None, Down, Up
+        None, Down, Up, Hold
     };
     static State state[];
 
     static bool keyBufferEnabled;
     static std::string keyBuffer;
+
+    static void pushBuffer(std::string str);
 };
 
 

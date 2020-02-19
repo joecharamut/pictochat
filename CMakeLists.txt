@@ -20,7 +20,7 @@ set(SRCS
         src/types/Font.cpp src/types/Font.h
         src/types/Color.cpp src/types/Color.h
         src/net/Request.cpp src/net/Request.h
-        src/state/BootState.cpp src/state/BootState.h)
+        src/state/BootState.cpp src/state/BootState.h src/dos/Shell.cpp src/dos/Shell.h src/dos/Console.cpp src/dos/Console.h)
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
 

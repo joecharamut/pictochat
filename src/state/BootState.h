@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "../types/Text.h"
+#include "../dos/Console.h"
 
 #include <memory>
 
@@ -15,19 +16,23 @@ public:
 
 private:
     enum InternalState {
-        RAM_CHECK, DOS_LOAD
+        TEST,
+        RAM_CHECK,
+        DOS_LOAD,
+        COMMAND
     };
 
     InternalState state = RAM_CHECK;
 
     std::shared_ptr<Text> text;
-    std::string oldText;
-    int save;
+    int save = 0;
     int ramCounter = 0;
     int frames = 0;
     bool cursor = false;
 
-    int bootWait = 0;
+    Console console = Console();
+    std::string commandStr;
+
 };
 
 

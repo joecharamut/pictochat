@@ -8,23 +8,25 @@ std::string Input::keyBuffer;
 void Input::event(SDL_Event *event) {
     switch (event->type) {
         case SDL_KEYDOWN: {
-            printf("keydown: %s\n", SDL_GetKeyName(event->key.keysym.sym));
+//            printf("keydown: %s\n", SDL_GetKeyName(event->key.keysym.sym));
             if (event->key.keysym.sym < 128) {
                 state[event->key.keysym.sym] = Down;
             }
-            break;
-        }
+        } break;
 
         case SDL_KEYUP: {
-            printf("keyup: %s\n", SDL_GetKeyName(event->key.keysym.sym));
+//            printf("keyup: %s\n", SDL_GetKeyName(event->key.keysym.sym));
             if (event->key.keysym.sym < 128) {
                 state[event->key.keysym.sym] = Up;
             }
-            break;
-        }
+        } break;
 
-        default:
-            break;
+        case SDL_TEXTINPUT: {
+//            printf("text: %s\n", event->text.text);
+            pushBuffer(event->text.text);
+        } break;
+
+        default: break;
     }
 }
 
@@ -32,6 +34,10 @@ void Input::update() {
     for (auto &key : state) {
         if (key == Up) {
             key = None;
+        }
+
+        if (key == Down) {
+            key = Hold;
         }
     }
 }
@@ -68,4 +74,10 @@ std::string Input::popBuffer(int chars) {
     std::string tmp = keyBuffer.substr(0, chars);
     keyBuffer = keyBuffer.substr(chars);
     return tmp;
+}
+
+void Input::pushBuffer(std::string str) {
+    if (!keyBufferEnabled) return;
+
+    keyBuffer += str;
 }
