@@ -19,14 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cmake/cmake-modules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Version.cpp.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Version.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/BootState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/BootState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/BootState.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/BootState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/cpp-httplib/test/test.cc" beforeDir="false" afterPath="$PROJECT_DIR$/lib/cpp-httplib/test/test.cc" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -93,7 +86,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmake-build-web/test.html">
+        <entry file="file://$PROJECT_DIR$/res/better.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-67">
               <caret line="46" column="43" selection-start-line="46" selection-start-column="43" selection-end-line="46" selection-end-column="43" />
@@ -300,9 +293,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/res" />
       <recent name="$PROJECT_DIR$/src/net" />
       <recent name="$PROJECT_DIR$/src/types" />
-      <recent name="$PROJECT_DIR$/res" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
@@ -364,7 +357,7 @@
       <workItem from="1581354714239" duration="12289000" />
       <workItem from="1581440049264" duration="29367000" />
       <workItem from="1581797874048" duration="7865000" />
-      <workItem from="1582161527021" duration="4577000" />
+      <workItem from="1582161527021" duration="5217000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1581280872973</created>
@@ -478,11 +471,18 @@
       <option name="project" value="LOCAL" />
       <updated>1581802067359</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="bios message &amp; version info">
+      <created>1582168853043</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1582168853043</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135536000" />
+    <option name="totallyTimeSpent" value="136176000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -502,7 +502,7 @@
       <window_info id="Favorites" order="2" sideWeight="0.5055644" side_tool="true" weight="0.24772036" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32793522" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36032388" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36032388" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3974563" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -583,7 +583,8 @@
     <MESSAGE value="mem" />
     <MESSAGE value="aaaaaaaaaaaaaaaaaaaaa" />
     <MESSAGE value="looks like i probably didnt need to make my own font system" />
-    <option name="LAST_COMMIT_MESSAGE" value="looks like i probably didnt need to make my own font system" />
+    <MESSAGE value="bios message &amp; version info" />
+    <option name="LAST_COMMIT_MESSAGE" value="bios message &amp; version info" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -913,7 +914,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-web/test.html">
+    <entry file="file://$PROJECT_DIR$/res/better.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-67">
           <caret line="46" column="43" selection-start-line="46" selection-start-column="43" selection-end-line="46" selection-end-column="43" />
