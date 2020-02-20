@@ -20,7 +20,16 @@ set(SRCS
         src/types/Font.cpp src/types/Font.h
         src/types/Color.cpp src/types/Color.h
         src/net/Request.cpp src/net/Request.h
-        src/state/BootState.cpp src/state/BootState.h src/dos/Shell.cpp src/dos/Shell.h src/dos/Console.cpp src/dos/Console.h)
+        src/state/BootState.cpp src/state/BootState.h
+        src/dos/Shell.cpp src/dos/Shell.h
+        src/dos/Console.cpp src/dos/Console.h)
+
+include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
+get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+configure_file("${CMAKE_SOURCE_DIR}/src/Version.cpp.in" "${CMAKE_BINARY_DIR}/src/Version.cpp" @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/src/Version.h" "${CMAKE_BINARY_DIR}/src/Version.h" @ONLY)
+list(APPEND SRCS "${CMAKE_BINARY_DIR}/src/Version.cpp" ${CMAKE_BINARY_DIR}/src/Version.h)
+
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
 
@@ -42,6 +51,7 @@ include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib)
+
 
 if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     message(STATUS "Compiling for emscripten")

@@ -16,13 +16,13 @@ public:
 
 private:
     enum InternalState {
-        TEST,
+        BIOS_START,
         RAM_CHECK,
         DOS_LOAD,
         COMMAND
     };
 
-    InternalState state = RAM_CHECK;
+    InternalState state = BIOS_START;
 
     std::shared_ptr<Text> text;
     int save = 0;

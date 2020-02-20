@@ -16,3 +16,6 @@
 [submodule "lib/CxxUrl"]
 	path = lib/CxxUrl
 	url = https://github.com/chmike/CxxUrl
+[submodule "cmake/cmake-modules"]
+	path = cmake/cmake-modules
+	url = https://github.com/rpavlik/cmake-modules.git

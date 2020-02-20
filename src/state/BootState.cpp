@@ -1,6 +1,7 @@
 #include "BootState.h"
 #include "../Main.h"
 #include "../Input.h"
+#include "../../cmake-build-debug/src/Version.h"
 
 BootState::BootState() {
     text = make_shared<Text>("0", std::make_shared<Font>("res/vga.ttf"), 20, Text::Blended_Wrapped, COLOR_WHITE,
@@ -19,9 +20,13 @@ void BootState::update() {
     frames++;
     std::string newText;
     switch (state) {
-        case TEST: {
-            if (Input::getKeyUp(SDLK_SPACE)) {
-                console.scrollBuffer(1);
+        case BIOS_START: {
+            if (frames == 60) {
+                console.write("stupid BIOS (c) 2020 spaghetti.rocks\n");
+            } else if (frames == 120) {
+                console.write("Rev. " + Version::GIT_SHA1_SHORT + "\n\n");
+            } else if (frames == 180) {
+                state = RAM_CHECK;
             }
         } break;
 
@@ -30,11 +35,11 @@ void BootState::update() {
             std::string str = "\r" + std::to_string(ramCounter) + " KB OK";
             console.write(str);
 
-            if (ramCounter > 63) {
+            if (ramCounter > 127) {
                 state = DOS_LOAD;
 
                 console.write("\n\n");
-                console.write("Starting MS-DOS...\n\n");
+                console.write("Starting WebDOS...\n");
                 save = frames;
             }
         } break;
@@ -52,8 +57,10 @@ void BootState::update() {
             commandStr += str;
 
             if (Input::getKeyDown(SDLK_RETURN)) {
-                commandStr.erase(commandStr.find_last_not_of(" ") + 1);
-                printf("command submit: %s\n", commandStr.c_str());
+                commandStr.erase(commandStr.find_last_not_of(' ') + 1);
+                if (!commandStr.empty()) {
+                    printf("command submit: %s\n", commandStr.c_str());
+                }
 
                 console.write("\n");
                 commandStr = "";
