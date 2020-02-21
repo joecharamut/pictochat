@@ -4,6 +4,7 @@
 #include "State.h"
 #include "../types/Text.h"
 #include "../dos/Console.h"
+#include "../dos/Shell.h"
 
 #include <memory>
 
@@ -11,7 +12,6 @@ class BootState : public State {
 public:
     BootState();
     ~BootState() override;
-    string getName() override;
     void update() override;
 
 private:
@@ -30,7 +30,8 @@ private:
     int frames = 0;
     bool cursor = false;
 
-    Console console = Console();
+    std::shared_ptr<Console> console = std::make_shared<Console>();
+    Shell shell = Shell(console);
     std::string commandStr;
 
 };

@@ -6,7 +6,7 @@
 
 class Util {
 public:
-    static std::vector<std::string> splitString(std::string str, std::string delimiter);
+    static std::vector<std::string> splitString(const std::string &str, const std::string &delimiter);
 
     template <typename T>
     static bool vectorContains(std::vector<T> vector, T object) {

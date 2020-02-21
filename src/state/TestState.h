@@ -13,7 +13,6 @@ class TestState : public State {
 public:
     TestState();
     ~TestState() override;
-    string getName() override;
     void update() override;
 
     shared_ptr<Text> text;

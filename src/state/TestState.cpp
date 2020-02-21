@@ -22,10 +22,6 @@ TestState::~TestState() {
     Mix_FreeChunk(music);
 }
 
-string TestState::getName() {
-    return "TestState";
-}
-
 void TestState::update() {
     SDL_Rect rect = {
             (Main::SCREEN_WIDTH  / 2) - (image->w / 2),

@@ -4,7 +4,7 @@
 
 #include "Util.h"
 
-std::vector<std::string> Util::splitString(std::string str, std::string delimiter) {
+std::vector<std::string> Util::splitString(const std::string &str, const std::string &delimiter) {
     std::vector<std::string> out = {};
     size_t start, end = 0;
     while ((start = str.find_first_not_of(delimiter, end)) != std::string::npos) {
