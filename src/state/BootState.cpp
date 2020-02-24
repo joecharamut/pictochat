@@ -31,6 +31,7 @@ void BootState::update() {
             ramCounter++;
             std::string str = "\r" + std::to_string(ramCounter) + " KB OK";
             console->write(str);
+            console->flush();
 
             if (ramCounter > 127) {
                 state = DOS_LOAD;
@@ -44,20 +45,34 @@ void BootState::update() {
         case DOS_LOAD: {
             if (frames - save > 90) {
                 state = COMMAND;
-                console->write("\n\nC:\\> ");
+//                console->write("\n\nC:\\> ");
                 Input::enableKeyBuffer();
             }
         } break;
 
         case COMMAND: {
+            if (!prompt) {
+                console->write("\rC:\\> ");
+                prompt = true;
+            }
+
             std::string str = Input::popBuffer();
-            commandStr += str;
+            if (!str.empty()) {
+                commandStr += str;
+                console->write("\rC:\\> ");
+                console->write(commandStr);
+                console->flush();
+            }
 
             if (Input::getKeyDown(SDLK_RETURN)) {
                 console->write("\n");
                 commandStr.erase(commandStr.find_last_not_of(' ') + 1);
                 if (!commandStr.empty()) {
-                    shell.processCommand(commandStr);
+                    runningCommand = shell.processCommand(commandStr).get();
+                    prompt = false;
+                    if (runningCommand) {
+                        state = RUNNING;
+                    }
                 }
                 commandStr = "";
             }
@@ -66,11 +81,17 @@ void BootState::update() {
                 commandStr = commandStr.substr(0, commandStr.size() - 1);
                 console->write("\b \b");
             }
+        } break;
 
-            console->write("\rC:\\> ");
-            console->write(commandStr);
+        case RUNNING: {
+            if (runningCommand->update() == Command::COMMAND_FINISHED) {
+                state = COMMAND;
+                runningCommand = nullptr;
+            }
         } break;
     }
+
+    console->update();
 
     newText = console->bufferString();
 

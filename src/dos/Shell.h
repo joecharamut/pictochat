@@ -12,7 +12,7 @@ public:
     explicit Shell(std::shared_ptr<Console> p_console);
     ~Shell();
 
-    void processCommand(const std::string& commandStr);
+    std::shared_ptr<Command> processCommand(const std::string& commandStr);
 
 private:
     std::shared_ptr<Console> console;

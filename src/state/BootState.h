@@ -19,7 +19,8 @@ private:
         BIOS_START,
         RAM_CHECK,
         DOS_LOAD,
-        COMMAND
+        COMMAND,
+        RUNNING
     };
 
     InternalState state = BIOS_START;
@@ -29,11 +30,13 @@ private:
     int ramCounter = 0;
     int frames = 0;
     bool cursor = false;
+    bool prompt = false;
 
     std::shared_ptr<Console> console = std::make_shared<Console>();
     Shell shell = Shell(console);
     std::string commandStr;
 
+    Command *runningCommand;
 };
 
 

@@ -10,9 +10,15 @@
 
 class Command {
 public:
+    enum CommandStatus {
+        COMMAND_RUNNING,
+        COMMAND_FINISHED
+    };
+
     explicit Command(std::shared_ptr<Console> console) : console(std::move(console)) {};
     virtual ~Command() = 0;
     virtual void exec(std::vector<std::string> flags, std::vector<std::string> args) = 0;
+    virtual CommandStatus update() = 0;
     virtual std::string help() = 0;
 
 private:

@@ -8,7 +8,32 @@ Console::Console() {
     }
 }
 
+void Console::update() {
+    flush(1);
+}
+
 void Console::write(const std::string &str) {
+    writeBuffer += str;
+}
+
+void Console::flush(int chars) {
+    size_t pos = chars;
+
+    if (writeBuffer.empty()) return;
+    if (pos < 0) {
+        pos = std::string::npos;
+    }
+
+    if (pos > writeBuffer.size()) {
+        internalWrite(writeBuffer);
+        writeBuffer = "";
+    } else {
+        internalWrite(writeBuffer.substr(0, pos));
+        writeBuffer = writeBuffer.substr(pos);
+    }
+}
+
+void Console::internalWrite(const std::string &str) {
     dirty = true;
 
     int cx = cursorPos.x;

@@ -9,6 +9,7 @@ public:
     CommandDir(std::shared_ptr<Console> console);
     ~CommandDir() override;
     void exec(std::vector<std::string> flags, std::vector<std::string> args) override;
+    CommandStatus update() override;
     std::string help() override;
 };
 

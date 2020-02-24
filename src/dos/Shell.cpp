@@ -1,13 +1,12 @@
-#include <utility>
-
-#include <utility>
-
 #include "Shell.h"
 #include "../Util.h"
 #include "command/CommandDir.h"
 
 #include <vector>
 #include <iostream>
+#include <utility>
+
+#define PL() printf("line %d\n", __LINE__)
 
 Shell::Shell(std::shared_ptr<Console> p_console) {
     console = std::move(p_console);
@@ -28,13 +27,12 @@ void Shell::registerCommand(const std::string &name, std::shared_ptr<Command> co
     printf("command `%s` already registered", name.c_str());
 }
 
-void Shell::processCommand(const std::string &commandStr) {
+std::shared_ptr<Command> Shell::processCommand(const std::string &commandStr) {
     printf("input string: `%s`\n", commandStr.c_str());
 
     std::string command;
     std::vector<std::string> flags;
     std::vector<std::string> args;
-
     int pos = 0;
 
     for (char c : commandStr) {
@@ -80,8 +78,11 @@ void Shell::processCommand(const std::string &commandStr) {
     }
 
     if (commands.count(command) > 0) {
-        commands[command]->exec(flags, args);
+        std::shared_ptr<Command> commandPtr = commands[command];
+        commandPtr->exec(flags, args);
+        return commandPtr;
     } else {
         console->write("Bad command or file name\n\n");
+        return nullptr;
     }
 }
