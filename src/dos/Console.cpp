@@ -1,4 +1,6 @@
+#include <algorithm>
 #include "Console.h"
+#include "../Util.h"
 
 Console::Console() {
     for (auto &line : textBuffer) {
@@ -39,7 +41,10 @@ void Console::internalWrite(const std::string &str) {
     int cx = cursorPos.x;
     int cy = cursorPos.y;
 
-    for (char c : str) {
+    std::string toWrite;
+    toWrite = Util::replaceAll(str, "\t", "    ");
+
+    for (char c : toWrite) {
         if (c == '\n') {
             cx = 0;
             cy++;

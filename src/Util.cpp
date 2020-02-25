@@ -14,6 +14,16 @@ std::vector<std::string> Util::splitString(const std::string &str, const std::st
     return out;
 }
 
+std::string Util::replaceAll(const std::string &str, const std::string &from, const std::string &to) {
+    std::string copy = str;
+    size_t start_pos = 0;
+    while((start_pos = copy.find(from, start_pos)) != std::string::npos) {
+        copy.replace(start_pos, from.length(), to);
+        start_pos += to.length();
+    }
+    return copy;
+}
+
 using namespace std;
 
 long long int Util::getMilliTime() {

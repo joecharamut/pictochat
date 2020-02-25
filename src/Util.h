@@ -18,6 +18,8 @@ public:
         return false;
     }
 
+    static std::string replaceAll(const std::string &str, const std::string &from, const std::string &to);
+
     static long long int getMilliTime();
 };
 

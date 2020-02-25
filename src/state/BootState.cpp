@@ -45,14 +45,13 @@ void BootState::update() {
         case DOS_LOAD: {
             if (frames - save > 90) {
                 state = COMMAND;
-//                console->write("\n\nC:\\> ");
-                Input::enableKeyBuffer();
             }
         } break;
 
         case COMMAND: {
             if (!prompt) {
                 console->write("\rC:\\> ");
+                Input::enableKeyBuffer();
                 prompt = true;
             }
 
@@ -66,10 +65,12 @@ void BootState::update() {
 
             if (Input::getKeyDown(SDLK_RETURN)) {
                 console->write("\n");
+                prompt = false;
+                Input::disableKeyBuffer();
+
                 commandStr.erase(commandStr.find_last_not_of(' ') + 1);
                 if (!commandStr.empty()) {
                     runningCommand = shell.processCommand(commandStr).get();
-                    prompt = false;
                     if (runningCommand) {
                         state = RUNNING;
                     }

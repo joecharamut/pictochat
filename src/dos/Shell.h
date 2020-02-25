@@ -6,6 +6,7 @@
 #include <memory>
 #include "command/Command.h"
 #include "Console.h"
+#include "VirtualFS.h"
 
 class Shell {
 public:
@@ -17,6 +18,7 @@ public:
 private:
     std::shared_ptr<Console> console;
     std::map<std::string, std::shared_ptr<Command>> commands;
+    std::shared_ptr<VirtualFS> filesystem;
 
     void registerCommand(const std::string &name, std::shared_ptr<Command> command);
 };

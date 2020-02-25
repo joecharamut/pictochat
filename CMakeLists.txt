@@ -22,7 +22,7 @@ set(SRCS
         src/net/Request.cpp src/net/Request.h
         src/state/BootState.cpp src/state/BootState.h
         src/dos/Shell.cpp src/dos/Shell.h
-        src/dos/Console.cpp src/dos/Console.h src/dos/command/Command.cpp src/dos/command/Command.h src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h)
+        src/dos/Console.cpp src/dos/Console.h src/dos/command/Command.cpp src/dos/command/Command.h src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h src/dos/VirtualFS.cpp src/dos/VirtualFS.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)

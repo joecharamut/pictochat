@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include "../Console.h"
+#include "../VirtualFS.h"
 
 class Command {
 public:
@@ -15,14 +16,15 @@ public:
         COMMAND_FINISHED
     };
 
-    explicit Command(std::shared_ptr<Console> console) : console(std::move(console)) {};
+    Command(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
+        : console(std::move(console)), filesystem(std::move(filesystem)) {};
     virtual ~Command() = 0;
     virtual void exec(std::vector<std::string> flags, std::vector<std::string> args) = 0;
     virtual CommandStatus update() = 0;
     virtual std::string help() = 0;
 
-private:
     std::shared_ptr<Console> console;
+    std::shared_ptr<VirtualFS> filesystem;
 };
 
 

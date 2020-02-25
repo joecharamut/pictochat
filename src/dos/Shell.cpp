@@ -10,8 +10,9 @@
 
 Shell::Shell(std::shared_ptr<Console> p_console) {
     console = std::move(p_console);
+    filesystem = std::make_shared<VirtualFS>();
 
-    registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console)));
+    registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console, filesystem)));
 }
 
 Shell::~Shell() {
