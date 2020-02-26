@@ -19,20 +19,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/dos/VirtualFS.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dos/VirtualFS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/res/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Util.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dos/Console.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/Console.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dos/Shell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/Shell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dos/Shell.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/Shell.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dos/command/Command.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/command/Command.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dos/VirtualFS.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/VirtualFS.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dos/VirtualFS.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/VirtualFS.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dos/command/CommandDir.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/command/CommandDir.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dos/command/CommandDir.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/dos/command/CommandDir.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/BootState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/state/BootState.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -61,12 +51,21 @@
     <expand />
     <select />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FavoritesManager">
     <favorites_list name="project" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/state/BootState.cpp">
           <provider selected="true" editor-type-id="text-editor">
@@ -82,7 +81,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/state/BootState.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
+            <state relative-caret-position="326">
               <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
               <folding>
                 <element signature="e#57#75#0" expanded="true" />
@@ -94,8 +93,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dos/VirtualFS.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+            <state relative-caret-position="236">
+              <caret line="71" column="54" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="54" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -103,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dos/VirtualFS.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+            <state relative-caret-position="146">
+              <caret line="20" column="33" lean-forward="true" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
               <folding>
                 <element signature="e#57#74#0" expanded="true" />
               </folding>
@@ -115,20 +114,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dos/Shell.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="14" column="113" selection-start-line="14" selection-start-column="113" selection-end-line="14" selection-end-column="113" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dos/command/CommandDir.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+            <state relative-caret-position="341">
+              <caret line="30" column="89" selection-start-line="30" selection-start-column="89" selection-end-line="30" selection-end-column="89" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -217,10 +207,10 @@
         <option value="$PROJECT_DIR$/res/index.html" />
         <option value="$PROJECT_DIR$/src/state/BootState.cpp" />
         <option value="$PROJECT_DIR$/src/dos/Shell.h" />
-        <option value="$PROJECT_DIR$/src/dos/command/CommandDir.cpp" />
         <option value="$PROJECT_DIR$/src/dos/command/CommandDir.h" />
         <option value="$PROJECT_DIR$/src/dos/command/Command.h" />
         <option value="$PROJECT_DIR$/src/dos/Shell.cpp" />
+        <option value="$PROJECT_DIR$/src/dos/command/CommandDir.cpp" />
         <option value="$PROJECT_DIR$/src/dos/VirtualFS.cpp" />
         <option value="$PROJECT_DIR$/src/dos/VirtualFS.h" />
       </list>
@@ -317,7 +307,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.project_wasm">
+  <component name="RunManager" selected="CMake Application.project">
     <configuration name="CxxUrl" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="project" TARGET_NAME="CxxUrl" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -364,7 +354,8 @@
       <workItem from="1581440049264" duration="29367000" />
       <workItem from="1581797874048" duration="7865000" />
       <workItem from="1582161527021" duration="5217000" />
-      <workItem from="1582300033771" duration="23531000" />
+      <workItem from="1582300033771" duration="25586000" />
+      <workItem from="1582731274117" duration="4965000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1581280872973</created>
@@ -499,11 +490,18 @@
       <option name="project" value="LOCAL" />
       <updated>1582554697286</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="wormking on filez">
+      <created>1582651955088</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1582651955088</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167936000" />
+    <option name="totallyTimeSpent" value="174956000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -518,12 +516,12 @@
     <frame x="0" y="24" width="1366" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4944356" visible="true" weight="0.25151977" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4944356" visible="true" weight="0.25531915" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" sideWeight="0.5055644" side_tool="true" weight="0.24772036" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32793522" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35771066" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.35771066" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3974563" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -532,7 +530,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3243243" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50227964" side_tool="true" weight="0.3243243" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3290938" />
-      <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.49772036" weight="0.3243243" />
+      <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.49772036" weight="0.3227345" />
       <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49924013" weight="0.32114467" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -554,6 +552,17 @@
               </option>
               <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
                 <collection />
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
               </option>
               <option name="COLUMN_ORDER">
                 <list>
@@ -607,7 +616,8 @@
     <MESSAGE value="bios message &amp; version info" />
     <MESSAGE value="dir" />
     <MESSAGE value="scrolling works nice nice" />
-    <option name="LAST_COMMIT_MESSAGE" value="scrolling works nice nice" />
+    <MESSAGE value="wormking on filez" />
+    <option name="LAST_COMMIT_MESSAGE" value="wormking on filez" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -632,48 +642,12 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/include/c++/9.2.0/bits/stl_vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="483" column="6" selection-start-line="483" selection-start-column="6" selection-end-line="483" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/SDL2/SDL.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="124" column="29" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ResourceManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="26" column="26" lean-forward="true" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Graphics.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
           <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
           <folding>
             <element signature="e#55#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/Request.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#53#70#0" expanded="true" />
-            <element signature="e#215#244#0" expanded="true" />
-            <element signature="e#1368#1641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -809,13 +783,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/src/Version.cpp" />
     <entry file="file://$PROJECT_DIR$/cmake/cmake-modules/GetGitRevisionDescription.cmake" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Version.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -931,26 +898,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/state/BootState.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/state/BootState.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-          <folding>
-            <element signature="e#57#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dos/Console.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -988,16 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dos/command/Command.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
-          <folding>
-            <element signature="e#73#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dos/command/CommandDir.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1005,27 +942,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dos/Shell.cpp">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="14" column="113" selection-start-line="14" selection-start-column="113" selection-end-line="14" selection-end-column="113" />
+        <state relative-caret-position="45">
+          <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dos/command/CommandDir.cpp">
+    <entry file="file://$PROJECT_DIR$/src/net/Request.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+        <state relative-caret-position="15">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#73#90#0" expanded="true" />
+            <element signature="e#215#244#0" expanded="true" />
+            <element signature="e#1368#1641#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dos/command/Command.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/test.bmp">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/state/BootState.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding>
+            <element signature="e#57#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/state/BootState.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/9.2.1/ext/atomicity.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="64" column="59" lean-forward="true" selection-start-line="64" selection-start-column="59" selection-end-line="64" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/9.2.1/bits/shared_ptr_base.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="1309" selection-start-line="1309" selection-end-line="1309" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dos/Shell.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420">
+          <caret line="14" column="113" selection-start-line="14" selection-start-column="113" selection-end-line="14" selection-end-column="113" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dos/VirtualFS.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+        <state relative-caret-position="236">
+          <caret line="71" column="54" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="54" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -1034,10 +1024,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dos/VirtualFS.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="24" column="44" selection-start-line="24" selection-start-column="44" selection-end-line="24" selection-end-column="44" />
+        <state relative-caret-position="146">
+          <caret line="20" column="33" lean-forward="true" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
           <folding>
             <element signature="e#57#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dos/command/CommandDir.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="30" column="89" selection-start-line="30" selection-start-column="89" selection-end-line="30" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

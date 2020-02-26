@@ -17,8 +17,18 @@ void CommandDir::exec(std::vector<std::string> flags, std::vector<std::string> a
     console->write(" Directory of C:\\\n");
     console->write("\n\n");
 
-    console->write("DOS\t\t<DIR>\n");
-    console->write("\t\t1 File(s)\t\t0 bytes\n\n");
+    std::shared_ptr<FileNode> node = filesystem->pathToNode("C:\\");
+    int files = 0;
+    int bytes = 0;
+    if (node) {
+        for (const auto &child : node->children) {
+            files++;
+            bytes += child->value.bytes;
+            console->write(child->value.displayName + "\t\t" + child->value.displayExtension+ "\n");
+        }
+    }
+
+    console->write("\t\t" + std::to_string(files) + " File(s)\t\t" + std::to_string(bytes) + " bytes\n\n");
 }
 
 Command::CommandStatus CommandDir::update() {
