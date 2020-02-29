@@ -24,8 +24,23 @@ std::string Util::replaceAll(const std::string &str, const std::string &from, co
     return copy;
 }
 
-using namespace std;
+std::string Util::toUpperCase(const std::string &str) {
+    std::string ret;
+    for (char c : str) {
+        ret += (char) toupper(c);
+    }
+    return ret;
+}
+
+std::string Util::toLowerCase(const std::string &str) {
+    std::string ret;
+    for (char c : str) {
+        ret += (char) tolower(c);
+    }
+    return ret;
+}
 
 long long int Util::getMilliTime() {
-    return chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now().time_since_epoch()).count();
 }

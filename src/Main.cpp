@@ -3,7 +3,7 @@
 #include "types/Text.h"
 #include "ResourceManager.h"
 #include "Input.h"
-#include "Util.h"
+#include "util/Util.h"
 #include "state/State.h"
 #include "state/TestState.h"
 #include "state/BootState.h"

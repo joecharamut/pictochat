@@ -20,6 +20,9 @@ public:
 
     static std::string replaceAll(const std::string &str, const std::string &from, const std::string &to);
 
+    static std::string toUpperCase(const std::string &str);
+    static std::string toLowerCase(const std::string &str);
+
     static long long int getMilliTime();
 };
 

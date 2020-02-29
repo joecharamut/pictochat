@@ -1,0 +1,3 @@
+#include "Sources.h"
+
+const std::string Sources::SOURCES_STR = "@SOURCE_SIZES@";

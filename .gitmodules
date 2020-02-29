@@ -19,3 +19,6 @@
 [submodule "cmake/cmake-modules"]
 	path = cmake/cmake-modules
 	url = https://github.com/rpavlik/cmake-modules.git
+[submodule "cmake/FileInformation"]
+	path = cmake/FileInformation
+	url = https://github.com/sakra/FileInformation.git

@@ -7,7 +7,7 @@ SDL_Renderer *Graphics::renderer;
 
 bool Graphics::init() {
     printf("creating window\n");
-    window = SDL_CreateWindow("hello", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+    window = SDL_CreateWindow("hewwo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window) {
         printf("error creating window: %s\n", SDL_GetError());

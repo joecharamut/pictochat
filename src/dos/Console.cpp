@@ -1,6 +1,6 @@
 #include <algorithm>
 #include "Console.h"
-#include "../Util.h"
+#include "../util/Util.h"
 
 Console::Console() {
     for (auto &line : textBuffer) {

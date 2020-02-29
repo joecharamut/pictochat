@@ -10,15 +10,15 @@
 
 class Shell {
 public:
+    std::shared_ptr<Console> console;
+    std::shared_ptr<VirtualFS> filesystem;
+
     explicit Shell(std::shared_ptr<Console> p_console);
     ~Shell();
-
     std::shared_ptr<Command> processCommand(const std::string& commandStr);
 
 private:
-    std::shared_ptr<Console> console;
     std::map<std::string, std::shared_ptr<Command>> commands;
-    std::shared_ptr<VirtualFS> filesystem;
 
     void registerCommand(const std::string &name, std::shared_ptr<Command> command);
 };

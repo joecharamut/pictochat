@@ -1,6 +1,7 @@
 #include "Shell.h"
-#include "../Util.h"
+#include "../util/Util.h"
 #include "command/CommandDir.h"
+#include "command/CommandCd.h"
 
 #include <vector>
 #include <iostream>
@@ -13,6 +14,7 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
     filesystem = std::make_shared<VirtualFS>();
 
     registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console, filesystem)));
+    registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<CommandCd>(console, filesystem)));
 }
 
 Shell::~Shell() {

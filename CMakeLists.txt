@@ -10,7 +10,7 @@ set(SRCS
         src/Graphics.cpp src/Graphics.h
         src/types/Text.cpp src/types/Text.h
         src/ResourceManager.cpp src/ResourceManager.h
-        src/Util.cpp src/Util.h
+        src/util/Util.cpp src/util/Util.h
         src/state/StateManager.cpp src/state/StateManager.h
         src/state/State.cpp src/state/State.h
         src/state/TestState.cpp src/state/TestState.h
@@ -22,13 +22,33 @@ set(SRCS
         src/net/Request.cpp src/net/Request.h
         src/state/BootState.cpp src/state/BootState.h
         src/dos/Shell.cpp src/dos/Shell.h
-        src/dos/Console.cpp src/dos/Console.h src/dos/command/Command.cpp src/dos/command/Command.h src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h src/dos/VirtualFS.cpp src/dos/VirtualFS.h)
+        src/dos/Console.cpp src/dos/Console.h
+        src/dos/command/Command.cpp src/dos/command/Command.h
+        src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
+        src/dos/VirtualFS.cpp src/dos/VirtualFS.h src/util/Sources.h src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-configure_file("${CMAKE_SOURCE_DIR}/src/Version.cpp.in" "${CMAKE_BINARY_DIR}/src/Version.cpp" @ONLY)
-configure_file("${CMAKE_SOURCE_DIR}/src/Version.h" "${CMAKE_BINARY_DIR}/src/Version.h" @ONLY)
-list(APPEND SRCS "${CMAKE_BINARY_DIR}/src/Version.cpp" ${CMAKE_BINARY_DIR}/src/Version.h)
+
+configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.h" COPYONLY)
+
+
+include(${CMAKE_SOURCE_DIR}/cmake/FileInformation/Module/FileInformation.cmake)
+set(SOURCE_SIZES "")
+foreach(source ${SRCS})
+    if (${source} MATCHES "cpp$")
+        file(SIZE ${source} FILE_SIZE)
+        list(APPEND SOURCE_SIZES ${source} ${FILE_SIZE})
+    endif()
+endforeach()
+
+configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" @ONLY)
+configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.h" COPYONLY)
+
+list(APPEND SRCS
+        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" "${CMAKE_SOURCE_DIR}/src/util/Version.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" "${CMAKE_SOURCE_DIR}/src/util/Sources.h")
 
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)

@@ -1,7 +1,7 @@
 #include "BootState.h"
 #include "../Main.h"
 #include "../Input.h"
-#include "../Version.h"
+#include "../util/Version.h"
 #include <SDL_mixer.h>
 
 BootState::BootState() {
@@ -19,7 +19,7 @@ void BootState::update() {
     switch (state) {
         case BIOS_START: {
             if (frames == 60) {
-                console->write("stupid BIOS (c) 2020 spaghetti.rocks\n");
+                console->write("stupid BIOS (c) 2020 spaghetti.rocks Enterprises Ltd.\n");
             } else if (frames == 120) {
                 console->write("Rev. " + Version::GIT_SHA1_SHORT + "\n\n");
             } else if (frames == 180) {
@@ -49,8 +49,9 @@ void BootState::update() {
         } break;
 
         case COMMAND: {
+            std::string path = shell.filesystem->getcwd() + "\\";
             if (!prompt) {
-                console->write("\rC:\\> ");
+                console->write("\r" + path + "> ");
                 Input::enableKeyBuffer();
                 prompt = true;
             }
@@ -58,7 +59,7 @@ void BootState::update() {
             std::string str = Input::popBuffer();
             if (!str.empty()) {
                 commandStr += str;
-                console->write("\rC:\\> ");
+                console->write("\r" + path + "> ");
                 console->write(commandStr);
                 console->flush();
             }

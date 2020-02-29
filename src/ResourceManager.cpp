@@ -1,6 +1,6 @@
 #include <vector>
 #include "ResourceManager.h"
-#include "Util.h"
+#include "util/Util.h"
 #include "Graphics.h"
 
 shared_ptr<Texture> ResourceManager::loadTexture(const string& filename) {
