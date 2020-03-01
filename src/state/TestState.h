@@ -7,18 +7,16 @@
 #include "../types/Text.h"
 #include <SDL_mixer.h>
 
-using namespace std;
-
 class TestState : public State {
 public:
     TestState();
     ~TestState() override;
     void update() override;
 
-    shared_ptr<Text> text;
+    std::shared_ptr<Text> text;
 
 private:
-    shared_ptr<Texture> image;
+    std::shared_ptr<Texture> image;
     Mix_Chunk *music;
 };
 

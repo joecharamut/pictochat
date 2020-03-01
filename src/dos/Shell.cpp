@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <utility>
+#include <random>
 
 #define PL() printf("line %d\n", __LINE__)
 
@@ -24,10 +25,11 @@ Shell::~Shell() {
 void Shell::registerCommand(const std::string &name, std::shared_ptr<Command> command) {
     if (commands.count(name) == 0) {
         commands[name] = std::move(command);
-        return;
-    }
 
-    printf("command `%s` already registered", name.c_str());
+        filesystem->addFile("C:\\DOS", StatData(name, "COM", rand() % 8192));
+    } else {
+        printf("command `%s` already registered", name.c_str());
+    }
 }
 
 std::shared_ptr<Command> Shell::processCommand(const std::string &commandStr) {

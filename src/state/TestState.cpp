@@ -5,7 +5,7 @@
 
 TestState::TestState() {
     image = ResourceManager::loadTexture("res/test.bmp");
-    text = make_shared<Text>("sand undertall", std::make_shared<Font>("res/bios.ttf"), 14, Text::Blended_Wrapped,
+    text = std::make_shared<Text>("sand undertall", std::make_shared<Font>("res/bios.ttf"), 14, Text::Blended_Wrapped,
             COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), Main::SCREEN_WIDTH);
     music = Mix_LoadWAV("res/output.ogg");
     if (!music) {

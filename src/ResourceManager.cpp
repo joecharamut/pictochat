@@ -3,9 +3,9 @@
 #include "util/Util.h"
 #include "Graphics.h"
 
-shared_ptr<Texture> ResourceManager::loadTexture(const string& filename) {
-    vector<string> split = Util::splitString(filename, ".");
-    string ext = split.back();
+std::shared_ptr<Texture> ResourceManager::loadTexture(const std::string& filename) {
+    std::vector<std::string> split = Util::splitString(filename, ".");
+    std::string ext = split.back();
 
     SDL_Surface *surface = nullptr;
 
@@ -22,7 +22,7 @@ shared_ptr<Texture> ResourceManager::loadTexture(const string& filename) {
         return nullptr;
     }
 
-    shared_ptr<Texture> texture = Graphics::createTexture(surface);
+    std::shared_ptr<Texture> texture = Graphics::createTexture(surface);
 
     SDL_FreeSurface(surface);
     return texture;

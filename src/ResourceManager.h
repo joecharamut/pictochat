@@ -6,11 +6,9 @@
 
 #include "types/Texture.h"
 
-using namespace std;
-
 class ResourceManager {
 public:
-    static shared_ptr<Texture> loadTexture(const string& filename);
+    static std::shared_ptr<Texture> loadTexture(const std::string& filename);
 };
 
 

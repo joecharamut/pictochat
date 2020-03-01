@@ -25,7 +25,8 @@ set(SRCS
         src/dos/Console.cpp src/dos/Console.h
         src/dos/command/Command.cpp src/dos/command/Command.h
         src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
-        src/dos/VirtualFS.cpp src/dos/VirtualFS.h src/util/Sources.h src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h)
+        src/dos/VirtualFS.cpp src/dos/VirtualFS.h
+        src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -47,8 +48,8 @@ configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.cpp.in" "${CMAKE_CURRENT_BI
 configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.h" COPYONLY)
 
 list(APPEND SRCS
-        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" "${CMAKE_SOURCE_DIR}/src/util/Version.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" "${CMAKE_SOURCE_DIR}/src/util/Sources.h")
+        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" "src/util/Version.h"
+        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" "src/util/Sources.h")
 
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
