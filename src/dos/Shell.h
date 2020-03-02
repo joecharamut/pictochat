@@ -18,9 +18,18 @@ public:
     std::shared_ptr<Command> processCommand(const std::string& commandStr);
 
 private:
-    std::map<std::string, std::shared_ptr<Command>> commands;
+    enum CommandType {
+        BUILTIN,
+        GLOBAL,
+        CONTEXT_REQUIRED
+    };
 
-    void registerCommand(const std::string &name, std::shared_ptr<Command> command);
+    std::map<std::string, std::shared_ptr<Command>> builtins;
+    std::map<std::string, std::shared_ptr<Command>> globalCommands;
+    std::map<std::string, std::shared_ptr<Command>> contextCommands;
+
+    void registerCommand(const std::string &name, const std::shared_ptr<Command> &command, CommandType type = BUILTIN,
+            const std::string &path = "C:\\DOS");
 };
 
 

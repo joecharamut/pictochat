@@ -23,6 +23,8 @@ public:
     static std::string toUpperCase(const std::string &str);
     static std::string toLowerCase(const std::string &str);
 
+    static bool stringEndsWith(const std::string &fullString, const std::string &ending);
+
     static long long int getMilliTime();
 };
 

@@ -2,6 +2,7 @@
 #include "../util/Util.h"
 #include "command/CommandDir.h"
 #include "command/CommandCd.h"
+#include "command/CommandCurl.h"
 
 #include <vector>
 #include <iostream>
@@ -14,21 +15,48 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
     console = std::move(p_console);
     filesystem = std::make_shared<VirtualFS>();
 
+    // register builtins
     registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console, filesystem)));
     registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<CommandCd>(console, filesystem)));
+
+    // register c:\dos commands
+    registerCommand("curl", std::static_pointer_cast<Command>(std::make_shared<CommandCurl>(console, filesystem)), GLOBAL);
 }
 
 Shell::~Shell() {
 
 }
 
-void Shell::registerCommand(const std::string &name, std::shared_ptr<Command> command) {
-    if (commands.count(name) == 0) {
-        commands[name] = std::move(command);
+void Shell::registerCommand(const std::string &name, const std::shared_ptr<Command> &command, CommandType type,
+        const std::string &path) {
 
-        filesystem->addFile("C:\\DOS", StatData(name, "COM", rand() % 8192));
-    } else {
-        printf("command `%s` already registered", name.c_str());
+    switch (type) {
+        case BUILTIN: {
+            if (builtins.count(name) == 0) {
+                builtins[name] = command;
+            } else {
+                printf("builtin `%s` already registered", name.c_str());
+            }
+        } break;
+
+        case GLOBAL: {
+            if (globalCommands.count(name) == 0) {
+                globalCommands[name] = command;
+                filesystem->addFile("C:\\DOS", StatData(name, "COM", rand() % 8192));
+            } else {
+                printf("global command `%s` already registered", name.c_str());
+            }
+        } break;
+
+        case CONTEXT_REQUIRED: {
+            std::string fullPath = path + "\\" + name + ".COM";
+            if (contextCommands.count(fullPath) == 0) {
+                contextCommands[fullPath] = command;
+                filesystem->addFile(path, StatData(name, "COM", rand() % 8192));
+            } else {
+                printf("context command `%s` already registered", name.c_str());
+            }
+        } break;
     }
 }
 
@@ -82,8 +110,18 @@ std::shared_ptr<Command> Shell::processCommand(const std::string &commandStr) {
         }
     }
 
-    if (commands.count(command) > 0) {
-        std::shared_ptr<Command> commandPtr = commands[command];
+    std::string commandWithPath = filesystem->getcwd() + "\\" + command + (Util::stringEndsWith(command, ".COM") ? "" : ".COM");
+    std::shared_ptr<Command> commandPtr = nullptr;
+
+    if (builtins.count(command) > 0) {
+        commandPtr = builtins[command];
+    } else if (globalCommands.count(command) > 0) {
+        commandPtr = globalCommands[command];
+    } else if (contextCommands.count(commandWithPath) > 0) {
+        commandPtr = globalCommands[command];
+    }
+
+    if (commandPtr) {
         commandPtr->exec(flags, args);
         return commandPtr;
     } else {

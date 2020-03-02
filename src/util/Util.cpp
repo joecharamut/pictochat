@@ -40,6 +40,14 @@ std::string Util::toLowerCase(const std::string &str) {
     return ret;
 }
 
+bool Util::stringEndsWith(const std::string &fullString, const std::string &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (fullString.compare(fullString.length() - ending.length(), ending.length(), ending) == 0);
+    } else {
+        return false;
+    }
+}
+
 long long int Util::getMilliTime() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now().time_since_epoch()).count();

@@ -26,7 +26,8 @@ set(SRCS
         src/dos/command/Command.cpp src/dos/command/Command.h
         src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
         src/dos/VirtualFS.cpp src/dos/VirtualFS.h
-        src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h)
+        src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h
+        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
