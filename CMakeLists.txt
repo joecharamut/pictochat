@@ -79,6 +79,7 @@ set(COMMON_LIBRARIES CxxUrl)
 include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
+include_directories(lib/json/include)
 include_directories(lib)
 
 

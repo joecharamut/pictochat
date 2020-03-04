@@ -26,3 +26,7 @@
 	path = lib/jsoncpp
 	url = https://github.com/open-source-parsers/jsoncpp.git
 	branch = d2e6a971f4544c55b8e3b25cf96db266971b778f
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git
+	branch = tags/3.7.3
