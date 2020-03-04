@@ -23,7 +23,7 @@ private:
     std::string writeBuffer;
     std::string cachedBuffer;
     bool dirty = true;
-    std::array<std::array<char, 90>, 30> textBuffer {};
+    std::array<std::array<char, 90>, 28> textBuffer {};
     Vector2 cursorPos = {0, 0};
 };
 

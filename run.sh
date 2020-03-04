@@ -1,11 +1,13 @@
 #!/bin/bash
 
 cd cmake-build-web
+source ~/emsdk/emsdk_env.sh
 
-python2 -m SimpleHTTPServer 8080 &
+#python2 -m SimpleHTTPServer 8080 &
+emrun --serve_after_close index.html
 PID=$!
 
-firefox -new-tab http://localhost:8080/project.html
+#firefox -new-tab http://localhost:8080/
 
 handle () {
     trap SIGINT

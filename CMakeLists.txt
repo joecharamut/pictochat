@@ -59,9 +59,16 @@ add_custom_target(copy-files ALL
         COMMAND rm -rf ${CMAKE_BINARY_DIR}/res
         COMMAND cp -R ${CMAKE_SOURCE_DIR}/res ${CMAKE_BINARY_DIR}/res)
 
+add_custom_target(copy-web-files ALL
+        COMMAND rm -f ${CMAKE_BINARY_DIR}/index.html
+        COMMAND rm -f ${CMAKE_BINARY_DIR}/logo.svg
+        COMMAND cp ${CMAKE_SOURCE_DIR}/res/index.html ${CMAKE_BINARY_DIR}
+        COMMAND cp ${CMAKE_SOURCE_DIR}/res/logo.svg ${CMAKE_BINARY_DIR})
+
 add_custom_target(project_wasm
         COMMAND bash ${CMAKE_SOURCE_DIR}/build.sh
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+add_dependencies(project_wasm copy-web-files)
 
 add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.hpp
@@ -85,7 +92,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \
-            --source-map-base http://localhost:8080/ -s RUNTIME_LOGGING=1 -s DEMANGLE_SUPPORT=1")
+            --source-map-base http://localhost:8080/ -s RUNTIME_LOGGING=1 -s DEMANGLE_SUPPORT=1 --emrun")
     else()
         set(EMSCRIPTEN_DEBUG "")
     endif()

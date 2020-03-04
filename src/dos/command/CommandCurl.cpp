@@ -42,7 +42,9 @@ void CommandCurl::requestCallback(Network::Response response) {
     printf("resp: %lld bytes\n", response.size);
     std::string dataStr;
     for (int i = 0; i < response.size; i++) {
-        dataStr += response.data.get()->at(i);
+        Network::byte b = response.data.get()->at(i);
+//        printf("byte: %x\n", b);
+        dataStr += b;
     }
     console->write(dataStr);
     status = COMMAND_FINISHED;
