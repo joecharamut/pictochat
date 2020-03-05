@@ -15,7 +15,6 @@ public:
     static bool load();
     static void loop();
     static void quit();
-    static void callback(Network::Response resp);
 
 private:
     static bool quit_flag;

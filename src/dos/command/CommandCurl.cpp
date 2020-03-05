@@ -16,7 +16,9 @@ void CommandCurl::exec(std::vector<std::string> flags, std::vector<std::string> 
         return;
     }
 
-    if (!std::regex_match(args[0], std::regex(R"(^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$)"))) {
+    if (!std::regex_match(args[0],
+            std::regex(R"(^((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$)"))
+    ) {
         // invalid url
         console->write("Invalid URL\n\n");
         return;
@@ -24,7 +26,6 @@ void CommandCurl::exec(std::vector<std::string> flags, std::vector<std::string> 
 
     status = COMMAND_RUNNING;
 
-    // std::function<void(int)> testFunc(std::bind(&A::func, this, _1));
     std::function<void(Network::Response)> callback(std::bind(&CommandCurl::requestCallback, this, std::placeholders::_1));
     Network::Request request = Network::Request(args[0], Network::Method::GET, callback);
     request.execute();
@@ -39,13 +40,19 @@ std::string CommandCurl::help() {
 }
 
 void CommandCurl::requestCallback(Network::Response response) {
-    printf("resp: %lld bytes\n", response.size);
-    std::string dataStr;
-    for (int i = 0; i < response.size; i++) {
-        Network::byte b = response.data.get()->at(i);
+    if (response.status == Network::Status::SUCCESS) {
+        printf("resp: %lld bytes\n", response.size);
+        std::string dataStr;
+        for (int i = 0; i < response.size; i++) {
+            Network::byte b = response.data.get()->at(i);
 //        printf("byte: %x\n", b);
-        dataStr += b;
+            dataStr += b;
+        }
+        console->write(dataStr);
+    } else {
+        console->write("request failed: " + response.statusText + "\n");
     }
-    console->write(dataStr);
+
+    console->write("\n\n");
     status = COMMAND_FINISHED;
 }

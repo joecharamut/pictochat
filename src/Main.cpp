@@ -83,42 +83,14 @@ bool Main::initSDL() {
     return true;
 }
 
-std::shared_ptr<State> testState;
-void Main::callback(Network::Response resp) {
-    std::string dataStr;
-    for(int i = 0; i < resp.size; i++) {
-        dataStr += resp.data.get()->at(i);
-    }
-
-    std::cout <<
-              "status: " << resp.status <<
-              ", statusCode: " << resp.statusCode <<
-              ", statusText: " << resp.statusText <<
-              ", size: " << resp.size <<
-              ", data: \n" << dataStr << std::endl;
-
-//    std::static_pointer_cast<TestState>(testState)->text = make_shared<Text>(dataStr, Font("res/bios.ttf"), 14,
-//            Text::Blended_Wrapped, COLOR(0xff, 0x00, 0xff), COLOR(0x00, 0xff, 0x00), 640);
-    std::static_pointer_cast<TestState>(testState)->text->setText(dataStr);
-}
-
 bool Main::load() {
     bool error = false;
-
-//    testState = std::static_pointer_cast<State>(std::make_shared<TestState>());
-//    if (!StateManager::setState(testState)) {
-//        printf("error setting state\n");
-//        error = true;
-//    }
 
     std::shared_ptr<State> st = std::static_pointer_cast<State>(std::make_shared<BootState>());
     if (!StateManager::setState(st)) {
         printf("error setting state\n");
         error = true;
     }
-
-//    Network::Request *request = new Network::Request("http://www.spaghetti.rocks/form.php?view=1", Network::GET, Main::callback);
-//    request->execute();
 
     return !error;
 }
@@ -133,7 +105,7 @@ void Main::loop() {
     frames++;
     long long int time = Util::getMilliTime();
 
-    if (time - lastTime > 1000) {
+    if (time - lastTime > 5000) {
         float fps = frames / ((time - lastTime) / 1000.f);
         lastTime = time;
         frames = 0;

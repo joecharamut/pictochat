@@ -1,6 +1,4 @@
 #include <utility>
-
-#include <utility>
 #include <cstring>
 #include <iostream>
 
@@ -64,24 +62,21 @@ void Network::Request::execute() {
     emscripten_fetch(&fetch_attr, url.c_str());
 #else
     Url parsed(url);
-
     std::unique_ptr<httplib::Client> client = nullptr;
     if (parsed.port().empty()) {
         client = std::make_unique<httplib::Client>(parsed.host());
     } else {
         client = std::make_unique<httplib::Client>(parsed.host(), std::stoi(parsed.port()));
     }
-
+    //todo fix for post requests
     auto res = client->Get(url.c_str());
     if (res) {
         std::shared_ptr<std::vector<byte>> bytes = std::make_shared<std::vector<byte>>();
-
         if (res->body.length() > 0) {
             for (char c : res->body) {
                 bytes->push_back(c);
             }
         }
-
         Response resp = Response(res->body.length(), bytes, SUCCESS, res->status, "");
         callback(resp);
     } else {

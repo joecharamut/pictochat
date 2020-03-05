@@ -9,7 +9,7 @@
 #include <utility>
 #include <random>
 
-#define PL() printf("line %d\n", __LINE__)
+#define PL() printf("%s:%d\n", __FILE__, __LINE__)
 
 Shell::Shell(std::shared_ptr<Console> p_console) {
     console = std::move(p_console);
@@ -125,7 +125,7 @@ std::shared_ptr<Command> Shell::processCommand(const std::string &commandStr) {
         commandPtr->exec(flags, args);
         return commandPtr;
     } else {
-        console->write("Bad command or file name\n\n");
+        console->write("Bad command or file name\n\n\n");
         return nullptr;
     }
 }
