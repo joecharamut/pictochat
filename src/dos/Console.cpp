@@ -2,6 +2,9 @@
 #include "Console.h"
 #include "../util/Util.h"
 
+const int Console::WIDTH;
+const int Console::LINES;
+
 Console::Console() {
     for (auto &line : textBuffer) {
         for (char &c : line) {

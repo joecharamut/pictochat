@@ -1,8 +1,10 @@
 #include "Shell.h"
 #include "../util/Util.h"
+
 #include "command/CommandDir.h"
 #include "command/CommandCd.h"
 #include "command/CommandCurl.h"
+#include "command/CommandComment.h"
 
 #include <vector>
 #include <iostream>
@@ -19,8 +21,11 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
     registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console, filesystem)));
     registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<CommandCd>(console, filesystem)));
 
-    // register c:\dos commands
-    registerCommand("curl", std::static_pointer_cast<Command>(std::make_shared<CommandCurl>(console, filesystem)), GLOBAL);
+    // register c:\dos global commands
+    registerCommand("curl", std::static_pointer_cast<Command>(
+            std::make_shared<CommandCurl>(console, filesystem)), GLOBAL);
+    registerCommand("comment", std::static_pointer_cast<Command>(
+            std::make_shared<CommandComment>(console, filesystem)), GLOBAL);
 }
 
 Shell::~Shell() {

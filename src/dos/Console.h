@@ -7,6 +7,9 @@
 
 class Console {
 public:
+    static const int WIDTH = 90;
+    static const int LINES = 28;
+
     Console();
     ~Console() = default;
 
@@ -23,7 +26,7 @@ private:
     std::string writeBuffer;
     std::string cachedBuffer;
     bool dirty = true;
-    std::array<std::array<char, 90>, 28> textBuffer {};
+    std::array<std::array<char, WIDTH>, LINES> textBuffer {};
     Vector2 cursorPos = {0, 0};
 };
 

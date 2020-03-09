@@ -27,14 +27,13 @@ set(SRCS
         src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
         src/dos/VirtualFS.cpp src/dos/VirtualFS.h
         src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h
-        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h)
+        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h src/dos/command/CommandComment.cpp src/dos/command/CommandComment.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 
 configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" @ONLY)
 configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.h" COPYONLY)
-
 
 include(${CMAKE_SOURCE_DIR}/cmake/FileInformation/Module/FileInformation.cmake)
 set(SOURCE_SIZES "")
@@ -79,7 +78,7 @@ set(COMMON_LIBRARIES CxxUrl)
 include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
-include_directories(lib/json/include)
+include_directories(lib/json/single_include)
 include_directories(lib)
 
 
