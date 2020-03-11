@@ -43,7 +43,7 @@ void VirtualFS::addFile(const std::string &path, StatData file) {
     std::shared_ptr<FileNode> node = pathToNode(path);
 
     if (node) {
-        printf("node: %s.%s\n", node->value.filename.c_str(), node->value.extension.c_str());
+//        printf("node: %s.%s\n", node->value.filename.c_str(), node->value.extension.c_str());
 
         //todo: fix filename
         std::string newFilename = Util::toUpperCase(file.filename);
@@ -72,7 +72,7 @@ void VirtualFS::addFile(const std::string &path, StatData file) {
                 node
         ));
     } else {
-        printf("nullptr\n");
+        printf("fs err: node is null\n");
     }
 }
 
@@ -80,24 +80,24 @@ void VirtualFS::addDir(const std::string &path, const std::string &name) {
     std::shared_ptr<FileNode> node = pathToNode(path);
 
     if (node) {
-        printf("node: %s.%s\n", node->value.filename.c_str(), node->value.extension.c_str());
+//        printf("node: %s.%s\n", node->value.filename.c_str(), node->value.extension.c_str());
         node->children.push_back(std::make_shared<FileNode>(
                 StatData(Util::toUpperCase(name), "<DIR>", 0),
                 std::vector<std::shared_ptr<FileNode>>(),
                 node
         ));
     } else {
-        printf("nullptr\n");
+        printf("fs err: node is null\n");
     }
 }
 
 std::shared_ptr<FileNode> VirtualFS::pathToNode(const std::string &path) {
     std::vector<std::string> pathSplit = Util::splitString(path, "\\");
 
-    for (const auto &str : pathSplit) {
-        printf("%s, ", str.c_str());
-    }
-    printf("\n");
+//    for (const auto &str : pathSplit) {
+//        printf("%s, ", str.c_str());
+//    }
+//    printf("\n");
 
     std::shared_ptr<FileNode> currentNode = fileTree;
 

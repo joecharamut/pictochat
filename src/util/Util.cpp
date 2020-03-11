@@ -52,3 +52,13 @@ long long int Util::getMilliTime() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now().time_since_epoch()).count();
 }
+
+std::string Util::centerString(int width, const std::string &str, char padChar) {
+    int len = str.length();
+    if(width < len) { return str; }
+
+    int diff = width - len;
+    int pad1 = diff/2;
+    int pad2 = diff - pad1;
+    return std::string(pad1, padChar) + str + std::string(pad2, padChar);
+}

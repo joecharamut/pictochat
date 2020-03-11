@@ -14,14 +14,25 @@ public:
     std::string help() override;
 
 private:
+    enum LocalState {
+        STATE_INIT,
+        STATE_DIAL,
+        STATE_DIAL_WAIT,
+        STATE_PRINT
+    };
+
     const std::string BASE_URL = "http://www.spaghetti.rocks/form.php";
     const std::string VIEW_URL = BASE_URL + "?view=1";
+    std::string SEPARATOR;
 
+    LocalState state = STATE_INIT;
 
     CommandStatus status = COMMAND_FINISHED;
     bool loaded = false;
     bool printed = false;
     nlohmann::json loadedComments;
+
+    int dialProgress = 0;
 
     void networkCallback(Network::Response response);
 };

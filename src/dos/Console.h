@@ -16,6 +16,7 @@ public:
     void update();
     void flush(int chars = -1);
     void write(const std::string &str);
+    bool bufferEmpty();
     void scrollBuffer(int lines);
     std::string bufferString();
     int cursorToStringIndex();

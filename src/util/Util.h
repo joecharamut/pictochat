@@ -26,6 +26,8 @@ public:
     static bool stringEndsWith(const std::string &fullString, const std::string &ending);
 
     static long long int getMilliTime();
+
+    static std::string centerString(int width, const std::string &str, char padChar = ' ');
 };
 
 

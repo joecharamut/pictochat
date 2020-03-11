@@ -21,6 +21,10 @@ void Console::write(const std::string &str) {
     writeBuffer += str;
 }
 
+bool Console::bufferEmpty() {
+    return writeBuffer.empty();
+}
+
 void Console::flush(int chars) {
     size_t pos = chars;
 
