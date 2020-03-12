@@ -3,7 +3,9 @@
 
 #include "Command.h"
 #include "../../net/Request.h"
+#include "../../types/Sound.h"
 #include <nlohmann/json.hpp>
+#include <array>
 
 class CommandComment : public Command {
 public:
@@ -33,6 +35,8 @@ private:
     nlohmann::json loadedComments;
 
     int dialProgress = 0;
+
+    std::array<std::shared_ptr<Sound>, 10> DTMF_TONES;
 
     void networkCallback(Network::Response response);
 };

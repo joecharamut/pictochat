@@ -5,10 +5,12 @@
 #include <memory>
 
 #include "types/Texture.h"
+#include "types/Sound.h"
 
 class ResourceManager {
 public:
-    static std::shared_ptr<Texture> loadTexture(const std::string& filename);
+    static std::shared_ptr<Texture> loadTexture(const std::string &filename);
+    static std::shared_ptr<Sound> loadSound(const std::string &filename);
 };
 
 

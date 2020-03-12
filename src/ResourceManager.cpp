@@ -27,3 +27,14 @@ std::shared_ptr<Texture> ResourceManager::loadTexture(const std::string& filenam
     SDL_FreeSurface(surface);
     return texture;
 }
+
+std::shared_ptr<Sound> ResourceManager::loadSound(const std::string &filename) {
+    Mix_Chunk *chunk = Mix_LoadWAV(filename.c_str());
+
+    if (!chunk) {
+        printf("error loading sound: %s\n", SDL_GetError());
+        return nullptr;
+    }
+
+    return std::make_shared<Sound>(chunk);
+}

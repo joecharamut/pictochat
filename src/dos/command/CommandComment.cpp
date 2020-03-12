@@ -1,5 +1,6 @@
 #include "CommandComment.h"
 #include "../../util/Util.h"
+#include "../../ResourceManager.h"
 
 CommandComment::CommandComment(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
         : Command(std::move(console), std::move(filesystem)) {
@@ -9,6 +10,17 @@ CommandComment::CommandComment(std::shared_ptr<Console> console, std::shared_ptr
     }
     separator += "\n";
     SEPARATOR = separator;
+
+    DTMF_TONES[0] = ResourceManager::loadSound("res/dtmf/0.ogg");
+    DTMF_TONES[1] = ResourceManager::loadSound("res/dtmf/1.ogg");
+    DTMF_TONES[2] = ResourceManager::loadSound("res/dtmf/2.ogg");
+    DTMF_TONES[3] = ResourceManager::loadSound("res/dtmf/3.ogg");
+    DTMF_TONES[4] = ResourceManager::loadSound("res/dtmf/4.ogg");
+    DTMF_TONES[5] = ResourceManager::loadSound("res/dtmf/5.ogg");
+    DTMF_TONES[6] = ResourceManager::loadSound("res/dtmf/6.ogg");
+    DTMF_TONES[7] = ResourceManager::loadSound("res/dtmf/7.ogg");
+    DTMF_TONES[8] = ResourceManager::loadSound("res/dtmf/8.ogg");
+    DTMF_TONES[9] = ResourceManager::loadSound("res/dtmf/9.ogg");
 }
 
 CommandComment::~CommandComment() = default;
@@ -47,6 +59,12 @@ Command::CommandStatus CommandComment::update() {
                         console->write("\nConnecting...\n\n");
                         dialProgress = 0;
                         state = STATE_DIAL_WAIT;
+                    }
+                }
+
+                if (dialProgress <= 11) {
+                    if (dialProgress != 1) {
+                        DTMF_TONES[rand() % 10]->playSync();
                     }
                 }
 
