@@ -64,7 +64,8 @@ Command::CommandStatus CommandComment::update() {
 
                 if (dialProgress <= 11) {
                     if (dialProgress != 1) {
-                        DTMF_TONES[rand() % 10]->playSync();
+                        DTMF_TONES[rand() % 10]->play();
+                        SDL_Delay(250);
                     }
                 }
 
