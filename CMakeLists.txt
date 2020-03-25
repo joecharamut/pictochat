@@ -62,15 +62,18 @@ add_custom_target(copy-files ALL
         COMMAND cp -R ${CMAKE_SOURCE_DIR}/res ${CMAKE_BINARY_DIR}/res)
 
 add_custom_target(copy-web-files ALL
-        COMMAND rm -f ${CMAKE_BINARY_DIR}/index.html
-        COMMAND rm -f ${CMAKE_BINARY_DIR}/logo.svg
-        COMMAND cp ${CMAKE_SOURCE_DIR}/res/index.html ${CMAKE_BINARY_DIR}
-        COMMAND cp ${CMAKE_SOURCE_DIR}/res/logo.svg ${CMAKE_BINARY_DIR})
+        COMMAND rm -rf ${CMAKE_BINARY_DIR}/web
+        COMMAND cp -R ${CMAKE_SOURCE_DIR}/web ${CMAKE_BINARY_DIR})
 
 add_custom_target(project_wasm
         COMMAND bash ${CMAKE_SOURCE_DIR}/build.sh
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 add_dependencies(project_wasm copy-web-files)
+
+add_custom_target(copy-web-build-files ALL
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.wasm ${CMAKE_BINARY_DIR}/web
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.data ${CMAKE_BINARY_DIR}/web
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.js ${CMAKE_BINARY_DIR}/web)
 
 add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.hpp
