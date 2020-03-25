@@ -9,6 +9,7 @@
 #include "state/BootState.h"
 #include "state/StateManager.h"
 #include "types/Color.h"
+#include "fs/Filesystem.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -30,6 +31,11 @@ int main(int argc, char **argv) {
 }
 
 bool Main::programMain(int argc, char **argv) {
+    if (!Filesystem::init()) {
+        printf("error init filesystem\n");
+        return EXIT_FAILURE;
+    }
+
     if (!initSDL()) {
         return EXIT_FAILURE;
     }
@@ -138,6 +144,7 @@ void Main::quit() {
 
     Graphics::unload();
     Font::unload();
+    Filesystem::sync();
 
     Mix_CloseAudio();
     Mix_Quit();

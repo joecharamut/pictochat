@@ -27,7 +27,10 @@ set(SRCS
         src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
         src/dos/VirtualFS.cpp src/dos/VirtualFS.h
         src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h
-        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h src/dos/command/CommandComment.cpp src/dos/command/CommandComment.h src/types/Sound.cpp src/types/Sound.h)
+        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h
+        src/dos/command/CommandComment.cpp src/dos/command/CommandComment.h
+        src/types/Sound.cpp src/types/Sound.h
+        src/fs/Filesystem.cpp src/fs/Filesystem.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -88,7 +91,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
 
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
-        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB")
+        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l idbfs.js")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \
