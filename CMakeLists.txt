@@ -29,8 +29,10 @@ set(SRCS
         src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h
         src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h
         src/dos/command/CommandComment.cpp src/dos/command/CommandComment.h
+        src/dos/command/CommandType.cpp src/dos/command/CommandType.h
         src/types/Sound.cpp src/types/Sound.h
-        src/fs/Filesystem.cpp src/fs/Filesystem.h)
+        src/fs/Filesystem.cpp src/fs/Filesystem.h
+        src/fs/File.cpp src/fs/File.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)

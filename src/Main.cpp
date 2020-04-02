@@ -144,7 +144,7 @@ void Main::quit() {
 
     Graphics::unload();
     Font::unload();
-    Filesystem::sync();
+    Filesystem::unload();
 
     Mix_CloseAudio();
     Mix_Quit();

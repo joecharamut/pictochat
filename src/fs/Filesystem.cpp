@@ -1,39 +1,42 @@
 #include "Filesystem.h"
+#include "../util/Util.h"
 
 #include <filesystem>
+#include <map>
+#include <algorithm>
+#include <fstream>
+
+std::map<std::string, std::string> Filesystem::files;
 
 bool Filesystem::init() {
+    bool initSuccess;
 #ifdef __EMSCRIPTEN__
-    return init_emscripten();
+    initSuccess = init_emscripten();
 #else
-    return init_native();
+    initSuccess = init_native();
 #endif
-}
+    if (!initSuccess) return false;
 
-void Filesystem::sync() {
-#ifdef __EMSCRIPTEN__
-    sync_emscripten();
-#endif
+    File index = File("fs/files.list");
+    if (index.size() > 0) {
+        std::shared_ptr<std::string> content = index.read();
+        printf("content: %s\n", content->c_str());
+        std::vector<std::string> split = Util::splitString(*content, ",");
+
+        for (int i = 0; i < split.size() - 1; i+= 2) {
+            files[split[i]] = split[i+1];
+        }
+
+        printf("done %ld files\n", files.size());
+    }
+
+    return true;
 }
 
 #ifdef __EMSCRIPTEN__
 bool Filesystem::init_emscripten() {
-    // test code
-//    for (const auto &entry : std::filesystem::directory_iterator("/fs")) {
-//        printf("%s\n", entry.path().c_str());
-//    }
-//
-//    srand(time(0));
-//    std::string file = "/fs/test" + std::to_string(rand());
-//    std::ofstream out(file);
-//    out << "hello world" << std::endl;
-//    out.close();
-//
-//    for (const auto &entry : std::filesystem::directory_iterator("/fs")) {
-//        printf("%s\n", entry.path().c_str());
-//    }
-
     // chdir to / so relative path is the same for both
+    // /fs is mounted in preinit js code
     MAIN_THREAD_EM_ASM(
             FS.chdir("/");
             );
@@ -42,6 +45,8 @@ bool Filesystem::init_emscripten() {
 }
 
 void Filesystem::sync_emscripten() {
+    // mm js in c++ what more could you want
+    // flush fs back to indexedDB
     MAIN_THREAD_EM_ASM(
             FS.syncfs(false, function (err) {
                 console.log("idbfs sync complete");
@@ -60,4 +65,43 @@ bool Filesystem::init_native() {
     return true;
 }
 #endif
+
+void Filesystem::unload() {
+#ifdef __EMSCRIPTEN__
+    sync_emscripten();
+#endif
+}
+
+bool Filesystem::fileExists(const std::string &virtualPath) {
+    return files.count(virtualPath) > 0;
+}
+
+void Filesystem::createFile(const std::string &virtualPath) {
+    std::string realPath;
+    if (!fileExists(virtualPath)) {
+        std::string randFile;
+        do {
+            randFile = "fs/" + std::to_string(rand()) + ".txt";
+        } while (!std::filesystem::exists(randFile));
+        realPath = randFile;
+
+        files[virtualPath] = realPath;
+    } else {
+        realPath = files[virtualPath];
+    }
+
+    std::ofstream ofs;
+    ofs.open(realPath, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+}
+
+std::shared_ptr<File> Filesystem::openFile(const std::string &virtualPath) {
+    if (!fileExists(virtualPath)) {
+        return nullptr;
+    }
+
+    return std::make_shared<File>(files[virtualPath]);
+}
+
+
 

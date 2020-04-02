@@ -24,6 +24,8 @@
             }
         }
     </script>
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/hack.css">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hack/0.8.1/dark.css">-->
     <style>
         body {
             font-family: arial, sans-serif;
@@ -62,8 +64,7 @@
         #status {
             display: inline-block;
             vertical-align: top;
-            margin-top: 30px;
-            margin-left: 20px;
+            margin: 16px;
             font-weight: bold;
             color: rgb(120, 120, 120);
         }
@@ -80,37 +81,53 @@
             padding: 0;
         }
 
-        .header img {
+        #logo {
             width: 80%;
             height: auto;
+        }
+
+        #modal {
+            text-align: center;
+            border: whitesmoke inset 4px;
+            color: lightgray;
+
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 8px;
         }
     </style>
 </head>
 <body onload="init();">
-<div class="header">
-    <img src="logo.svg" alt="logo">
-</div>
+
 <br><br>
+
 <div class="emscripten_border">
     <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 </div>
 
-<div style="text-align: center;">
-    <p id="status">Downloading...</p><br>
+<div id="modal">
+    <div id="modal-desktop">
+        <img src="logo.svg" alt="logo" id="logo"><br>
+        <p id="status">Downloading...</p><br>
+        <progress value="0" max="100" id="progress"></progress><br>
+        <button id="modalRunButton" style="display: none;" onclick="modalAccept();">>> Run >></button>
+    </div>
+    <div id="modal-mobile" style="display: none;">
 
-    <div class="emscripten">
-        <progress value="0" max="100" id="progress" hidden=1></progress>
     </div>
 </div>
 
 <script type='text/javascript'>
     var statusElement = document.getElementById('status');
     var progressElement = document.getElementById('progress');
+    var modalId = -1;
 
     function preRun() {
         var id = getUniqueRunDependency(1);
-        console.log("id: " + id);
         addRunDependency(id);
+
         FS.mkdir("/fs");
         FS.mount(IDBFS, {}, "/fs");
         FS.syncfs(true, function (err) {
@@ -118,12 +135,31 @@
             if (err) {
                 console.log(err);
             }
+
             removeRunDependency(id);
         });
     }
 
+    function setModal() {
+        modalId = getUniqueRunDependency(1);
+        addRunDependency(modalId);
+
+        var isMobile = (
+            (typeof window.orientation !== "undefined") ||
+            ("ontouchstart" in window) ||
+            (navigator.userAgent.match(/iPad|iPhone|iPod|Android|IEMobile/) !== null)
+        );
+
+        // display mobile disclaimer
+    }
+
+    function modalAccept() {
+        $("#modal").css("display", "none");
+        removeRunDependency(modalId);
+    }
+
     var Module = {
-        preRun: [preRun],
+        preRun: [preRun, setModal],
         postRun: [],
         print: function (text) {
             if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
@@ -169,7 +205,12 @@
         totalDependencies: 0,
         monitorRunDependencies: function (left) {
             this.totalDependencies = Math.max(this.totalDependencies, left);
-            Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+            if (left > 0) {
+                Module.setStatus('Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')');
+            } else {
+                Module.setStatus('All downloads complete.');
+                $("#modalRunButton").css("display", "initial");
+            }
         }
     };
     Module.setStatus('Downloading...');
