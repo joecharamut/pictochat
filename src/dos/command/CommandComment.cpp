@@ -2,7 +2,7 @@
 #include "../../util/Util.h"
 #include "../../ResourceManager.h"
 
-CommandComment::CommandComment(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
+Commands::CommandComment::CommandComment(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
         : Command(std::move(console), std::move(filesystem)) {
     std::string separator;
     for (int i = 0; i < Console::WIDTH; i++) {
@@ -23,13 +23,13 @@ CommandComment::CommandComment(std::shared_ptr<Console> console, std::shared_ptr
     DTMF_TONES[9] = ResourceManager::loadSound("res/dtmf/9.ogg");
 }
 
-CommandComment::~CommandComment() = default;
+Commands::CommandComment::~CommandComment() = default;
 
-void CommandComment::exec(std::vector<std::string> flags, std::vector<std::string> args) {
+void Commands::CommandComment::exec(std::vector<std::string> flags, std::vector<std::string> args) {
     status = COMMAND_RUNNING;
 }
 
-Command::CommandStatus CommandComment::update() {
+Command::CommandStatus Commands::CommandComment::update() {
     switch (state) {
         case STATE_INIT: {
             console->write(SEPARATOR);
@@ -120,11 +120,11 @@ Command::CommandStatus CommandComment::update() {
     return status;
 }
 
-std::string CommandComment::help() {
+std::string Commands::CommandComment::help() {
     return std::string();
 }
 
-void CommandComment::networkCallback(Network::Response response) {
+void Commands::CommandComment::networkCallback(Network::Response response) {
     if (response.status == Network::Status::SUCCESS) {
         std::string dataStr;
         for (int i = 0; i < response.size; i++) {

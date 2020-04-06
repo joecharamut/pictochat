@@ -108,11 +108,13 @@
 </div>
 
 <div id="modal">
-    <div id="modal-desktop">
+    <div id="modal-all">
         <img src="logo.svg" alt="logo" id="logo"><br>
         <p id="status">Downloading...</p><br>
         <progress value="0" max="100" id="progress"></progress><br>
-        <button id="modalRunButton" style="display: none;" onclick="modalAccept();">>> Run >></button>
+    </div>
+    <div id="modal-desktop">
+        <a href="#" id="modalRunButton" style="display: none;" onclick="modalAccept();"><pre>[ Run ]</pre></a>
     </div>
     <div id="modal-mobile" style="display: none;">
 
@@ -151,6 +153,10 @@
         );
 
         // display mobile disclaimer
+        if (isMobile) {
+            $("#modal-desktop").css("display", "none");
+            $("#modal-mobile").css("display", "initial");
+        }
     }
 
     function modalAccept() {

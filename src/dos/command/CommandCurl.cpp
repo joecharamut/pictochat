@@ -2,14 +2,14 @@
 
 #include <regex>
 
-CommandCurl::CommandCurl(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
+Commands::CommandCurl::CommandCurl(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
         : Command(std::move(console), std::move(filesystem)) {
 
 }
 
-CommandCurl::~CommandCurl() = default;
+Commands::CommandCurl::~CommandCurl() = default;
 
-void CommandCurl::exec(std::vector<std::string> flags, std::vector<std::string> args) {
+void Commands::CommandCurl::exec(std::vector<std::string> flags, std::vector<std::string> args) {
     if (args.empty()) {
         // invalid args
         console->write("No URL Specified\n\n");
@@ -31,15 +31,15 @@ void CommandCurl::exec(std::vector<std::string> flags, std::vector<std::string> 
     request.execute();
 }
 
-Command::CommandStatus CommandCurl::update() {
+Command::CommandStatus Commands::CommandCurl::update() {
     return status;
 }
 
-std::string CommandCurl::help() {
+std::string Commands::CommandCurl::help() {
     return std::string();
 }
 
-void CommandCurl::requestCallback(Network::Response response) {
+void Commands::CommandCurl::requestCallback(Network::Response response) {
     if (response.status == Network::Status::SUCCESS) {
         printf("resp: %lld bytes\n", response.size);
         std::string dataStr;

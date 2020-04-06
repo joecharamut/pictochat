@@ -6,14 +6,14 @@
 #include "../../util/Util.h"
 #include "../VirtualFS.h"
 
-CommandCd::CommandCd(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
+Commands::CommandCd::CommandCd(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
         : Command(std::move(console), std::move(filesystem)) {
 
 }
 
-CommandCd::~CommandCd() = default;
+Commands::CommandCd::~CommandCd() = default;
 
-void CommandCd::exec(std::vector<std::string> flags, std::vector<std::string> args) {
+void Commands::CommandCd::exec(std::vector<std::string> flags, std::vector<std::string> args) {
     std::string subdir;
     if (!args.empty()) {
         subdir = Util::toUpperCase(args[0]);
@@ -31,10 +31,10 @@ void CommandCd::exec(std::vector<std::string> flags, std::vector<std::string> ar
     }
 }
 
-Command::CommandStatus CommandCd::update() {
+Command::CommandStatus Commands::CommandCd::update() {
     return COMMAND_FINISHED;
 }
 
-std::string CommandCd::help() {
+std::string Commands::CommandCd::help() {
     return std::string();
 }

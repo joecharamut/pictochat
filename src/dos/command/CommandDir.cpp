@@ -5,14 +5,14 @@
 #include "../../util/Util.h"
 #include "../VirtualFS.h"
 
-CommandDir::CommandDir(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
+Commands::CommandDir::CommandDir(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
     : Command(std::move(console), std::move(filesystem)) {
 
 }
 
-CommandDir::~CommandDir() = default;
+Commands::CommandDir::~CommandDir() = default;
 
-void CommandDir::exec(std::vector<std::string> flags, std::vector<std::string> args) {
+void Commands::CommandDir::exec(std::vector<std::string> flags, std::vector<std::string> args) {
     console->write("\n");
     console->write(" Volume in drive C is PISS_ASS\n");
     console->write(" Volume Serial Number is " + Version::GIT_SHA1_SHORT + "\n");
@@ -43,10 +43,10 @@ void CommandDir::exec(std::vector<std::string> flags, std::vector<std::string> a
     }
 }
 
-Command::CommandStatus CommandDir::update() {
+Command::CommandStatus Commands::CommandDir::update() {
     return COMMAND_FINISHED;
 }
 
-std::string CommandDir::help() {
+std::string Commands::CommandDir::help() {
     return std::string();
 }

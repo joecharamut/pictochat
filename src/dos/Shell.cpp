@@ -19,15 +19,15 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
     filesystem = std::make_shared<VirtualFS>();
 
     // register builtins
-    registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<CommandDir>(console, filesystem)));
-    registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<CommandCd>(console, filesystem)));
-    registerCommand("type", std::static_pointer_cast<Command>(std::make_shared<CommandType>(console, filesystem)));
+    registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandDir>(console, filesystem)));
+    registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandCd>(console, filesystem)));
+    registerCommand("type", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandType>(console, filesystem)));
 
     // register c:\dos global commands
     registerCommand("curl", std::static_pointer_cast<Command>(
-            std::make_shared<CommandCurl>(console, filesystem)), GLOBAL);
+            std::make_shared<Commands::CommandCurl>(console, filesystem)), GLOBAL);
     registerCommand("comment", std::static_pointer_cast<Command>(
-            std::make_shared<CommandComment>(console, filesystem)), GLOBAL);
+            std::make_shared<Commands::CommandComment>(console, filesystem)), GLOBAL);
 }
 
 Shell::~Shell() {
