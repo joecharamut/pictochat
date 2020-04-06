@@ -76,7 +76,8 @@ bool Filesystem::fileExists(const std::string &virtualPath) {
     return files.count(virtualPath) > 0;
 }
 
-void Filesystem::createFile(const std::string &virtualPath) {
+std::shared_ptr<File> Filesystem::createFile(const std::string &virtualPath) {
+    // create file if not exists, truncate, return file ptr
     std::string realPath;
     if (!fileExists(virtualPath)) {
         std::string randFile;
@@ -93,6 +94,8 @@ void Filesystem::createFile(const std::string &virtualPath) {
     std::ofstream ofs;
     ofs.open(realPath, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
+
+    return nullptr;
 }
 
 std::shared_ptr<File> Filesystem::openFile(const std::string &virtualPath) {
@@ -101,6 +104,10 @@ std::shared_ptr<File> Filesystem::openFile(const std::string &virtualPath) {
     }
 
     return std::make_shared<File>(files[virtualPath]);
+}
+
+void Filesystem::deleteFile(const std::string &virtualPath) {
+
 }
 
 

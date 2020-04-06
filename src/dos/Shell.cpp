@@ -19,15 +19,18 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
     filesystem = std::make_shared<VirtualFS>();
 
     // register builtins
-    registerCommand("dir", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandDir>(console, filesystem)));
-    registerCommand("cd", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandCd>(console, filesystem)));
-    registerCommand("type", std::static_pointer_cast<Command>(std::make_shared<Commands::CommandType>(console, filesystem)));
+    registerCommand("dir",
+            std::static_pointer_cast<Command>(std::make_shared<Commands::CommandDir>(console, filesystem)), BUILTIN, "");
+    registerCommand("cd",
+            std::static_pointer_cast<Command>(std::make_shared<Commands::CommandCd>(console, filesystem)), BUILTIN, "");
+    registerCommand("type",
+            std::static_pointer_cast<Command>(std::make_shared<Commands::CommandType>(console, filesystem)), BUILTIN, "");
 
     // register c:\dos global commands
     registerCommand("curl", std::static_pointer_cast<Command>(
-            std::make_shared<Commands::CommandCurl>(console, filesystem)), GLOBAL);
+            std::make_shared<Commands::CommandCurl>(console, filesystem)), GLOBAL, "C:\\DOS");
     registerCommand("comment", std::static_pointer_cast<Command>(
-            std::make_shared<Commands::CommandComment>(console, filesystem)), GLOBAL);
+            std::make_shared<Commands::CommandComment>(console, filesystem)), GLOBAL, "C:\\DOS");
 }
 
 Shell::~Shell() {

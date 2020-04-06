@@ -32,6 +32,8 @@
             margin: 0;
             padding: 0;
             background: black;
+            overflow: hidden;
+            height: 100%;
         }
 
         .emscripten {
@@ -64,21 +66,15 @@
         #status {
             display: inline-block;
             vertical-align: top;
-            margin: 16px;
+            margin: 8px;
             font-weight: bold;
             color: rgb(120, 120, 120);
+            font-size: 16px;
         }
 
         #progress {
             height: 20px;
             width: 300px;
-        }
-
-        .header {
-            text-align: center;
-            user-select: none;
-            margin: 0;
-            padding: 0;
         }
 
         #logo {
@@ -90,12 +86,45 @@
             text-align: center;
             border: whitesmoke inset 4px;
             color: lightgray;
+            background-color: black;
 
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 8px;
+            z-index: 9999;
+        }
+
+        #modalRunButton {
+            color: lightgray;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        #screen-container {
+            display: inline-block;
+            width: 690px;
+            height: 680px;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 0%);
+        }
+
+        #canvas {
+            position: relative;
+            top: 30px;
+            right: 0px;
+            z-index: 1;
+        }
+        
+        #monitor {
+            position: absolute;
+            z-index: 20;
+            width: 690px;
+            height: 680px;
         }
     </style>
 </head>
@@ -104,13 +133,16 @@
 <br><br>
 
 <div class="emscripten_border">
-    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    <div id="screen-container">
+        <img id="monitor" src="monitor.png" alt="" />
+        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    </div>
 </div>
 
 <div id="modal">
     <div id="modal-all">
         <img src="logo.svg" alt="logo" id="logo"><br>
-        <p id="status">Downloading...</p><br>
+        <pre id="status">Downloading...</pre><br>
         <progress value="0" max="100" id="progress"></progress><br>
     </div>
     <div id="modal-desktop">
@@ -211,7 +243,7 @@
         totalDependencies: 0,
         monitorRunDependencies: function (left) {
             this.totalDependencies = Math.max(this.totalDependencies, left);
-            if (left > 0) {
+            if (left > 1) {
                 Module.setStatus('Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')');
             } else {
                 Module.setStatus('All downloads complete.');

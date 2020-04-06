@@ -28,8 +28,8 @@ private:
     std::map<std::string, std::shared_ptr<Command>> globalCommands;
     std::map<std::string, std::shared_ptr<Command>> contextCommands;
 
-    void registerCommand(const std::string &name, const std::shared_ptr<Command> &command, CommandType type = BUILTIN,
-            const std::string &path = "C:\\DOS");
+    void registerCommand(const std::string &name, const std::shared_ptr<Command> &command, CommandType type,
+            const std::string &path);
 };
 
 
