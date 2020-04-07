@@ -1,12 +1,6 @@
 [submodule "lib/cpp-httplib"]
 	path = lib/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git
-[submodule "cmake/sdl2-cmake-scripts"]
-	path = cmake/sdl2-cmake-scripts
-	url = https://github.com/tcbrindle/sdl2-cmake-scripts.git
-[submodule "cmake/cmake-modern-findsdl2"]
-	path = cmake/cmake-modern-findsdl2
-	url = https://github.com/opeik/cmake-modern-findsdl2
 [submodule "cmake/sdl2"]
 	path = cmake/sdl2
 	url = https://github.com/opeik/cmake-modern-findsdl2
@@ -22,14 +16,7 @@
 [submodule "cmake/FileInformation"]
 	path = cmake/FileInformation
 	url = https://github.com/sakra/FileInformation.git
-[submodule "lib/jsoncpp"]
-	path = lib/jsoncpp
-	url = https://github.com/open-source-parsers/jsoncpp.git
-	branch = d2e6a971f4544c55b8e3b25cf96db266971b778f
 [submodule "lib/json"]
 	path = lib/json
 	url = https://github.com/nlohmann/json.git
 	branch = tags/3.7.3
-[submodule "lib/sdl-gpu"]
-	path = lib/sdl-gpu
-	url = https://github.com/grimfang4/sdl-gpu.git

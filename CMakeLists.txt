@@ -122,16 +122,6 @@ else()
 #    target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
 
-include(ExternalProject)
-ExternalProject_Add(sdl-gpu
-        PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl-gpu
-        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl-gpu/src
-        BUILD_ALWAYS true
-        INSTALL_COMMAND true
-)
-
-
-
 if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     target_link_libraries(project ${COMMON_LIBRARIES})
 else()
