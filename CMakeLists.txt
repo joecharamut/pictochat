@@ -110,7 +110,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_OPTS}")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_OPTS}")
 
-    target_link_libraries(project ${COMMON_LIBRARIES})
+#    target_link_libraries(project ${COMMON_LIBRARIES})
 else()
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/sdl2-cmake-modules)
 
@@ -119,5 +119,21 @@ else()
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
 
+#    target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
+endif()
+
+include(ExternalProject)
+ExternalProject_Add(sdl-gpu
+        PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl-gpu
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/sdl-gpu/src
+        BUILD_ALWAYS true
+        INSTALL_COMMAND true
+)
+
+
+
+if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
+    target_link_libraries(project ${COMMON_LIBRARIES})
+else()
     target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()

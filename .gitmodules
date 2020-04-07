@@ -30,3 +30,6 @@
 	path = lib/json
 	url = https://github.com/nlohmann/json.git
 	branch = tags/3.7.3
+[submodule "lib/sdl-gpu"]
+	path = lib/sdl-gpu
+	url = https://github.com/grimfang4/sdl-gpu.git
