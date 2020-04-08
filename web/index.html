@@ -68,7 +68,7 @@
             vertical-align: top;
             margin: 8px;
             font-weight: bold;
-            color: rgb(120, 120, 120);
+            color: #555555;
             font-size: 16px;
         }
 
@@ -134,7 +134,7 @@
 
 <div class="emscripten_border">
     <div id="screen-container">
-        <img id="monitor" src="monitor.png" alt="" />
+        <img id="monitor" src="monitor.png" alt="" draggable="false" />
         <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     </div>
 </div>
@@ -142,6 +142,8 @@
 <div id="modal">
     <div id="modal-all">
         <img src="logo.svg" alt="logo" id="logo"><br>
+        <pre style="font-size: 16pt;">public access terminal</pre>
+        <pre>information right at your fingertips<abbr style="text-decoration: underline;" title="May contain little to no real information; Fingers not included; These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.">*</abbr></pre>
         <pre id="status">Downloading...</pre><br>
         <progress value="0" max="100" id="progress"></progress><br>
     </div>
@@ -149,7 +151,9 @@
         <a href="#" id="modalRunButton" style="display: none;" onclick="modalAccept();"><pre>[ Run ]</pre></a>
     </div>
     <div id="modal-mobile" style="display: none;">
-
+        <pre style="font-size: 18pt;">Mobile browsers are unsupported</pre>
+        <pre>you dont have a physical keyboard sorry</pre>
+        <pre>alternatively, if you do or just dont care <a href="#" onclick="modalAccept();" style="color: lightgray;">click here</a></pre>
     </div>
 </div>
 
@@ -197,7 +201,7 @@
     }
 
     var Module = {
-        preRun: [preRun, setModal],
+        preRun: [setModal, preRun],
         postRun: [],
         print: function (text) {
             if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');

@@ -5,7 +5,7 @@
 #include <SDL_mixer.h>
 
 BootState::BootState() {
-    text = std::make_shared<Text>("0", std::make_shared<Font>("res/vga.ttf"), 20, Text::Blended_Wrapped, COLOR_GREEN,
+    text = std::make_shared<Text>("0", std::make_shared<Font>("res/vga.ttf"), 20, Text::Blended_Wrapped, COLOR(0xff, 0xbf, 0x00),
             COLOR_BLACK, Main::SCREEN_WIDTH);
 }
 

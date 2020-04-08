@@ -2,6 +2,8 @@
   <dictionary name="joseph">
     <words>
       <w>emscripten</w>
+      <w>scanline</w>
+      <w>scanlines</w>
     </words>
   </dictionary>
 </component>
