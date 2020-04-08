@@ -1,0 +1,10 @@
+--- src/CMakeLists.txt	2020-04-08 12:55:44.433684264 -0400
++++ src/CMakeLists.txt	2020-04-08 12:57:52.663217219 -0400
+@@ -1,3 +1,7 @@
++get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
++list(FILTER dirs EXCLUDE REGEX "\\/usr\\/include.*")
++set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES ${dirs})
++
+ set(SDL_gpu_SRCS
+ 	${SDL_gpu_SRCS}
+ 	SDL_gpu.c

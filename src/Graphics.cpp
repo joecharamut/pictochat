@@ -2,6 +2,9 @@
 #include "Main.h"
 #include "state/StateManager.h"
 
+#include <SDL_gpu.h>
+#include <iostream>
+
 SDL_Window *Graphics::window;
 SDL_Renderer *Graphics::renderer;
 
@@ -10,6 +13,11 @@ SDL_Texture *Graphics::textureTarget;
 SDL_Texture *Graphics::scanlineTexture;
 
 bool Graphics::init() {
+    std::cout << "sdl_gpu start" << std::endl;
+    std::cout << "compiled: " << std::to_string(GPU_GetCompiledVersion().major) << "." << std::to_string(GPU_GetCompiledVersion().minor) << "." << std::to_string(GPU_GetCompiledVersion().patch) << std::endl;
+    std::cout << "linked: " << std::to_string(GPU_GetLinkedVersion().major) << "." << std::to_string(GPU_GetLinkedVersion().minor) << "." << std::to_string(GPU_GetLinkedVersion().patch) << std::endl;
+    std::cout << "sdl_gpu end" << std::endl;
+
     printf("creating window\n");
     window = SDL_CreateWindow("hewwo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);

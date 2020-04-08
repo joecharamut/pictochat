@@ -82,17 +82,17 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
-set(COMMON_LIBRARIES CxxUrl GL GLEW)
+set(COMMON_LIBRARIES CxxUrl GL)
 #include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib/json/single_include)
 include_directories(lib)
 
-
-if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
+if(EMSCRIPTEN)
     message(STATUS "Compiling for emscripten")
     set_target_properties(project PROPERTIES SUFFIX ".html")
+    include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
@@ -122,7 +122,49 @@ else()
 #    target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
 
-if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
+get_property(includes DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fix_include.cmake ${CMAKE_CURRENT_BINARY_DIR}/fix_include.cmake COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fix_include2.cmake ${CMAKE_CURRENT_BINARY_DIR}/fix_include2.cmake COPYONLY)
+
+include(ExternalProject)
+if(EMSCRIPTEN)
+    ExternalProject_Add(sdl-gpu
+            GIT_REPOSITORY https://github.com/grimfang4/sdl-gpu.git
+            GIT_TAG def5ea106068a28d65ed74870e5eedca58c669b0
+            GIT_SHALLOW TRUE
+            PATCH_COMMAND patch -p0 < ${CMAKE_SOURCE_DIR}/sdl-gpu-emscripten.patch
+            SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/sdl-gpu-emscripten
+            CMAKE_ARGS -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+            -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DSDL_gpu_BUILD_DEMOS=NO
+            -DSDL_gpu_BUILD_SHARED=NO
+            -DOpenGL_GL_PREFERENCE=LEGACY
+            INSTALL_COMMAND "")
+    ExternalProject_Get_Property(sdl-gpu install_dir)
+else()
+    ExternalProject_Add(sdl-gpu
+            GIT_REPOSITORY https://github.com/grimfang4/sdl-gpu.git
+            GIT_TAG def5ea106068a28d65ed74870e5eedca58c669b0
+            GIT_SHALLOW TRUE
+            SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/sdl-gpu
+            CMAKE_ARGS -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
+            -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DSDL_gpu_BUILD_DEMOS=NO
+            -DSDL_gpu_BUILD_SHARED=NO
+            -DOpenGL_GL_PREFERENCE=LEGACY
+            INSTALL_COMMAND "")
+    ExternalProject_Get_Property(sdl-gpu install_dir)
+endif()
+
+add_library(SDL_gpu UNKNOWN IMPORTED)
+add_dependencies(SDL_gpu sdl-gpu)
+set_property(TARGET SDL_gpu PROPERTY IMPORTED_LOCATION ${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/lib/libSDL2_gpu.a)
+include_directories(${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/include)
+list(APPEND COMMON_LIBRARIES SDL_gpu)
+
+if(EMSCRIPTEN)
     target_link_libraries(project ${COMMON_LIBRARIES})
 else()
     target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
