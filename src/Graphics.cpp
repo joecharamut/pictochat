@@ -9,8 +9,6 @@ int Graphics::scanlineOffset = 0;
 SDL_Texture *Graphics::textureTarget;
 SDL_Texture *Graphics::scanlineTexture;
 
-SDL_Texture *tex;
-
 bool Graphics::init() {
     printf("creating window\n");
     window = SDL_CreateWindow("hewwo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -58,9 +56,6 @@ bool Graphics::init() {
     SDL_FreeSurface(loadSurface);
     SDL_FreeSurface(scanlineSurface);
 
-    tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET,
-                            Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT);
-
     return true;
 }
 
@@ -75,10 +70,16 @@ void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *de
     SDL_RenderCopy(renderer, texture, srcrect, destrect);
 }
 
+std::shared_ptr<Texture> Graphics::createTexture(SDL_Surface *surface) {
+//    printf("creating texture\n");
+    return std::make_shared<Texture>(SDL_CreateTextureFromSurface(renderer, surface));
+}
+
 void Graphics::update() {
     // set target to texture
     SDL_SetRenderTarget(renderer, textureTarget);
     // clear it
+    SDL_SetRenderDrawColor(renderer, 0x25, 0x25, 0x25, 0xff);
     SDL_RenderClear(renderer);
     // draw state gfx
     StateManager::update();
@@ -99,9 +100,4 @@ void Graphics::update() {
 
     // flip to display
     SDL_RenderPresent(renderer);
-}
-
-std::shared_ptr<Texture> Graphics::createTexture(SDL_Surface *surface) {
-//    printf("creating texture\n");
-    return std::make_shared<Texture>(SDL_CreateTextureFromSurface(renderer, surface));
 }

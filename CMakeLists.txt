@@ -82,9 +82,8 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
-set(COMMON_LIBRARIES CxxUrl)
-#set(COMMON_LIBRARIES CxxUrl GL GLU)
-include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
+set(COMMON_LIBRARIES CxxUrl GL GLEW)
+#include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib/json/single_include)

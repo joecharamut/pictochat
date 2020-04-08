@@ -143,7 +143,8 @@
     <div id="modal-all">
         <img src="logo.svg" alt="logo" id="logo"><br>
         <pre style="font-size: 16pt;">public access terminal</pre>
-        <pre>information right at your fingertips<abbr style="text-decoration: underline;" title="May contain little to no real information; Fingers not included; These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.">*</abbr></pre>
+        <pre style="font-size: 12pt;">information at your fingertips<abbr style="text-decoration: underline;" title="May contain little to no real information; Fingers not included; These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.">*</abbr></pre>
+        <pre style="font-size: 8pt;">use at own risk</pre>
         <pre id="status">Downloading...</pre><br>
         <progress value="0" max="100" id="progress"></progress><br>
     </div>
@@ -236,11 +237,13 @@
                 text = m[1];
                 progressElement.value = parseInt(m[2]) * 100;
                 progressElement.max = parseInt(m[4]) * 100;
-                progressElement.hidden = false;
+                $("#progress").css("display", "initial");
+                $("#modalRunButton").css("display", "none");
             } else {
                 progressElement.value = null;
                 progressElement.max = null;
-                progressElement.hidden = true;
+                $("#progress").css("display", "none");
+                $("#modalRunButton").css("display", "initial");
             }
             statusElement.innerHTML = text;
         },
@@ -251,7 +254,6 @@
                 Module.setStatus('Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')');
             } else {
                 Module.setStatus('All downloads complete.');
-                $("#modalRunButton").css("display", "initial");
             }
         }
     };
