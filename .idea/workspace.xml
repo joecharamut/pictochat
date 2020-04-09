@@ -22,20 +22,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/res/shader/crt.frag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/shader/crt.vert" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/res/shader/pi.glsl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/res/shader/crt.frag" beforeDir="false" afterPath="$PROJECT_DIR$/res/shader/crt.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sdl-gpu-emscripten.patch" beforeDir="false" afterPath="$PROJECT_DIR$/sdl-gpu-emscripten.patch" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Graphics.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Graphics.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Graphics.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/TestState.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/state/TestState.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/Text.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/Text.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/Text.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/Text.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/Texture.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/Texture.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/Texture.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/Texture.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmake-build-release/" />
@@ -70,11 +61,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="46">
-              <caret line="83" column="27" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
+              <caret line="97" column="119" selection-start-line="97" selection-start-column="119" selection-end-line="97" selection-end-column="119" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sdl-gpu-emscripten.patch">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="22" lean-forward="true" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -82,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Graphics.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+            <state relative-caret-position="255">
+              <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -94,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/shader/crt.vert">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="69" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
+            <state relative-caret-position="30">
+              <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -103,26 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/shader/crt.frag">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/res/shader/pi.glsl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Graphics.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+            <state relative-caret-position="-30">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -130,7 +112,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2235">
+            <state relative-caret-position="414">
               <caret line="149" column="10" selection-start-line="149" selection-start-column="10" selection-end-line="149" selection-end-column="10" />
             </state>
           </provider>
@@ -158,6 +140,8 @@
       <find>runDependencies</find>
       <find>run(</find>
       <find>Module.downl</find>
+      <find>glGetTexImage</find>
+      <find>SDL_GPU_USE_GLES</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/font</dir>
@@ -175,8 +159,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/res/index.html" />
-        <option value="$PROJECT_DIR$/run.sh" />
         <option value="$PROJECT_DIR$/src/fs/File.h" />
         <option value="$PROJECT_DIR$/cmake-build-debug/fs/test.txt" />
         <option value="$PROJECT_DIR$/src/fs/File.cpp" />
@@ -208,7 +190,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/external/sdl-gpu/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists2.txt" />
-        <option value="$PROJECT_DIR$/sdl-gpu-emscripten.patch" />
         <option value="$PROJECT_DIR$/src/types/Texture.h" />
         <option value="$PROJECT_DIR$/src/types/Texture.cpp" />
         <option value="$PROJECT_DIR$/src/types/Text.h" />
@@ -218,14 +199,17 @@
         <option value="$PROJECT_DIR$/src/shader/crt.frag" />
         <option value="$PROJECT_DIR$/src/shader/crt.vert" />
         <option value="$PROJECT_DIR$/res/shader/crt2.glsl" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/res/shader/crt-pi.glsl" />
         <option value="$PROJECT_DIR$/res/shader/crt-pi.frag" />
         <option value="$PROJECT_DIR$/res/shader/crt-pi.vert" />
         <option value="$PROJECT_DIR$/res/shader/crt.vert" />
-        <option value="$PROJECT_DIR$/src/Graphics.cpp" />
-        <option value="$PROJECT_DIR$/res/shader/crt.frag" />
         <option value="$PROJECT_DIR$/res/shader/pi.glsl" />
+        <option value="$PROJECT_DIR$/res/shader/crt.frag" />
+        <option value="$PROJECT_DIR$/src/Graphics.cpp" />
+        <option value="$PROJECT_DIR$/external/sdl-gpu-emscripten/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists.txt2" />
+        <option value="$PROJECT_DIR$/sdl-gpu-emscripten.patch" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
       </list>
     </option>
   </component>
@@ -285,7 +269,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/res/shader" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/external/sdl-gpu-emscripten/src" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -301,9 +285,9 @@
       <recent name="$PROJECT_DIR$/src/util" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/external/sdl-gpu-emscripten/src" />
       <recent name="$PROJECT_DIR$/res/shader" />
       <recent name="$PROJECT_DIR$/src/shader" />
-      <recent name="$PROJECT_DIR$/external/sdl-gpu-emscripten/src" />
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/res/dtmf" />
     </key>
@@ -320,7 +304,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.project">
+  <component name="RunManager" selected="CMake Application.project_wasm">
     <configuration name="CxxUrl" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="project" TARGET_NAME="CxxUrl" CONFIG_NAME="Release">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -392,7 +376,7 @@
       <workItem from="1583755772364" duration="30407000" />
       <workItem from="1586179270868" duration="9437000" />
       <workItem from="1586278030692" duration="958000" />
-      <workItem from="1586370509738" duration="19061000" />
+      <workItem from="1586370509738" duration="23010000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <created>1581280872973</created>
@@ -646,11 +630,18 @@
       <option name="project" value="LOCAL" />
       <updated>1586368780755</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="shader works but it doest do anything">
+      <created>1586445015953</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1586445015953</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="327023000" />
+    <option name="totallyTimeSpent" value="330972000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -663,14 +654,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="289" width="1600" height="860" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49490836" visible="true" weight="0.2394095" />
       <window_info id="Structure" order="1" sideWeight="0.50509167" side_tool="true" weight="0.2394095" />
       <window_info id="Favorites" order="2" sideWeight="0.5055644" side_tool="true" weight="0.24772036" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32793522" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4987163" visible="true" weight="0.33738193" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4987163" weight="0.33738193" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3954116" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -749,7 +739,6 @@
       <path value="$PROJECT_DIR$/external/sdl-gpu" />
       <path value="$PROJECT_DIR$/external/sdl-gpu-emscripten" />
     </ignored-roots>
-    <MESSAGE value="memory looks better, segfault on quit because ttf quits and we need ttf close still" />
     <MESSAGE value="check before unloading so no segfault &#10;rip memory tho" />
     <MESSAGE value="mem" />
     <MESSAGE value="aaaaaaaaaaaaaaaaaaaaa" />
@@ -774,7 +763,8 @@
     <MESSAGE value="scanlines work and look ok and also some fun flavor text" />
     <MESSAGE value="working" />
     <MESSAGE value="gpu compiles finally" />
-    <option name="LAST_COMMIT_MESSAGE" value="gpu compiles finally" />
+    <MESSAGE value="shader works but it doest do anything" />
+    <option name="LAST_COMMIT_MESSAGE" value="shader works but it doest do anything" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -799,47 +789,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/fs/Filesystem.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="97" column="19" selection-start-line="97" selection-start-column="19" selection-end-line="97" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/fs/Filesystem.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
-          <folding>
-            <element signature="e#87#104#0" expanded="true" />
-            <element signature="e#198#221#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dos/Shell.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="32" column="2" selection-start-line="32" selection-start-column="2" selection-end-line="32" selection-end-column="2" />
-          <folding>
-            <element signature="e#49#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dos/VirtualFS.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Input.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -878,13 +827,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
           <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/sdl-gpu-prefix/src/sdl-gpu-build/SDL_gpu-0.11.0/include/SDL_gpu.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="747" column="29" selection-start-line="747" selection-start-column="29" selection-end-line="747" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -944,9 +886,6 @@
     <entry file="file://$PROJECT_DIR$/external/sdl-gpu/src/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists2.txt" />
     <entry file="file://$PROJECT_DIR$/fix_include.cmake" />
     <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/CMakeLists.txt.orig" />
@@ -955,14 +894,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="23" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sdl-gpu-emscripten.patch">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret column="4" selection-start-column="4" selection-end-column="4" />
-          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1011,13 +942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="149" column="10" selection-start-line="149" selection-start-column="10" selection-end-line="149" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/shader/cgwg-CRT-fast-flat.OpenGL.shader">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -1036,13 +960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="4464" column="56" selection-start-line="4464" selection-start-column="56" selection-end-line="4464" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="83" column="27" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -1067,6 +984,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/res/shader/pi.glsl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/shader/crt.vert">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/sdl-gpu-prefix/src/sdl-gpu-build/SDL_gpu-0.11.0/include/SDL_gpu.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="506" column="51" lean-forward="true" selection-start-line="506" selection-start-column="51" selection-end-line="506" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Graphics.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="149" column="10" selection-start-line="149" selection-start-column="10" selection-end-line="149" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Graphics.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -1074,34 +1029,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/shader/crt.vert">
+    <entry file="file:///usr/include/SDL2/SDL_opengl.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="69" selection-start-line="13" selection-start-column="69" selection-end-line="13" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Graphics.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="160">
+          <caret line="1893" column="22" selection-start-line="1893" selection-start-column="22" selection-end-line="1893" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/shader/crt.frag">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="-30">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/shader/pi.glsl">
+    <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/src/renderer_GL_common.inl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="40" selection-start-line="10" selection-start-column="40" selection-end-line="10" selection-end-column="40" />
+        <state relative-caret-position="77190">
+          <caret line="6484" column="32" selection-start-line="6484" selection-start-column="16" selection-end-line="6484" selection-end-column="32" />
+          <folding>
+            <element signature="e#92307#92349#0" expanded="true" />
+            <element signature="e#92478#93033#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1244">
+          <caret line="222" column="39" selection-start-line="222" selection-start-column="39" selection-end-line="222" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists.txt2">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/external/sdl-gpu-emscripten/src/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sdl-gpu-emscripten.patch">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="22" lean-forward="true" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="97" column="119" selection-start-line="97" selection-start-column="119" selection-end-line="97" selection-end-column="119" />
         </state>
       </provider>
     </entry>

@@ -95,7 +95,7 @@ if(EMSCRIPTEN)
 
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
-        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l idbfs.js")
+        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l idbfs.js -s LEGACY_GL_EMULATION=1 -s ERROR_ON_UNDEFINED_SYMBOLS=0")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \
@@ -161,7 +161,7 @@ add_library(SDL_gpu UNKNOWN IMPORTED)
 add_dependencies(SDL_gpu sdl-gpu)
 set_property(TARGET SDL_gpu PROPERTY IMPORTED_LOCATION ${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/lib/libSDL2_gpu.a)
 include_directories(${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/include)
-list(APPEND COMMON_LIBRARIES GL GLU SDL_gpu)
+list(APPEND COMMON_LIBRARIES GL SDL_gpu)
 
 if(EMSCRIPTEN)
     target_link_libraries(project ${COMMON_LIBRARIES})

@@ -15,7 +15,7 @@ GPU_ShaderBlock block;
 bool Graphics::init() {
     printf("creating window\n");
 
-    gWindow = GPU_Init(Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, GPU_DEFAULT_INIT_FLAGS);
+    gWindow = GPU_Init(Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, GPU_INIT_ENABLE_VSYNC);
     if (!gWindow) {
         printf("error creating window: %s\n", SDL_GetError());
         return false;
@@ -95,11 +95,11 @@ void Graphics::update() {
     if (scanlineOffset > SCANLINE_LIMIT) scanlineOffset = 0;
     GPU_Rect rect {0, (scanlineOffset / 2.f) - Main::SCREEN_HEIGHT, (float) Main::SCREEN_WIDTH, (float) Main::SCREEN_HEIGHT * 2};
     // draw scanlines
-//    GPU_BlitRect(scanlines, nullptr, gWindow, &rect);
+    GPU_BlitRect(scanlines, nullptr, gWindow, &rect);
 
     GPU_FreeImage(target);
     target = GPU_CopyImageFromTarget(gWindow);
-    GPU_ClearRGBA(gWindow, 0x25, 0x25, 0x0, 0xff);
+    GPU_ClearRGBA(gWindow, 0x0, 0x0, 0x0, 0xff);
 
     GPU_ActivateShaderProgram(shader, &block);
     GPU_SetShaderImage(target, GPU_GetUniformLocation(shader, "sampler"), 1);
