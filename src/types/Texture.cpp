@@ -1,19 +1,18 @@
 #include "Texture.h"
 #include "../Graphics.h"
 
-Texture::Texture(GPU_Image *texture) {
+Texture::Texture(SDL_Texture *texture) {
     this->texture = texture;
-    w = texture->w;
-    h = texture->h;
+    SDL_QueryTexture(texture, nullptr, nullptr, &w, &h);
 }
 
 Texture::~Texture() {
 //    printf("destroying texture\n");
-    GPU_FreeImage(texture);
+    SDL_DestroyTexture(texture);
 }
 
 // srcRect = source texture (null = whole)
 // destRect = screen (null = stretch to whole)
-void Texture::draw(GPU_Rect *srcRect, GPU_Rect *destRect) {
+void Texture::draw(SDL_Rect *srcRect, SDL_Rect *destRect) {
     Graphics::drawTexture(texture, srcRect, destRect);
 }
