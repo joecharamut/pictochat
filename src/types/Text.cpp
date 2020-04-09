@@ -38,10 +38,10 @@ void Text::setText(const std::string &newText) {
     SDL_FreeSurface(surface);
 }
 
-void Text::draw(SDL_Rect destRect) {
+void Text::draw(GPU_Rect destRect) {
     texture->draw(nullptr, &destRect);
 }
 
 void Text::draw(int x, int y) {
-    this->draw((SDL_Rect) {x, y, w, h});
+    this->draw((GPU_Rect) {(float) x, (float) y, (float) w, (float) h});
 }

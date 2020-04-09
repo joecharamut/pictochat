@@ -13,7 +13,6 @@ set(SRCS
         src/util/Util.cpp src/util/Util.h
         src/state/StateManager.cpp src/state/StateManager.h
         src/state/State.cpp src/state/State.h
-        src/state/TestState.cpp src/state/TestState.h
         src/Input.cpp src/Input.h
         src/types/Vector2.cpp src/types/Vector2.h
         src/types/Texture.cpp src/types/Texture.h
@@ -82,7 +81,7 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
-set(COMMON_LIBRARIES CxxUrl GL)
+set(COMMON_LIBRARIES CxxUrl)
 #include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
@@ -162,7 +161,7 @@ add_library(SDL_gpu UNKNOWN IMPORTED)
 add_dependencies(SDL_gpu sdl-gpu)
 set_property(TARGET SDL_gpu PROPERTY IMPORTED_LOCATION ${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/lib/libSDL2_gpu.a)
 include_directories(${install_dir}/src/sdl-gpu-build/SDL_gpu-0.11.0/include)
-list(APPEND COMMON_LIBRARIES SDL_gpu)
+list(APPEND COMMON_LIBRARIES GL GLU SDL_gpu)
 
 if(EMSCRIPTEN)
     target_link_libraries(project ${COMMON_LIBRARIES})

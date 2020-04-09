@@ -5,7 +5,6 @@
 #include "Input.h"
 #include "util/Util.h"
 #include "state/State.h"
-#include "state/TestState.h"
 #include "state/BootState.h"
 #include "state/StateManager.h"
 #include "types/Color.h"

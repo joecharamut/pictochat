@@ -2,40 +2,27 @@
 #include "Main.h"
 #include "state/StateManager.h"
 
-#include <SDL_gpu.h>
-#include <iostream>
-
-SDL_Window *Graphics::window;
-SDL_Renderer *Graphics::renderer;
-
 int Graphics::scanlineOffset = 0;
-SDL_Texture *Graphics::textureTarget;
-SDL_Texture *Graphics::scanlineTexture;
+
+#include <GL/glew.h>
+GPU_Target *gWindow;
+GPU_Image *target;
+GPU_Image *scanlines;
+
+int vert, frag, shader;
+GPU_ShaderBlock block;
 
 bool Graphics::init() {
-    std::cout << "sdl_gpu start" << std::endl;
-    std::cout << "compiled: " << std::to_string(GPU_GetCompiledVersion().major) << "." << std::to_string(GPU_GetCompiledVersion().minor) << "." << std::to_string(GPU_GetCompiledVersion().patch) << std::endl;
-    std::cout << "linked: " << std::to_string(GPU_GetLinkedVersion().major) << "." << std::to_string(GPU_GetLinkedVersion().minor) << "." << std::to_string(GPU_GetLinkedVersion().patch) << std::endl;
-    std::cout << "sdl_gpu end" << std::endl;
-
     printf("creating window\n");
-    window = SDL_CreateWindow("hewwo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-            Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (!window) {
+
+    gWindow = GPU_Init(Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, GPU_DEFAULT_INIT_FLAGS);
+    if (!gWindow) {
         printf("error creating window: %s\n", SDL_GetError());
         return false;
     }
 
-    printf("creating renderer\n");
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!renderer) {
-        printf("error creating renderer: %s\n", SDL_GetError());
-        return false;
-    }
-
-    textureTarget = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET,
-            Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT);
-    if (!textureTarget) {
+    target = GPU_CreateImage(Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, GPU_FORMAT_RGBA);
+    if (!target) {
         printf("error creating render target texture: %s\n", SDL_GetError());
         return false;
     }
@@ -60,52 +47,66 @@ bool Graphics::init() {
         }
     }
 
-    scanlineTexture = SDL_CreateTextureFromSurface(renderer, scanlineSurface);
+    scanlines = GPU_CopyImageFromSurface(scanlineSurface);
     SDL_FreeSurface(loadSurface);
     SDL_FreeSurface(scanlineSurface);
+
+
+    vert = GPU_LoadShader(GPU_VERTEX_SHADER, "res/shader/crt.vert");
+    printf("vert: %s\n", GPU_GetShaderMessage());
+
+    frag = GPU_LoadShader(GPU_FRAGMENT_SHADER, "res/shader/crt.frag");
+    printf("frag: %s\n", GPU_GetShaderMessage());
+
+    shader = GPU_LinkShaders(vert, frag);
+    printf("link: %s\n", GPU_GetShaderMessage());
+
+    block = GPU_LoadShaderBlock(shader, "gpu_Vertex", "gpu_TexCoord", "gpu_Color", "gpu_ModelViewProjectionMatrix");
+    int screenSize[] {Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT};
+    GPU_SetAttributeiv(GPU_GetUniformLocation(shader, "size"), 2, (int *) &screenSize);
+
+    GPU_FreeShader(vert);
+    GPU_FreeShader(frag);
 
     return true;
 }
 
 void Graphics::unload() {
-    SDL_DestroyTexture(scanlineTexture);
-    SDL_DestroyTexture(textureTarget);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    GPU_FreeImage(target);
+    GPU_FreeImage(scanlines);
 }
 
-void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *destrect) {
-    SDL_RenderCopy(renderer, texture, srcrect, destrect);
+void Graphics::drawTexture(GPU_Image *texture, GPU_Rect *srcrect, GPU_Rect *destrect) {
+    GPU_BlitRect(texture, srcrect, gWindow, destrect);
 }
 
 std::shared_ptr<Texture> Graphics::createTexture(SDL_Surface *surface) {
 //    printf("creating texture\n");
-    return std::make_shared<Texture>(SDL_CreateTextureFromSurface(renderer, surface));
+    return std::make_shared<Texture>(GPU_CopyImageFromSurface(surface));
 }
 
 void Graphics::update() {
-    // set target to texture
-    SDL_SetRenderTarget(renderer, textureTarget);
-    // clear it
-    SDL_SetRenderDrawColor(renderer, 0x25, 0x25, 0x25, 0xff);
-    SDL_RenderClear(renderer);
+    GPU_ClearRGBA(gWindow, 0x25, 0x25, 0x25, 0xff);
     // draw state gfx
     StateManager::update();
 
     // update scanline positions
     scanlineOffset++;
     if (scanlineOffset > SCANLINE_LIMIT) scanlineOffset = 0;
-    SDL_Rect rect {0, (scanlineOffset / 2) - Main::SCREEN_HEIGHT, Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT * 2};
+    GPU_Rect rect {0, (scanlineOffset / 2.f) - Main::SCREEN_HEIGHT, (float) Main::SCREEN_WIDTH, (float) Main::SCREEN_HEIGHT * 2};
     // draw scanlines
-    SDL_RenderCopy(renderer, scanlineTexture, nullptr, &rect);
+//    GPU_BlitRect(scanlines, nullptr, gWindow, &rect);
 
-    // target window
-    SDL_SetRenderTarget(renderer, nullptr);
-    // clear it
-    SDL_RenderClear(renderer);
-    // draw target with scanlines
-    SDL_RenderCopy(renderer, textureTarget, nullptr, nullptr);
+    GPU_FreeImage(target);
+    target = GPU_CopyImageFromTarget(gWindow);
+    GPU_ClearRGBA(gWindow, 0x25, 0x25, 0x0, 0xff);
 
-    // flip to display
-    SDL_RenderPresent(renderer);
+    GPU_ActivateShaderProgram(shader, &block);
+    GPU_SetShaderImage(target, GPU_GetUniformLocation(shader, "sampler"), 1);
+
+    GPU_BlitRect(target, nullptr, gWindow, nullptr);
+
+    GPU_ActivateShaderProgram(0, nullptr);
+
+    GPU_Flip(gWindow);
 }

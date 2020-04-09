@@ -2,19 +2,20 @@
 #define PROJECT_TEXTURE_H
 
 #include <SDL2/SDL.h>
+#include <SDL_gpu.h>
 #include "Vector2.h"
 
 class Texture {
 private:
-    SDL_Texture *texture = nullptr;
+    GPU_Image *texture = nullptr;
 
 public:
     int w = -1;
     int h = -1;
 
-    explicit Texture(SDL_Texture *texture);
+    explicit Texture(GPU_Image *texture);
     ~Texture();
-    void draw(SDL_Rect *srcRect, SDL_Rect *destRect);
+    void draw(GPU_Rect *srcRect, GPU_Rect *destRect);
 };
 
 
