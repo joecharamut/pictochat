@@ -52,7 +52,7 @@ void Shell::registerCommand(const std::string &name, const std::shared_ptr<Comma
         case GLOBAL: {
             if (globalCommands.count(name) == 0) {
                 globalCommands[name] = command;
-                filesystem->addFile("C:\\DOS", StatData(name, "COM", rand() % 8192));
+                filesystem->addFile("C:\\DOS", StatData(name, "COM", rand() % 8192), false);
             } else {
                 printf("global command `%s` already registered", name.c_str());
             }
@@ -62,7 +62,7 @@ void Shell::registerCommand(const std::string &name, const std::shared_ptr<Comma
             std::string fullPath = path + "\\" + name + ".COM";
             if (contextCommands.count(fullPath) == 0) {
                 contextCommands[fullPath] = command;
-                filesystem->addFile(path, StatData(name, "COM", rand() % 8192));
+                filesystem->addFile(path, StatData(name, "COM", rand() % 8192), false);
             } else {
                 printf("context command `%s` already registered", name.c_str());
             }

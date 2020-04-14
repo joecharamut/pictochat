@@ -1,4 +1,5 @@
 #include "File.h"
+#include <sys/stat.h>
 
 File::File(const std::string &path) {
     printf("opening file\n");
@@ -30,11 +31,8 @@ void File::seek(int offs, int origin) {
 }
 
 int File::size() {
-    int size;
+    struct stat statdata {};
+    fstat(fileno(filePtr), &statdata);
 
-    fseek(filePtr, 0, SEEK_END);
-    size = ftell(filePtr);
-    fseek(filePtr, pos, SEEK_SET);
-
-    return size;
+    return statdata.st_size;
 }

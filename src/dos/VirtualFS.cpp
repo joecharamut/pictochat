@@ -4,6 +4,7 @@
 #include "VirtualFS.h"
 #include "../util/Util.h"
 #include "../util/Sources.h"
+#include "../fs/Filesystem.h"
 
 VirtualFS::VirtualFS() {
     fileTree = std::make_shared<FileNode>(
@@ -27,10 +28,17 @@ VirtualFS::VirtualFS() {
     std::vector<std::string> sources = Util::splitString(Sources::SOURCES_STR, ";");
     for (int i = 0; i < sources.size(); i += 2) {
         std::string filename = Util::splitString(Util::splitString(sources[i], "/").back(), ".").front();
-        addFile("C:\\BIN", StatData(filename, "O", atoi(sources[i+1].c_str())));
+        addFile("C:\\BIN", StatData(filename, "O", atoi(sources[i+1].c_str())), false);
     }
 
-    addFile("C:", StatData("soup",    "txt", rand() % 1024));
+    addFile("C:", StatData("soup", "txt", rand() % 1024), false);
+
+    for (const auto &filePair : Filesystem::files) {
+        std::string filename = Util::splitString(filePair.first, "\\").back();
+        auto fileSplit = Util::splitString(filename, ".");
+        std::string path = filePair.first.substr(0, filePair.first.size() - filename.size());
+        addFile(path, StatData(fileSplit[0], fileSplit[1], Filesystem::openFile(filePair.first)->size()), true);
+    }
 }
 
 VirtualFS::~VirtualFS() = default;
@@ -39,7 +47,8 @@ StatData VirtualFS::stat(const std::string &path) {
     return pathToNode(path)->value;
 }
 
-void VirtualFS::addFile(const std::string &path, StatData file) {
+void VirtualFS::addFile(const std::string &path, StatData file, bool realFile) {
+    printf("trying to add file: (p: %s, f: %s)\n", path.c_str(), (file.filename + "." + file.extension).c_str());
     std::shared_ptr<FileNode> node = pathToNode(path);
 
     if (node) {
@@ -65,6 +74,7 @@ void VirtualFS::addFile(const std::string &path, StatData file) {
         }
 
         StatData fixed = StatData(newFilename, Util::toUpperCase(file.extension), file.bytes);
+        fixed.realFile = realFile;
 
         node->children.push_back(std::make_shared<FileNode>(
                 fixed,
@@ -91,7 +101,41 @@ void VirtualFS::addDir(const std::string &path, const std::string &name) {
     }
 }
 
-std::shared_ptr<FileNode> VirtualFS::pathToNode(const std::string &path) {
+std::string VirtualFS::resolvePath(const std::string &path) {
+    std::string newPath = path;
+    if (!Util::stringStartsWith(newPath, "C:")) {
+        newPath = nodeToPath(currentDirectory) + "\\" + newPath;
+    }
+
+    auto split = Util::splitString(newPath, "\\");
+    std::vector<std::string> newParts;
+    for (const auto &part : split) {
+        if (part == ".") {
+            printf("skip .\n");
+            continue;
+        } else if (part == "..") {
+            printf("erase ..\n");
+            newParts.pop_back();
+            continue;
+        } else {
+            newParts.push_back(part);
+        }
+    }
+
+    std::string consPath;
+    for (const auto &pathPart : newParts) {
+        consPath += pathPart;
+        consPath += "\\";
+    }
+    consPath.pop_back();
+
+    printf("resolve path: %s -> %s\n", path.c_str(), consPath.c_str());
+    return consPath;
+}
+
+std::shared_ptr<FileNode> VirtualFS::pathToNode(const std::string &inPath) {
+    std::string path = resolvePath(inPath);
+
     std::vector<std::string> pathSplit = Util::splitString(path, "\\");
 
 //    for (const auto &str : pathSplit) {
@@ -107,8 +151,12 @@ std::shared_ptr<FileNode> VirtualFS::pathToNode(const std::string &path) {
         if (pathIdx >= pathSplit.size()) break;
         if (nodeIdx >= currentNode->children.size()) return nullptr;
 
+        auto nodeSplit = Util::splitString(pathSplit[pathIdx], ".");
+        std::string filename = Util::toUpperCase(nodeSplit[0]);
+        std::string extension = (nodeSplit.size() == 2 ? Util::toUpperCase(nodeSplit[1]) : "<DIR>");
+
         StatData data = currentNode->children[nodeIdx]->value;
-        if (data.extension == "<DIR>" && data.filename == Util::toUpperCase(pathSplit[pathIdx])) {
+        if (data.filename == filename && data.extension == extension) {
             currentNode = currentNode->children[nodeIdx];
             nodeIdx = 0;
             pathIdx++;
@@ -125,10 +173,13 @@ std::string VirtualFS::nodeToPath(std::shared_ptr<FileNode> node) {
 
     std::shared_ptr<FileNode> parent = node;
     do {
+        if (parent->value.extension != "<DIR>") {
+            path.insert(0, "." + parent->value.extension);
+        }
         path.insert(0, "\\" + parent->value.filename);
     } while ((parent = parent->parent) != nullptr);
 
-    return path.substr(2);
+    return path.substr(3);
 }
 
 void VirtualFS::chdir(std::shared_ptr<FileNode> node) {

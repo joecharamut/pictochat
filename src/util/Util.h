@@ -24,6 +24,7 @@ public:
     static std::string toLowerCase(const std::string &str);
 
     static bool stringEndsWith(const std::string &fullString, const std::string &ending);
+    static bool stringStartsWith(const std::string &fullString, const std::string &start);
 
     static long long int getMilliTime();
 

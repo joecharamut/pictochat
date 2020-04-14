@@ -37,6 +37,8 @@ private:
     std::string commandStr;
 
     Command *runningCommand;
+    
+    void updateState();
 };
 
 

@@ -48,6 +48,14 @@ bool Util::stringEndsWith(const std::string &fullString, const std::string &endi
     }
 }
 
+bool Util::stringStartsWith(const std::string &fullString, const std::string &start) {
+    if (fullString.length() >= start.length()) {
+        return fullString.substr(0, start.size()) == start;
+    } else {
+        return false;
+    }
+}
+
 long long int Util::getMilliTime() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now().time_since_epoch()).count();

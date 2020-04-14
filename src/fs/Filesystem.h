@@ -16,6 +16,9 @@
 
 class Filesystem {
 public:
+    // virtual path -> real file map
+    static std::map<std::string, std::string> files;
+
     static bool init();
     static void unload();
 
@@ -25,9 +28,6 @@ public:
     static void deleteFile(const std::string &virtualPath);
 
 private:
-    // virtual path -> real file map
-    static std::map<std::string, std::string> files;
-
 #ifdef __EMSCRIPTEN__
     static bool init_emscripten();
     static void sync_emscripten();

@@ -126,6 +126,12 @@
             width: 690px;
             height: 680px;
         }
+
+        #more-info-link {
+            font-size: 8pt;
+            color: #767676;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body onload="init();">
@@ -143,10 +149,24 @@
     <div id="modal-all">
         <img src="logo.svg" alt="logo" id="logo"><br>
         <pre style="font-size: 16pt;">public access terminal</pre>
-        <pre style="font-size: 12pt;">information at your fingertips<abbr style="text-decoration: underline;" title="May contain little to no real information; Fingers not included; These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease.">*</abbr></pre>
+        <pre style="font-size: 12pt;">information at your fingertips<span style="text-decoration: underline;">*</span></pre>
         <pre style="font-size: 8pt;">use at own risk</pre>
         <pre id="status">Downloading...</pre><br>
         <progress value="0" max="100" id="progress"></progress><br>
+        <div>
+            <a href="#" onclick="toggleMore();" id="more-info-link" style="display: inherit;"><pre>More info</pre></a>
+            <script>
+                function toggleMore() {
+                    $("#info").css("display", ($("#info").css("display") === "none" ? "inherit" : "none"));
+                }
+            </script>
+            <div id="info" style="display: none;">
+                <pre>May contain little to no real information. Fingers not included.
+These statements have not been evaluated by the Food and Drug Administration.
+This product is not intended to diagnose, treat, cure, or prevent any disease.</pre>
+                <pre>written in c++, compiled for web with Emscripten</pre>
+            </div>
+        </div>
     </div>
     <div id="modal-desktop">
         <a href="#" id="modalRunButton" style="display: none;" onclick="modalAccept();"><pre>[ Run ]</pre></a>

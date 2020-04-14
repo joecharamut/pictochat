@@ -16,6 +16,7 @@ struct StatData {
     std::string displayName;
     std::string extension;
     std::string displayExtension;
+    bool realFile = false;
     int bytes;
 
     StatData(std::string filename, std::string extension, int bytes)
@@ -45,7 +46,7 @@ public:
     ~VirtualFS();
 
     StatData stat(const std::string& path);
-    void addFile(const std::string& path, StatData file);
+    void addFile(const std::string& path, StatData file, bool realFile);
     void addDir(const std::string& path, const std::string &name);
     std::shared_ptr<FileNode> pathToNode(const std::string &path);
     std::string nodeToPath(std::shared_ptr<FileNode> node);
@@ -55,6 +56,8 @@ public:
 private:
     std::shared_ptr<FileNode> fileTree;
     std::shared_ptr<FileNode> currentDirectory;
+
+    std::string resolvePath(const std::string &path);
 };
 
 

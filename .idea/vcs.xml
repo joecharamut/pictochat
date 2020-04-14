@@ -8,6 +8,5 @@
     <mapping directory="$PROJECT_DIR$/lib/CxxUrl" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/cpp-httplib" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/json" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/lib/sdl-gpu" vcs="Git" />
   </component>
 </project>

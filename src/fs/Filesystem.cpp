@@ -73,6 +73,7 @@ void Filesystem::unload() {
 }
 
 bool Filesystem::fileExists(const std::string &virtualPath) {
+    printf("path: %s\n", virtualPath.c_str());
     return files.count(virtualPath) > 0;
 }
 

@@ -15,7 +15,29 @@ BootState::~BootState() {
 
 void BootState::update() {
     frames++;
+    
+    if (console->bufferEmpty()) {
+        updateState();
+    }
+
+    console->update();
+
     std::string newText;
+    newText = console->bufferString();
+
+    if (frames % 15 == 0) {
+        cursor = !cursor;
+    }
+
+    if (cursor) {
+        newText[console->cursorToStringIndex()] = '_';
+    }
+
+    text->setText(newText);
+    text->draw(0, 0);
+}
+
+void BootState::updateState() {
     switch (state) {
         case BIOS_START: {
             if (frames == 60) {
@@ -80,8 +102,11 @@ void BootState::update() {
             }
 
             if (Input::getKeyDown(SDLK_BACKSPACE)) {
+                if (!commandStr.empty()) {
+                    console->write("\b \b");
+                }
+
                 commandStr = commandStr.substr(0, commandStr.size() - 1);
-                console->write("\b \b");
             }
         } break;
 
@@ -92,19 +117,4 @@ void BootState::update() {
             }
         } break;
     }
-
-    console->update();
-
-    newText = console->bufferString();
-
-    if (frames % 15 == 0) {
-        cursor = !cursor;
-    }
-
-    if (cursor) {
-        newText[console->cursorToStringIndex()] = '_';
-    }
-
-    text->setText(newText);
-    text->draw(0, 0);
 }
