@@ -2,11 +2,36 @@
 #include "../Main.h"
 #include "../Input.h"
 #include "../util/Version.h"
+#include "../Graphics.h"
 #include <SDL_mixer.h>
 
 BootState::BootState() {
     text = std::make_shared<Text>("0", std::make_shared<Font>("res/vga.ttf"), 20, Text::Blended_Wrapped,
             COLOR(0xff, 0xbf, 0x00), COLOR_BLACK, Main::SCREEN_WIDTH);
+
+    SDL_Surface *loadSurface = SDL_LoadBMP("res/scanlines3.bmp");
+    if (!loadSurface) {
+        printf("error loading scanline texture: %s\n", SDL_GetError());
+        Main::quit();
+    }
+
+    SDL_Surface *scanlineSurface = SDL_CreateRGBSurfaceWithFormat(0, Main::SCREEN_WIDTH,
+            Main::SCREEN_HEIGHT * 2, 32, SDL_PIXELFORMAT_RGBA32);
+    if (!scanlineSurface) {
+        printf("error creating scanline surface: %s\n", SDL_GetError());
+        Main::quit();
+    }
+
+    for (int x = 0; x < Main::SCREEN_WIDTH; x += loadSurface->w) {
+        for (int y = 0; y < Main::SCREEN_HEIGHT * 2; y += loadSurface->h) {
+            SDL_Rect rect {x, y, x + loadSurface->w, y + loadSurface->h};
+            SDL_BlitSurface(loadSurface, nullptr, scanlineSurface, &rect);
+        }
+    }
+
+    scanlineTexture = Graphics::createTexture(scanlineSurface);
+    SDL_FreeSurface(loadSurface);
+    SDL_FreeSurface(scanlineSurface);
 }
 
 BootState::~BootState() {
@@ -35,6 +60,13 @@ void BootState::update() {
 
     text->setText(newText);
     text->draw(0, 0);
+
+    // update scanline positions
+    scanlineOffset++;
+    if (scanlineOffset > SCANLINE_LIMIT) scanlineOffset = 0;
+    SDL_Rect rect {0, (scanlineOffset / 2) - Main::SCREEN_HEIGHT, Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT * 2};
+    // draw scanlines
+    scanlineTexture->draw(nullptr, &rect);
 }
 
 void BootState::updateState() {

@@ -37,6 +37,10 @@ private:
     std::string commandStr;
 
     Command *runningCommand;
+
+    std::shared_ptr<Texture> scanlineTexture;
+    const int SCANLINE_LIMIT = 32;
+    int scanlineOffset = 0;
     
     void updateState();
 };
