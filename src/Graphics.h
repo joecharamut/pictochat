@@ -13,6 +13,7 @@ public:
     static std::shared_ptr<Texture> createTexture(SDL_Surface *surface);
     static void update();
     static void setClearColor(SDL_Color color);
+    static void setWindowSize(int w, int h);
 
 private:
     static SDL_Window *window;

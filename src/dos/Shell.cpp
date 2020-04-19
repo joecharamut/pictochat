@@ -6,6 +6,7 @@
 #include "command/CommandCurl.h"
 #include "command/CommandComment.h"
 #include "command/CommandType.h"
+#include "command/CommandChat.h"
 
 #include <vector>
 #include <iostream>
@@ -31,6 +32,8 @@ Shell::Shell(std::shared_ptr<Console> p_console) {
             std::make_shared<Commands::CommandCurl>(console, filesystem)), GLOBAL, "C:\\DOS");
     registerCommand("comment", std::static_pointer_cast<Command>(
             std::make_shared<Commands::CommandComment>(console, filesystem)), GLOBAL, "C:\\DOS");
+    registerCommand("chat", std::static_pointer_cast<Command>(
+            std::make_shared<Commands::CommandChat>(console, filesystem)), GLOBAL, "C:\\DOS");
 }
 
 Shell::~Shell() {

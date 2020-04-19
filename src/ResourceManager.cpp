@@ -1,4 +1,5 @@
 #include <vector>
+#include <SDL_image.h>
 #include "ResourceManager.h"
 #include "util/Util.h"
 #include "Graphics.h"
@@ -12,8 +13,7 @@ std::shared_ptr<Texture> ResourceManager::loadTexture(const std::string& filenam
     if (ext == "bmp") {
         surface = SDL_LoadBMP(filename.c_str());
     } else {
-        printf("ERR: No loader function for images of type %s (%s)\n", ext.c_str(), filename.c_str());
-        return nullptr;
+        surface = IMG_Load(filename.c_str());
     }
 
     if (!surface) {

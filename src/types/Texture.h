@@ -15,6 +15,8 @@ public:
     explicit Texture(SDL_Texture *texture);
     ~Texture();
     void draw(SDL_Rect *srcRect, SDL_Rect *destRect);
+    void draw(int x, int y);
+    void setTint(int r, int g, int b);
 };
 
 

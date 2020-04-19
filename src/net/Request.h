@@ -44,14 +44,17 @@ namespace Network {
     public:
         Request(std::string url, Method method, std::function<void(Response)> callback);
         void setHeaders(const std::map<std::string, std::string> &headers);
+        void setPostData(const std::string &data);
         void execute();
 
     private:
         static int requestIndex;
         static std::vector<std::function<void(Response)>> callbacks;
 
+        Method method;
         std::function<void(Response)> callback;
         std::string url;
+        std::string postData;
 
 #ifdef __EMSCRIPTEN__
         emscripten_fetch_attr_t fetch_attr {};

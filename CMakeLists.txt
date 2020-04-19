@@ -32,7 +32,14 @@ set(SRCS
         src/dos/command/CommandType.cpp src/dos/command/CommandType.h
         src/types/Sound.cpp src/types/Sound.h
         src/fs/Filesystem.cpp src/fs/Filesystem.h
-        src/fs/File.cpp src/fs/File.h)
+        src/fs/File.cpp src/fs/File.h
+        src/dos/command/CommandChat.cpp src/dos/command/CommandChat.h
+        src/gui/GuiObject.cpp src/gui/GuiObject.h
+        src/gui/GuiButton.cpp src/gui/GuiButton.h
+        src/gui/GuiImage.cpp src/gui/GuiImage.h
+        src/chat/MainMenuGui.cpp src/chat/MainMenuGui.h
+        src/gui/GuiText.cpp src/gui/GuiText.h
+        src/types/Timer.cpp src/types/Timer.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -83,7 +90,7 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
 set(COMMON_LIBRARIES CxxUrl GL GLEW)
-#include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
+include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib/json/single_include)
@@ -94,7 +101,8 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     message(STATUS "Compiling for emscripten")
     set_target_properties(project PROPERTIES SUFFIX ".html")
 
-    set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s USE_SDL_MIXER=2 -s FETCH=1")
+    set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='[\"png\"]' \
+        -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
         -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l idbfs.js")
 

@@ -12,6 +12,7 @@ std::vector<std::function<void(Network::Response)>> Network::Request::callbacks;
 Network::Request::Request(std::string url, Network::Method method, std::function<void(Response)> callback) {
     this->callback = callback;
     this->url = std::move(url);
+    this->method = method;
     requestIndex++;
 
 #ifdef __EMSCRIPTEN__
@@ -57,6 +58,14 @@ void Network::Request::setHeaders(const std::map<std::string, std::string> &head
 #endif
 }
 
+void Network::Request::setPostData(const std::string &data) {
+    postData = data;
+#ifdef __EMSCRIPTEN__
+    this->fetch_attr.requestData = postData.c_str();
+    this->fetch_attr.requestDataSize = postData.size();
+#endif
+}
+
 void Network::Request::execute() {
 #ifdef __EMSCRIPTEN__
     emscripten_fetch(&fetch_attr, url.c_str());
@@ -69,7 +78,12 @@ void Network::Request::execute() {
         client = std::make_unique<httplib::Client>(parsed.host(), std::stoi(parsed.port()));
     }
     //todo fix for post requests
-    auto res = client->Get(url.c_str());
+    std::shared_ptr<httplib::Response> res;
+    if (method == GET) {
+        res = client->Get(url.c_str());
+    } else {
+        res = client->Post(url.c_str(), postData, "text/plain");
+    }
     if (res) {
         std::shared_ptr<std::vector<byte>> bytes = std::make_shared<std::vector<byte>>();
         if (res->body.length() > 0) {

@@ -14,7 +14,7 @@ Commands::CommandDir::~CommandDir() = default;
 
 void Commands::CommandDir::exec(std::vector<std::string> flags, std::vector<std::string> args) {
     console->write("\n");
-    console->write(" Volume in drive C is PISS_ASS\n");
+    console->write(" Volume in drive C is PISS\n");
     console->write(" Volume Serial Number is " + Version::GIT_SHA1_SHORT + "\n");
 
     std::string subdir;

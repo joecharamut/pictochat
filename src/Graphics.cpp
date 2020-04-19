@@ -56,3 +56,7 @@ void Graphics::update() {
 void Graphics::setClearColor(SDL_Color color) {
     clearColor = color;
 }
+
+void Graphics::setWindowSize(int w, int h) {
+    SDL_SetWindowSize(window, w, h);
+}

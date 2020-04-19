@@ -3,6 +3,7 @@
 #include "../Input.h"
 #include "../util/Version.h"
 #include "../Graphics.h"
+#include "../dos/command/CommandChat.h"
 #include <SDL_mixer.h>
 
 BootState::BootState() {
@@ -40,10 +41,6 @@ BootState::~BootState() {
 
 void BootState::update() {
     frames++;
-    
-    if (console->bufferEmpty()) {
-        updateState();
-    }
 
     console->update();
 
@@ -67,6 +64,10 @@ void BootState::update() {
     SDL_Rect rect {0, (scanlineOffset / 2) - Main::SCREEN_HEIGHT, Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT * 2};
     // draw scanlines
     scanlineTexture->draw(nullptr, &rect);
+
+    if (console->bufferEmpty()) {
+        updateState();
+    }
 }
 
 void BootState::updateState() {
@@ -91,7 +92,7 @@ void BootState::updateState() {
                 state = DOS_LOAD;
 
                 console->write("\n\n");
-                console->write("Starting WebDOS...\n");
+                console->write("Starting...\n");
                 save = frames;
             }
         } break;

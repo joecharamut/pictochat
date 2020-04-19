@@ -21,6 +21,7 @@
 #endif
 
 #include <iostream>
+#include <SDL_image.h>
 
 const int Main::SCREEN_WIDTH = 640;
 const int Main::SCREEN_HEIGHT = 480;
@@ -63,6 +64,13 @@ bool Main::initSDL() {
     printf("init sdl\n");
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         printf("error init sdl: %s\n", SDL_GetError());
+        return false;
+    }
+
+    printf("init img\n");
+    int imgFlags = IMG_INIT_PNG;
+    if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
+        printf("error init img: %s\n", SDL_GetError());
         return false;
     }
 
@@ -149,6 +157,7 @@ void Main::quit() {
     Mix_CloseAudio();
     Mix_Quit();
     TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
     quit_flag = true;
 #ifdef __EMSCRIPTEN__
