@@ -13,33 +13,20 @@ set(SRCS
         src/util/Util.cpp src/util/Util.h
         src/state/StateManager.cpp src/state/StateManager.h
         src/state/State.cpp src/state/State.h
-        src/state/TestState.cpp src/state/TestState.h
         src/Input.cpp src/Input.h
         src/types/Vector2.cpp src/types/Vector2.h
         src/types/Texture.cpp src/types/Texture.h
         src/types/Font.cpp src/types/Font.h
         src/types/Color.cpp src/types/Color.h
         src/net/Request.cpp src/net/Request.h
-        src/state/BootState.cpp src/state/BootState.h
-        src/dos/Shell.cpp src/dos/Shell.h
-        src/dos/Console.cpp src/dos/Console.h
-        src/dos/command/Command.cpp src/dos/command/Command.h
-        src/dos/command/CommandDir.cpp src/dos/command/CommandDir.h
-        src/dos/VirtualFS.cpp src/dos/VirtualFS.h
-        src/dos/command/CommandCd.cpp src/dos/command/CommandCd.h
-        src/dos/command/CommandCurl.cpp src/dos/command/CommandCurl.h
-        src/dos/command/CommandComment.cpp src/dos/command/CommandComment.h
-        src/dos/command/CommandType.cpp src/dos/command/CommandType.h
         src/types/Sound.cpp src/types/Sound.h
-        src/fs/Filesystem.cpp src/fs/Filesystem.h
-        src/fs/File.cpp src/fs/File.h
-        src/dos/command/CommandChat.cpp src/dos/command/CommandChat.h
         src/gui/GuiObject.cpp src/gui/GuiObject.h
         src/gui/GuiButton.cpp src/gui/GuiButton.h
         src/gui/GuiImage.cpp src/gui/GuiImage.h
         src/chat/MainMenuGui.cpp src/chat/MainMenuGui.h
         src/gui/GuiText.cpp src/gui/GuiText.h
-        src/types/Timer.cpp src/types/Timer.h)
+        src/types/Timer.cpp src/types/Timer.h
+        src/chat/ChatState.cpp src/chat/ChatState.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)

@@ -7,17 +7,15 @@
 #include "../Main.h"
 #include "../gui/GuiText.h"
 #include "../types/Timer.h"
-#include "../dos/command/CommandChat.h"
+#include "ChatState.h"
 
-namespace Commands {
-    class CommandChat;
-}
+class ChatState;
 
 class MainMenuGui {
 public:
     MainMenuGui();
     ~MainMenuGui();
-    void setup(std::string userId, Commands::CommandChat *instance);
+    void setup(std::string userId, ChatState *instance);
     void draw();
 
 private:
@@ -40,7 +38,7 @@ private:
     int users[4] = {-1, -1, -1, -1};
 
     std::string userId;
-    Commands::CommandChat *instance;
+    ChatState *instance;
 
     std::shared_ptr<GuiImage> top;
     std::shared_ptr<GuiImage> bottom;

@@ -30,7 +30,7 @@ MainMenuGui::MainMenuGui() {
             COLOR(0x80, 0x80, 0x80), [this](bool leftClick) {
         showClick = true;
         if (leftClick) {
-            instance->closeWindow = true;
+//            instance->closeWindow = true;
         }
     });
 
@@ -49,7 +49,7 @@ MainMenuGui::~MainMenuGui() {
     SDL_FreeCursor(handCursor);
 }
 
-void MainMenuGui::setup(std::string userId, Commands::CommandChat *instance) {
+void MainMenuGui::setup(std::string userId, ChatState *instance) {
     this->userId = std::move(userId);
     this->instance = instance;
     pingStatus();

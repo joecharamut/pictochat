@@ -5,11 +5,9 @@
 #include "Input.h"
 #include "util/Util.h"
 #include "state/State.h"
-#include "state/TestState.h"
-#include "state/BootState.h"
 #include "state/StateManager.h"
 #include "types/Color.h"
-#include "fs/Filesystem.h"
+#include "chat/ChatState.h"
 
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -23,8 +21,8 @@
 #include <iostream>
 #include <SDL_image.h>
 
-const int Main::SCREEN_WIDTH = 640;
-const int Main::SCREEN_HEIGHT = 480;
+const int Main::SCREEN_WIDTH = 256;
+const int Main::SCREEN_HEIGHT = 192*2;
 bool Main::quit_flag = false;
 
 int main(int argc, char **argv) {
@@ -32,11 +30,6 @@ int main(int argc, char **argv) {
 }
 
 bool Main::programMain(int argc, char **argv) {
-    if (!Filesystem::init()) {
-        printf("error init filesystem\n");
-        return EXIT_FAILURE;
-    }
-
     if (!initSDL()) {
         return EXIT_FAILURE;
     }
@@ -100,7 +93,7 @@ bool Main::initSDL() {
 bool Main::load() {
     bool error = false;
 
-    std::shared_ptr<State> st = std::static_pointer_cast<State>(std::make_shared<BootState>());
+    std::shared_ptr<State> st = std::static_pointer_cast<State>(std::make_shared<ChatState>());
     if (!StateManager::setState(st)) {
         printf("error setting state\n");
         error = true;
@@ -152,7 +145,6 @@ void Main::quit() {
 
     Graphics::unload();
     Font::unload();
-    Filesystem::unload();
 
     Mix_CloseAudio();
     Mix_Quit();

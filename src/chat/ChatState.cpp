@@ -1,15 +1,9 @@
-#include "CommandChat.h"
-#include "../../ResourceManager.h"
-#include "../../util/Util.h"
-#include "../../Input.h"
-#include "../../Graphics.h"
-#include "../Shell.h"
-#include "../../gui/GuiImage.h"
-#include "../../gui/GuiButton.h"
+#include "ChatState.h"
+#include "../util/Util.h"
+#include "../ResourceManager.h"
+#include "../Input.h"
 
-Commands::CommandChat::CommandChat(std::shared_ptr<Console> console, std::shared_ptr<VirtualFS> filesystem)
-        : Command(std::move(console), std::move(filesystem)) {
-
+ChatState::ChatState() {
     frame = ResourceManager::loadTexture("res/pictochat/frame.png");
 
     frameRect = {
@@ -20,17 +14,7 @@ Commands::CommandChat::CommandChat(std::shared_ptr<Console> console, std::shared
     };
 }
 
-Commands::CommandChat::~CommandChat() { }
-
-void Commands::CommandChat::exec(std::vector<std::string> flags, std::vector<std::string> args) {
-    status = COMMAND_RUNNING;
-    initState = (InitState) 0;
-    windowEnabled = false;
-    username = "";
-    timer.reset();
-}
-
-Command::CommandStatus Commands::CommandChat::update() {
+void ChatState::update() {
     timer.tick();
 
     if (!windowEnabled) {
@@ -38,7 +22,7 @@ Command::CommandStatus Commands::CommandChat::update() {
             default: break;
 
             case SERVER_PING: {
-                console->write("\rConnecting...");
+                printf("\rConnecting...");
                 initState = SERVER_WAIT;
                 pingServer();
             } break;
@@ -49,11 +33,11 @@ Command::CommandStatus Commands::CommandChat::update() {
 
             case SERVER_REPLY: {
                 if (!online) {
-                    console->write("Server not online.\n\n");
-                    status = COMMAND_FINISHED;
+                    printf("Server not online.\n\n");
+                    exit(0);
                 } else {
-                    console->write("OK\n");
-                    console->write("Enter a username: ");
+                    printf("OK\n");
+                    printf("Enter a username: ");
                     initState = INPUT_USERNAME;
                 }
             } break;
@@ -65,20 +49,20 @@ Command::CommandStatus Commands::CommandChat::update() {
                     for (char c : str) {
                         if (isalnum(c)) {
                             username += c;
-                            console->write(std::string(1, c));
+                            printf(std::string(1, c).c_str());
                         }
                     }
                 }
 
                 if (Input::getKeyUp(SDLK_RETURN)) {
-                    console->write("\n");
+                    printf("\n");
                     Input::disableKeyBuffer();
                     initState = CHECK_USERNAME;
                 }
 
                 if (Input::getKeyUp(SDLK_BACKSPACE)) {
                     if (!username.empty()) {
-                        console->write("\b \b");
+                        printf("\b \b");
                         username.pop_back();
                     }
                 }
@@ -96,8 +80,8 @@ Command::CommandStatus Commands::CommandChat::update() {
                         userId = respStr;
                         initState = DONE_USERNAME;
                     } else {
-                        console->write("Username unavailable\n");
-                        status = COMMAND_FINISHED;
+                        printf("Username unavailable\n");
+                        exit(0);
                     }
                 });
                 req.setPostData(username);
@@ -109,30 +93,23 @@ Command::CommandStatus Commands::CommandChat::update() {
             } break;
 
             case DONE_USERNAME: {
-                console->write("Connected\n");
+                printf("Connected\n");
                 mainMenuGui->setup(userId, this);
                 windowEnabled = true;
             } break;
         }
     } else {
         drawWindow();
-        if (closeWindow) {
-            closeWindow = false;
-            console->write("\n");
-            SDL_SetCursor(SDL_GetDefaultCursor());
-            status = COMMAND_FINISHED;
-        }
+//        if (closeWindow) {
+//            closeWindow = false;
+//            printf("\n");
+//            SDL_SetCursor(SDL_GetDefaultCursor());
+//            status = COMMAND_FINISHED;
+//        }
     }
-
-    return status;
 }
 
-std::string Commands::CommandChat::help() {
-    return std::string();
-}
-
-
-void Commands::CommandChat::pingServer() {
+void ChatState::pingServer() {
     Network::Request("http://lab.spaghetti.rocks:8080/status", Network::GET, [this](Network::Response resp) {
         initState = SERVER_REPLY;
         printf("reply\n");
@@ -151,9 +128,9 @@ void Commands::CommandChat::pingServer() {
     }).execute();
 }
 
-void Commands::CommandChat::drawWindow() {
+void ChatState::drawWindow() {
     frame->draw(nullptr, &frameRect);
-    switch (chatState) {
+    switch (state) {
         case MAIN_MENU: {
             mainMenuGui->draw();
         } break;
