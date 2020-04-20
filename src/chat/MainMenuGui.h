@@ -17,17 +17,13 @@ public:
     ~MainMenuGui();
     void setup(std::string userId, ChatState *instance);
     void draw();
+    void socketMessage(std::string message);
 
 private:
     void updateCursorPos();
-    void pingStatus();
 
     const int SCREEN_W = 256;
     const int SCREEN_H = 192;
-    const int CENTER_X = (Main::SCREEN_WIDTH / 2) - (SCREEN_W / 2);
-    const int CENTER_Y = (Main::SCREEN_HEIGHT / 2) - (SCREEN_H);
-    const int BASE_X = CENTER_X;
-    const int BASE_Y = CENTER_Y + SCREEN_H;
 
     SDL_Cursor *handCursor;
     SDL_Cursor *defaultCursor;
@@ -40,7 +36,6 @@ private:
     std::string userId;
     ChatState *instance;
 
-    std::shared_ptr<GuiImage> top;
     std::shared_ptr<GuiImage> bottom;
 
     std::shared_ptr<GuiImage> signalRedA;
@@ -60,7 +55,8 @@ private:
     std::shared_ptr<GuiText> onlineTextC;
     std::shared_ptr<GuiText> onlineTextD;
 
-    int cursorX = BASE_X + 26, cursorY = BASE_Y + 28;
+    int cursorX = 26;
+    int cursorY = SCREEN_H + 28;
 };
 
 

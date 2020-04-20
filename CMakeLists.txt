@@ -26,7 +26,7 @@ set(SRCS
         src/chat/MainMenuGui.cpp src/chat/MainMenuGui.h
         src/gui/GuiText.cpp src/gui/GuiText.h
         src/types/Timer.cpp src/types/Timer.h
-        src/chat/ChatState.cpp src/chat/ChatState.h)
+        src/chat/ChatState.cpp src/chat/ChatState.h src/chat/TopScreenGui.cpp src/chat/TopScreenGui.h src/chat/GuiMacros.h src/net/Socket.cpp src/net/Socket.h src/chat/Message.cpp src/chat/Message.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -91,7 +91,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     set(EMSCRIPTEN_USE "-s USE_SDL=2 -s USE_SDL_TTF=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='[\"png\"]' \
         -s USE_SDL_MIXER=2 -s FETCH=1")
     set(EMSCRIPTEN_FLAGS "--no-heap-copy --preload-file res -s EXIT_RUNTIME=1 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 \
-        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l idbfs.js")
+        -s ENVIRONMENT='web' -s TOTAL_MEMORY=128MB -l websocket.js")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \

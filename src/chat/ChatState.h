@@ -8,49 +8,48 @@
 #include "../types/Timer.h"
 #include "../types/Texture.h"
 #include "MainMenuGui.h"
+#include "TopScreenGui.h"
+#include "../net/Socket.h"
+#include <nlohmann/json.hpp>
+
 
 class MainMenuGui;
+class TopScreenGui;
 
 class ChatState : public State {
 public:
     ChatState();
-    ~ChatState() override = default;
+    ~ChatState() override;
     void update() override;
+    void pingServer();
+
+    std::shared_ptr<Socket> socket;
+    bool online = false;
 
 private:
     void drawWindow();
-    void pingServer();
+    void pingResponse(const std::string &jsonData);
+    void socketHandler(Socket::EventData event);
 
-    enum BottomScreenState {
-        MAIN_MENU
+    enum State {
+        SETUP,
+        SERVER_CONNECT, SERVER_PING, SERVER_WAIT, SERVER_REPLY,
+        INPUT_USERNAME, CHECK_USERNAME, WAIT_USERNAME, DONE_USERNAME,
+        ERROR, NOOP
     };
-    BottomScreenState state = MAIN_MENU;
-
-    enum InitState {
-        SERVER_PING, SERVER_WAIT, SERVER_REPLY,
-        INPUT_USERNAME, CHECK_USERNAME, WAIT_USERNAME, DONE_USERNAME
-    };
-    InitState initState = SERVER_PING;
+    State state = (State) 0;
 
     Timer timer = Timer();
 
     std::string username;
     std::string userId;
 
-    const int SCREEN_W = 256;
-    const int SCREEN_H = 192;
-    const int CENTER_X = (Main::SCREEN_WIDTH / 2) - (SCREEN_W / 2);
-    const int CENTER_Y = (Main::SCREEN_HEIGHT / 2) - (SCREEN_H);
-    const int BASE_X = CENTER_X;
-    const int BASE_Y = CENTER_Y + SCREEN_H;
-
-    SDL_Rect frameRect {};
-
-    std::shared_ptr<Texture> frame;
+    std::shared_ptr<Texture> connectingTexture = nullptr;
+    std::shared_ptr<Texture> errorTexture = nullptr;
 
     std::shared_ptr<MainMenuGui> mainMenuGui = std::make_shared<MainMenuGui>();
+    std::shared_ptr<TopScreenGui> topScreenGui = std::make_shared<TopScreenGui>();
 
-    bool online = false;
     bool windowEnabled = false;
 };
 

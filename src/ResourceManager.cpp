@@ -4,7 +4,13 @@
 #include "util/Util.h"
 #include "Graphics.h"
 
+std::map<std::string, std::shared_ptr<Texture>> ResourceManager::loadedTextures;
+
 std::shared_ptr<Texture> ResourceManager::loadTexture(const std::string& filename) {
+    if (loadedTextures.count(filename) > 0) {
+        return loadedTextures[filename];
+    }
+
     std::vector<std::string> split = Util::splitString(filename, ".");
     std::string ext = split.back();
 
@@ -23,6 +29,7 @@ std::shared_ptr<Texture> ResourceManager::loadTexture(const std::string& filenam
     }
 
     std::shared_ptr<Texture> texture = Graphics::createTexture(surface);
+    loadedTextures[filename] = texture;
 
     SDL_FreeSurface(surface);
     return texture;
