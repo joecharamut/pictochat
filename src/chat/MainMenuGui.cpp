@@ -24,19 +24,25 @@ MainMenuGui::MainMenuGui() {
     backButton = GUI_BUTTON(LoadTexture("res/pictochat/backButton.png"), 90, SCREEN_H + 172, COLOR(0x80, 0x80, 0x80),
             [this](bool leftClick) {
         showClick = true;
-        if (leftClick) {
-//            instance->closeWindow = true;
-        }
     });
 
-    cursor = GUI_BUTTON(LoadTexture("res/pictochat/cursor.png"), cursorX, cursorY, COLOR_WHITE, [this](bool leftClick) {
+    cursor = GUI_BUTTON(LoadTexture("res/pictochat/cursor.png"), cursorX, cursorY, COLOR_WHITE, ([this](bool leftClick) {
         showClick = true;
-    });
+        if (!ready) return;
+        if (leftClick && !pendingJoin) {
+            pendingJoin = true;
+            pendingRoom = cursorRoom;
+            instance->socket->send(((nlohmann::json) {
+                    {"action", "join"},
+                    {"room", roomStrings[cursorRoom]}
+            }).dump());
+        }
+    }));
 
-    onlineTextA = GUI_DS_TEXT("0/16", 166, SCREEN_H + 42 + 32*0);
-    onlineTextB = GUI_DS_TEXT("0/16", 166, SCREEN_H + 42 + 32*1);
-    onlineTextC = GUI_DS_TEXT("0/16", 166, SCREEN_H + 42 + 32*2);
-    onlineTextD = GUI_DS_TEXT("0/16", 166, SCREEN_H + 42 + 32*3);
+    onlineTextA = GUI_DS_TEXT("0/16", COLOR_BLACK, 166, SCREEN_H + 42 + 32*0);
+    onlineTextB = GUI_DS_TEXT("0/16", COLOR_BLACK, 166, SCREEN_H + 42 + 32*1);
+    onlineTextC = GUI_DS_TEXT("0/16", COLOR_BLACK, 166, SCREEN_H + 42 + 32*2);
+    onlineTextD = GUI_DS_TEXT("0/16", COLOR_BLACK, 166, SCREEN_H + 42 + 32*3);
 }
 
 MainMenuGui::~MainMenuGui() {
@@ -44,10 +50,9 @@ MainMenuGui::~MainMenuGui() {
     SDL_FreeCursor(handCursor);
 }
 
-void MainMenuGui::setup(std::string userId, ChatState *instance) {
-    this->userId = std::move(userId);
+void MainMenuGui::setup(ChatState *instance) {
     this->instance = instance;
-//    this->instance->pingServer();
+    this->instance->pingServer();
 }
 
 void MainMenuGui::draw() {
@@ -60,6 +65,12 @@ void MainMenuGui::draw() {
     if (timer.get() > 180) {
         timer.reset();
         instance->pingServer();
+        if (!instance->online) {
+            users[0] = -1;
+            users[1] = -1;
+            users[2] = -1;
+            users[3] = -1;
+        }
     }
 
     bottom->draw();
@@ -78,6 +89,8 @@ void MainMenuGui::draw() {
     (users[3] < 0 ? signalRedD : signalGreenD)->draw();
 
     SDL_SetCursor((showClick ? handCursor : defaultCursor));
+
+    ready = true;
 }
 
 void MainMenuGui::updateCursorPos() {
@@ -97,6 +110,10 @@ void MainMenuGui::updateCursorPos() {
         } else if (bottomScreenY > 128 && bottomScreenY <= 160) {
             room = 3; // room d
         }
+    }
+
+    if (room != -1) {
+        cursorRoom = room;
     }
 
     switch (room) {
@@ -134,7 +151,14 @@ void MainMenuGui::socketMessage(std::string message) {
         onlineTextB->text->setText(std::to_string((users[1] != -1 ? users[1] : 0)) + "/16");
         onlineTextC->text->setText(std::to_string((users[2] != -1 ? users[2] : 0)) + "/16");
         onlineTextD->text->setText(std::to_string((users[3] != -1 ? users[3] : 0)) + "/16");
-    } else {
-        printf("unknown json type: %s\n", type.c_str());
+    } else if (type == "join") {
+        pendingJoin = false;
+        bool success = json["success"].get<bool>();
+        if (!success) {
+            instance->topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Error Joining Room"));
+        } else {
+            instance->setRoom(roomStrings[pendingRoom]);
+            SDL_SetCursor(SDL_GetDefaultCursor());
+        }
     }
 }

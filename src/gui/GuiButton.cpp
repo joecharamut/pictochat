@@ -5,10 +5,18 @@ void GuiButton::draw() {
     int my;
     int buttons = SDL_GetMouseState(&mx, &my);
     bool leftClick = buttons & SDL_BUTTON_LMASK;
+    bool clickUp = false;
+
+    if (leftClick && !lastClick) {
+        lastClick = true;
+    } else if (!leftClick && lastClick) {
+        lastClick = false;
+        clickUp = true;
+    }
 
     if (mx >= x && mx < x + texture->w && my >= y && my < y + texture->h) {
         texture->setTint(hoverColor.r, hoverColor.g, hoverColor.b);
-        eventHandler(leftClick);
+        eventHandler(clickUp);
     } else {
         texture->setTint(0xff, 0xff, 0xff);
     }

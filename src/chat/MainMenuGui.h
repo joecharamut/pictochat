@@ -15,7 +15,7 @@ class MainMenuGui {
 public:
     MainMenuGui();
     ~MainMenuGui();
-    void setup(std::string userId, ChatState *instance);
+    void setup(ChatState *instance);
     void draw();
     void socketMessage(std::string message);
 
@@ -24,17 +24,18 @@ private:
 
     const int SCREEN_W = 256;
     const int SCREEN_H = 192;
+    const std::string roomStrings[4] = {"A", "B", "C", "D"};
 
     SDL_Cursor *handCursor;
     SDL_Cursor *defaultCursor;
     bool showClick;
+    bool ready = false;
 
     Timer timer = Timer();
 
     int users[4] = {-1, -1, -1, -1};
 
-    std::string userId;
-    ChatState *instance;
+    ChatState *instance = nullptr;
 
     std::shared_ptr<GuiImage> bottom;
 
@@ -57,6 +58,10 @@ private:
 
     int cursorX = 26;
     int cursorY = SCREEN_H + 28;
+    int cursorRoom = 0;
+
+    bool pendingJoin = false;
+    int pendingRoom = 0;
 };
 
 

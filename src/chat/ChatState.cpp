@@ -2,10 +2,12 @@
 #include "../util/Util.h"
 #include "../ResourceManager.h"
 #include "../Input.h"
+#include "GuiMacros.h"
 
 ChatState::ChatState() {
-    connectingTexture = ResourceManager::loadTexture("res/pictochat/connecting.png");
-    errorTexture = ResourceManager::loadTexture("res/pictochat/error.png");
+    blankTexture = GUI_IMAGE(LoadTexture("res/pictochat/blankscreen.png"), 0, 192);
+    usernameTexture = GUI_IMAGE(LoadTexture("res/pictochat/usernameprompt.png"), 11, 192+72);
+    usernameText = GUI_DS_TEXT("", COLOR_WHITE, 106, 192+83);
 }
 
 ChatState::~ChatState() {
@@ -19,7 +21,8 @@ void ChatState::update() {
         default: break;
 
         case ERROR: {
-            errorTexture->draw(0, 192);
+            topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Could not connect to server"));
+            state = NOOP;
         } break;
 
         case SETUP: {
@@ -28,10 +31,8 @@ void ChatState::update() {
             topScreenGui->pushMessage(Message(Message::WELCOME_MESSAGE, ""));
             topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Connecting..."));
 
-            socket = std::make_shared<Socket>("ws://localhost:1337",
+            socket = std::make_shared<Socket>("ws://lab.spaghetti.rocks:8069",
                     std::bind(&ChatState::socketHandler, this, std::placeholders::_1));
-
-            mainMenuGui->setup("", this);
         } break;
 
         case SERVER_CONNECT: {
@@ -44,29 +45,17 @@ void ChatState::update() {
         } break;
 
         case SERVER_WAIT: {
-            connectingTexture->draw(0, 192);
+
         } break;
 
         case SERVER_REPLY: {
             if (!online) {
-                printf("Server not online.\n\n");
                 topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Server not online"));
                 state = NOOP;
             } else {
-                printf("OK\n");
                 topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Connection Successful"));
-                windowEnabled = true;
-
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "and"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "then"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "he"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "turned"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "himself"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "into"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "a"));
-//                topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "pickle"));
-
-                state = NOOP;
+                bottomState = USERNAME;
+                state = INPUT_USERNAME;
             }
         } break;
 
@@ -75,45 +64,35 @@ void ChatState::update() {
             std::string str = Input::popBuffer();
             if (!str.empty()) {
                 for (char c : str) {
-                    if (isalnum(c)) {
-                        username += c;
-                        printf("%s", std::string(1, c).c_str());
+                    if (username.size() < 10) {
+                        if (isalnum(c)) {
+                            username += c;
+                            usernameText->text->setText(username);
+                        }
                     }
                 }
             }
 
             if (Input::getKeyUp(SDLK_RETURN)) {
-                printf("\n");
                 Input::disableKeyBuffer();
                 state = CHECK_USERNAME;
             }
 
-            if (Input::getKeyUp(SDLK_BACKSPACE)) {
+            if (Input::getKeyDown(SDLK_BACKSPACE)) {
                 if (!username.empty()) {
-                    printf("\b \b");
                     username.pop_back();
+                    usernameText->text->setText(username);
                 }
             }
         } break;
 
         case CHECK_USERNAME: {
             state = WAIT_USERNAME;
-            Network::Request req = Network::Request("http://lab.spaghetti.rocks:8080/register", Network::POST,
-                    [this](Network::Response resp) {
-                if (resp.status == Network::SUCCESS && resp.statusCode == 200) {
-                    std::string respStr;
-                    for (char b : *resp.data) {
-                        respStr += b;
-                    }
-                    userId = respStr;
-                    state = DONE_USERNAME;
-                } else {
-                    printf("Username unavailable\n");
-                    exit(0);
-                }
-            });
-            req.setPostData(username);
-            req.execute();
+
+            socket->send(((nlohmann::json) {
+                    {"action", "username"},
+                    {"username", username}
+            }).dump());
         } break;
 
         case WAIT_USERNAME: {
@@ -121,16 +100,36 @@ void ChatState::update() {
         } break;
 
         case DONE_USERNAME: {
-            printf("Connected\n");
-            mainMenuGui->setup(userId, this);
-            windowEnabled = true;
+            mainMenuGui->setup(this);
+            keyboardGui->setup(this);
+            bottomState = MAIN_MENU;
+            state = NOOP;
         } break;
     }
 
-    if (windowEnabled) {
-        drawWindow();
-    }
     topScreenGui->draw();
+
+    switch (bottomState) {
+        default: break;
+
+        case BLANK: {
+            blankTexture->draw();
+        } break;
+
+        case USERNAME: {
+            blankTexture->draw();
+            usernameTexture->draw();
+            usernameText->draw();
+        } break;
+
+        case MAIN_MENU: {
+            mainMenuGui->draw();
+        } break;
+
+        case KEYBOARD: {
+            keyboardGui->draw();
+        } break;
+    }
 }
 
 void ChatState::socketHandler(Socket::EventData event) {
@@ -155,19 +154,27 @@ void ChatState::socketHandler(Socket::EventData event) {
 
         case Socket::Message: {
             std::string msgString = (const char *) event.messageData;
-            if (!online) {
-                auto parsed = nlohmann::json::parse(msgString);
+            auto parsed = nlohmann::json::parse(msgString);
+            auto type = parsed["type"].get<std::string>();
 
-                auto type = parsed["type"].get<std::string>();
-                nlohmann::basic_json json = parsed;
-
-                if (type == "status") {
-                    pingResponse(msgString);
-                } else {
-                    printf("unknown json type: %s\n", type.c_str());
-                }
-            } else {
+            if (type == "status" || type == "join") {
                 mainMenuGui->socketMessage(msgString);
+            }
+
+            if (type == "status") {
+                pingResponse(msgString);
+            } else if (type == "username") {
+                usernameResponse(parsed["valid"].get<bool>());
+            } else if (type == "message") {
+                try {
+                    auto messageType = (Message::MessageType) parsed["message"]["type"].get<int>();
+                    auto messageData = parsed["message"]["data"].get<std::string>();
+                    auto messageUser = parsed["message"]["user"].get<std::string>();
+
+                    topScreenGui->pushMessage(Message(messageType, messageData, messageUser));
+                } catch (std::exception &e) {
+                    printf("error: %s\n", e.what());
+                }
             }
         } break;
     }
@@ -182,8 +189,22 @@ void ChatState::pingResponse(const std::string &jsonData) {
     if (state == SERVER_WAIT) state = SERVER_REPLY;
 }
 
-void ChatState::drawWindow() {
-    mainMenuGui->draw();
+void ChatState::setRoom(const std::string &room) {
+    this->room = room;
+    bottomState = KEYBOARD;
 }
 
+void ChatState::exitRoom() {
 
+}
+
+void ChatState::usernameResponse(bool valid) {
+    if (!valid) {
+        username = "";
+        usernameText->text->setText(username);
+        topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Invalid Username"));
+        state = INPUT_USERNAME;
+    } else {
+        state = DONE_USERNAME;
+    }
+}

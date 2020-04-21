@@ -10,7 +10,7 @@ SDL_Color Graphics::clearColor = COLOR(0x25, 0x25, 0x25);
 
 bool Graphics::init() {
     printf("creating window\n");
-    window = SDL_CreateWindow("hewwo", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+    window = SDL_CreateWindow("pictochat", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             Main::SCREEN_WIDTH, Main::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (!window) {
         printf("error creating window: %s\n", SDL_GetError());

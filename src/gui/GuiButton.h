@@ -21,6 +21,7 @@ public:
 private:
     int x;
     int y;
+    bool lastClick;
     SDL_Color hoverColor;
     std::function<void(bool)> eventHandler;
 };
