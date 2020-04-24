@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd cmake-build-release-web/web
+cd ../cmake-build-release-web/web
 source ~/emsdk/emsdk_env.sh
 
 #python2 -m SimpleHTTPServer 8080 &

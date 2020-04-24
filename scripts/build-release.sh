@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/joseph/emsdk/emsdk_env.sh
+source ~/emsdk/emsdk_env.sh
 
 mkdir -p cmake-build-release-web
 #rm -rf cmake-build-web/*
