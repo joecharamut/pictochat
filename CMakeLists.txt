@@ -26,29 +26,13 @@ set(SRCS
         src/chat/MainMenuGui.cpp src/chat/MainMenuGui.h
         src/gui/GuiText.cpp src/gui/GuiText.h
         src/types/Timer.cpp src/types/Timer.h
-        src/chat/ChatState.cpp src/chat/ChatState.h src/chat/TopScreenGui.cpp src/chat/TopScreenGui.h src/chat/GuiMacros.h src/net/Socket.cpp src/net/Socket.h src/chat/Message.cpp src/chat/Message.h src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h src/util/Base64.cpp src/util/Base64.h)
-
-include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
-get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-
-configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" @ONLY)
-configure_file("${CMAKE_SOURCE_DIR}/src/util/Version.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.h" COPYONLY)
-
-include(${CMAKE_SOURCE_DIR}/cmake/FileInformation/Module/FileInformation.cmake)
-set(SOURCE_SIZES "")
-foreach(source ${SRCS})
-    if (${source} MATCHES "cpp$")
-        file(SIZE ${source} FILE_SIZE)
-        list(APPEND SOURCE_SIZES ${source} ${FILE_SIZE})
-    endif()
-endforeach()
-
-configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" @ONLY)
-configure_file("${CMAKE_SOURCE_DIR}/src/util/Sources.h" "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.h" COPYONLY)
-
-list(APPEND SRCS
-        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Version.cpp" "src/util/Version.h"
-        "${CMAKE_CURRENT_BINARY_DIR}/src/util/Sources.cpp" "src/util/Sources.h")
+        src/chat/ChatState.cpp src/chat/ChatState.h
+        src/chat/TopScreenGui.cpp src/chat/TopScreenGui.h
+        src/chat/GuiMacros.h
+        src/net/Socket.cpp src/net/Socket.h
+        src/chat/Message.cpp src/chat/Message.h
+        src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h
+        src/util/Base64.cpp src/util/Base64.h)
 
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
@@ -62,12 +46,12 @@ add_custom_target(copy-web-files ALL
         COMMAND cp -R ${CMAKE_SOURCE_DIR}/web ${CMAKE_BINARY_DIR})
 
 add_custom_target(project_wasm
-        COMMAND bash ${CMAKE_SOURCE_DIR}/build.sh
+        COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/build.sh
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 add_dependencies(project_wasm copy-web-files)
 
 add_custom_target(project_wasm_release
-        COMMAND bash ${CMAKE_SOURCE_DIR}/build-release.sh
+        COMMAND bash ${CMAKE_SOURCE_DIR}/scripts/build-release.sh
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 add_dependencies(project_wasm_release copy-web-files)
 
@@ -82,14 +66,13 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
 set(COMMON_LIBRARIES CxxUrl)
-include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
+#include_directories(~/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib/json/single_include)
 include_directories(lib)
 
-
-if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
+if(EMSCRIPTEN)
     message(STATUS "Compiling for emscripten")
     set_target_properties(project PROPERTIES SUFFIX ".html")
 
@@ -110,7 +93,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${EMSCRIPTEN_OPTS}")
     set(CMAKE_LINKER_FLAGS "${CMAKE_LINKER_FLAGS} ${EMSCRIPTEN_OPTS}")
 
-#    target_link_libraries(project ${COMMON_LIBRARIES})
+    target_link_libraries(project ${COMMON_LIBRARIES})
 else()
     list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/sdl2-cmake-modules)
 
@@ -119,11 +102,5 @@ else()
     find_package(SDL2_image REQUIRED)
     find_package(SDL2_mixer REQUIRED)
 
-#    target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
-endif()
-
-if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
-    target_link_libraries(project ${COMMON_LIBRARIES})
-else()
     target_link_libraries(project ${COMMON_LIBRARIES} SDL2::Main SDL2::TTF SDL2::Image SDL2::Mixer)
 endif()
