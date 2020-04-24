@@ -26,7 +26,7 @@ set(SRCS
         src/chat/MainMenuGui.cpp src/chat/MainMenuGui.h
         src/gui/GuiText.cpp src/gui/GuiText.h
         src/types/Timer.cpp src/types/Timer.h
-        src/chat/ChatState.cpp src/chat/ChatState.h src/chat/TopScreenGui.cpp src/chat/TopScreenGui.h src/chat/GuiMacros.h src/net/Socket.cpp src/net/Socket.h src/chat/Message.cpp src/chat/Message.h src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h)
+        src/chat/ChatState.cpp src/chat/ChatState.h src/chat/TopScreenGui.cpp src/chat/TopScreenGui.h src/chat/GuiMacros.h src/net/Socket.cpp src/net/Socket.h src/chat/Message.cpp src/chat/Message.h src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h src/util/Base64.cpp src/util/Base64.h)
 
 include(${CMAKE_SOURCE_DIR}/cmake/cmake-modules/GetGitRevisionDescription.cmake)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
@@ -81,7 +81,7 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
-set(COMMON_LIBRARIES CxxUrl GL GLEW)
+set(COMMON_LIBRARIES CxxUrl)
 include_directories(/home/joseph/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
@@ -100,7 +100,7 @@ if(CMAKE_CXX_COMPILER MATCHES "em\\+\\+")
 
     if (CMAKE_BUILD_TYPE MATCHES "Debug")
         set(EMSCRIPTEN_DEBUG "-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 \
-            -s DISABLE_EXCEPTION_CATCHING=0 -s RUNTIME_LOGGING=1 -s DEMANGLE_SUPPORT=1 --emrun  -O0")
+            -s DISABLE_EXCEPTION_CATCHING=0 -s RUNTIME_LOGGING=1 -s DEMANGLE_SUPPORT=1 --emrun -O0")
     else()
         set(EMSCRIPTEN_DEBUG "-O2")
     endif()

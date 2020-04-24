@@ -26,12 +26,25 @@ public:
 private:
     void updateTextLines();
     void pollBuffer();
+    void updateDraw();
     void sendMessage();
+    void clearDraw();
+    std::string getSurfaceData();
+    void loadSurfaceData(const std::string &data);
+    void drawPixel(int x, int y);
+    void drawLine(int x1, int y1, int x2, int y2);
 
-    ChatState *instance;
+    ChatState *instance = nullptr;
 
-    SDL_Cursor *handCursor;
-    bool showClick;
+    SDL_Cursor *handCursor = nullptr;
+    bool showClick = false;
+    bool surfaceClear = false;
+
+    SDL_Texture *drawSurface = nullptr;
+    const int drawWidth = 230;
+    const int drawHeight = 80;
+    int lastMouseX = -1;
+    int lastMouseY = -1;
 
     std::shared_ptr<GuiImage> keyboardImage;
 

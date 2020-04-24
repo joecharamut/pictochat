@@ -6,7 +6,8 @@
 SDL_Window *Graphics::window;
 SDL_Renderer *Graphics::renderer;
 
-SDL_Color Graphics::clearColor = COLOR(0x25, 0x25, 0x25);
+SDL_Color Graphics::clearColor = SDL_Color {0x00, 0x00, 0x00, 0x00};
+
 
 bool Graphics::init() {
     printf("creating window\n");
@@ -60,3 +61,77 @@ void Graphics::setClearColor(SDL_Color color) {
 void Graphics::setWindowSize(int w, int h) {
     SDL_SetWindowSize(window, w, h);
 }
+
+void Graphics::textureDrawLine(SDL_Texture *tex, int x1, int y1, int x2, int y2) {
+    SDL_SetRenderTarget(renderer, tex);
+    unsigned char r, g, b, a;
+    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+
+
+    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xff);
+    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    SDL_SetRenderTarget(renderer, nullptr);
+}
+
+void Graphics::textureDrawPoint(SDL_Texture *tex, int x, int y) {
+    SDL_SetRenderTarget(renderer, tex);
+    unsigned char r, g, b, a;
+    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
+
+
+    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xff);
+    SDL_RenderDrawPoint(renderer, x, y);
+
+
+    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+    SDL_SetRenderTarget(renderer, nullptr);
+}
+
+std::shared_ptr<unsigned char> Graphics::getTexturePixels(SDL_Texture *tex, int w, int h) {
+    SDL_SetRenderTarget(renderer, tex);
+
+    int pitch = w * 4;
+    void *ptr = nullptr;
+    SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGBA32, ptr, pitch);
+    auto *pixels = (unsigned char *) ptr;
+
+    int bytes = w * 4 * h;
+
+    auto *mem = new unsigned char[bytes];
+    std::copy(pixels, pixels + bytes, mem);
+    std::shared_ptr<unsigned char> pixelCopy(mem);
+
+    SDL_SetRenderTarget(renderer, nullptr);
+    return pixelCopy;
+}
+
+SDL_Texture *Graphics::createTexture(int w, int h) {
+    printf("%d %d\n", w, h);
+    SDL_Texture *tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, w, h);
+
+    if (!tex) {
+        printf("createTexture() error: %s\n", SDL_GetError());
+        exit(1);
+    }
+
+    if (SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND) < 0) {
+        printf("createTexture() error: %s\n", SDL_GetError());
+        exit(1);
+    }
+    return tex;
+}
+
+void Graphics::clearTexture(SDL_Texture *tex) {
+    SDL_SetRenderTarget(renderer, tex);
+
+    SDL_RenderClear(renderer);
+
+    SDL_SetRenderTarget(renderer, nullptr);
+}
+
+
+
+

@@ -15,6 +15,12 @@ public:
     static void setClearColor(SDL_Color color);
     static void setWindowSize(int w, int h);
 
+    static SDL_Texture *createTexture(int w, int h);
+    static void textureDrawLine(SDL_Texture *tex, int x1, int y1, int x2, int y2);
+    static void textureDrawPoint(SDL_Texture *tex, int x, int y);
+    static std::shared_ptr<unsigned char> getTexturePixels(SDL_Texture *tex, const int w, const int h);
+    static void clearTexture(SDL_Texture *tex);
+
 private:
     static SDL_Window *window;
     static SDL_Renderer *renderer;

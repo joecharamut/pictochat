@@ -10,7 +10,7 @@
 class GuiImage : public GuiObject {
 public:
     GuiImage(std::shared_ptr<Texture> texture, int x, int y) : texture(std::move(texture)), x(x), y(y) {};
-    ~GuiImage() override = default;
+    ~GuiImage() override;
     void draw() override;
     void move(int x, int y);
 

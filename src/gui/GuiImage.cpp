@@ -1,5 +1,9 @@
 #include "GuiImage.h"
 
+GuiImage::~GuiImage() {
+
+}
+
 void GuiImage::draw() {
     texture->draw(x, y);
 }
