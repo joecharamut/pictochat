@@ -32,7 +32,7 @@ set(SRCS
         src/net/Socket.cpp src/net/Socket.h
         src/chat/Message.cpp src/chat/Message.h
         src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h
-        src/util/Base64.cpp src/util/Base64.h)
+        src/util/Base64.cpp src/util/Base64.h src/chat/ImageUtil.cpp src/chat/ImageUtil.h)
 
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)
@@ -65,8 +65,22 @@ add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/string.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.cpp)
 
-set(COMMON_LIBRARIES CxxUrl)
-#include_directories(~/emsdk/upstream/emscripten/system/include)
+include(ExternalProject)
+ExternalProject_Add(sdl2-gfx
+        URL http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-1.0.4.zip
+        SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/sdl2_gfx
+        BUILD_IN_SOURCE 1
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/sdl2_gfx
+        CONFIGURE_COMMAND bash -c "source ~/emsdk/emsdk_env.sh && chmod +x configure && emconfigure ./configure --enable-mmx=no"
+        BUILD_COMMAND bash -c "source ~/emsdk/emsdk_env.sh && emmake make"
+        INSTALL_COMMAND "")
+add_library(SDL2_gfx UNKNOWN IMPORTED)
+add_dependencies(SDL2_gfx sdl2-gfx)
+set_property(TARGET SDL2_gfx PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/external/sdl2_gfx/.libs/libSDL2_gfx.a)
+include_directories(${CMAKE_SOURCE_DIR}/external/sdl2_gfx)
+
+set(COMMON_LIBRARIES CxxUrl SDL2_gfx)
+include_directories(~/emsdk/upstream/emscripten/system/include)
 #include_directories(lib/cpp-httplib)
 #include_directories(lib/CxxUrl)
 include_directories(lib/json/single_include)

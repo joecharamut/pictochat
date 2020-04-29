@@ -5,10 +5,10 @@
 #include "../Input.h"
 #include "../util/Base64.h"
 #include "../Graphics.h"
+#include "ImageUtil.h"
 
 KeyboardGui::KeyboardGui() {
-    handCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
-    drawSurface = Graphics::createTexture(drawWidth, drawHeight);
+    drawTexture = std::make_shared<Texture>(Graphics::createTexture(drawWidth, drawHeight));
 
     keyboardImage = GUI_IMAGE(LoadTexture("res/pictochat/keyboard/keyboard.png"), 0, 192);
     nameText = GUI_DS_TEXT("", COLOR(0x00, 0x00, 0x88), 28, 192+18);
@@ -45,8 +45,7 @@ KeyboardGui::KeyboardGui() {
 }
 
 KeyboardGui::~KeyboardGui() {
-    SDL_FreeCursor(handCursor);
-    SDL_DestroyTexture(drawSurface);
+
 }
 
 void KeyboardGui::setup(ChatState *instance) {
@@ -75,10 +74,13 @@ void KeyboardGui::draw() {
     clearButton->draw();
 //    closeButton->draw();
 
-    SDL_Rect rect {23, 17+192, drawWidth, drawHeight};
-    Graphics::drawTexture(drawSurface, nullptr, &rect);
+    drawTexture->draw(23, 17+192);
 
-    SDL_SetCursor(showClick ? handCursor : SDL_GetDefaultCursor());
+    if (showClick) {
+        Graphics::setCurosr(Graphics::Hand);
+    } else {
+        Graphics::setCurosr(Graphics::Default);
+    }
 }
 
 void KeyboardGui::sendMessage() {
@@ -87,7 +89,11 @@ void KeyboardGui::sendMessage() {
     instance->socket->send(((nlohmann::json) {
             {"action", "message"},
             {"room", instance->room},
-            {"message", {{"type", (int) Message::USER_MESSAGE}, {"data", messageText}, {"image", getSurfaceData()}}}
+            {"message", {
+                {"type", (int) Message::USER_MESSAGE},
+                {"data", messageText},
+                {"image", (surfaceClear ? "" : getSurfaceData())}
+            }}
     }).dump());
 
     messageText = "";
@@ -100,6 +106,7 @@ void KeyboardGui::pollBuffer() {
     if (!str.empty()) {
         for (char c : str) {
             if (messageText.size() < messageLimit) {
+                // printable ascii
                 if (c >= 0x20 && c < 0x7f) {
                     messageText += c;
                 }
@@ -173,92 +180,77 @@ void KeyboardGui::updateDraw() {
         showClick = true;
     }
 
-    if (insideElement && !insideName && !topRightCorner && !bottomLeftCorner && !bottomRightCorner) {
-        if (leftClick) {
-            int thisMouseX = mx - baseX;
-            int thisMouseY = my - baseY;
-            if (hasLastMouse && !(thisMouseX == lastMouseX && thisMouseY == lastMouseY)) {
-                drawLine(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
-            } else {
-                drawPixel(thisMouseX, thisMouseY);
-            }
+    bool canDraw = insideElement && !insideName && !topRightCorner && !bottomLeftCorner && !bottomRightCorner;
 
-            lastMouseX = thisMouseX;
-            lastMouseY = thisMouseY;
+    if (canDraw && leftClick) {
+        int thisMouseX = mx - baseX;
+        int thisMouseY = my - baseY;
+
+        if (hasLastMouse && !(thisMouseX == lastMouseX && thisMouseY == lastMouseY)) {
+//            drawLine(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
+            stroke(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
+        } else {
+//            drawPixel(thisMouseX, thisMouseY);
+            stroke(thisMouseX, thisMouseY);
         }
 
-        if (!leftClick && hasLastMouse) {
-            lastMouseX = -1;
-            lastMouseY = -1;
-        }
-    }
-}
-
-void KeyboardGui::clearDraw() {
-    surfaceClear = true;
-    Graphics::clearTexture(drawSurface);
-}
-
-std::string KeyboardGui::getSurfaceData() {
-    // RGBA32 = 4 bytes / pxl
-    // only need to check alpha
-    // alpha should be 4th byte
-    auto pixels = Graphics::getTexturePixels(drawSurface, drawWidth, drawHeight);
-
-    bool bitmap[drawWidth * drawHeight];
-    for (int i = 0; i < drawWidth * drawHeight; i++) {
-        bitmap[i] = pixels.get()[(i * 4) + 3] == 0xff;
+        lastMouseX = thisMouseX;
+        lastMouseY = thisMouseY;
     }
 
-    // pack into byte
-    unsigned char bitmapPacked[(drawWidth * drawHeight) / 8];
-    for (int i = 0; i < (drawWidth * drawHeight) / 8; i++) {
-        unsigned char cons = 0;
+    if ((!canDraw || !leftClick) && hasLastMouse) {
+        // finish stroke
 
-        for (int j = 0; j < 8; j++) {
-            cons |= (bitmap[(i * 8) + j] << j);
-        }
+        // clip pos
+        mx = std::max(mx, baseX);
+        mx = std::min(mx, baseX + 230);
 
-        bitmapPacked[i] = cons;
+        my = std::max(my, baseY);
+        my = std::min(my, baseY + 80);
+
+        // todo fix name clipping
+
+        int thisMouseX = mx - baseX;
+        int thisMouseY = my - baseY;
+
+//        drawLine(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
+        stroke(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
+
+        lastMouseX = -1;
+        lastMouseY = -1;
     }
 
-    return Base64::base64_encode(bitmapPacked, sizeof(bitmapPacked));
 }
 
-void KeyboardGui::loadSurfaceData(const std::string &data) {
-    clearDraw();
-
-    std::string decoded = Base64::base64_decode(data);
-    const char *bytes = decoded.c_str();
-    int numBytes = decoded.size();
-
-    int x = 0;
-    int y = 0;
-
-    for (int i = 0; i < numBytes; i++) {
-        int workingByte = bytes[i];
-
-        for (int j = 0; j < 8; j++) {
-            int pixelValue = (workingByte & (1 << j)) != 0 ? 0xff : 0x00;
-
-            if (pixelValue) {
-                Graphics::textureDrawPoint(drawSurface, x, y);
-            }
-            x++;
-            if (x >= drawWidth) {
-                x = 0;
-                y++;
-            }
-        }
+void KeyboardGui::stroke(int x1, int y1, int x2, int y2) {
+    if (x2 == -1 && y2 == -1) {
+        // point
+        drawPixel(x1, y1);
+    } else {
+        // line
+        drawLine(x1, y1, x2, y2);
     }
 }
 
 void KeyboardGui::drawPixel(int x, int y) {
     surfaceClear = false;
-    Graphics::textureDrawPoint(drawSurface, x, y);
+    drawTexture->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y, 3);
 }
 
 void KeyboardGui::drawLine(int x1, int y1, int x2, int y2) {
     surfaceClear = false;
-    Graphics::textureDrawLine(drawSurface, x1, y1, x2, y2);
+    drawTexture->drawLine(SDL_Color {0x00, 0x00, 0x00, 0xff}, x1, y1, x2, y2, 3);
+}
+
+void KeyboardGui::clearDraw() {
+    surfaceClear = true;
+    drawTexture->clearTexture();
+}
+
+std::string KeyboardGui::getSurfaceData() {
+    return ImageUtil::encode(drawTexture);
+}
+
+void KeyboardGui::loadSurfaceData(const std::string &data) {
+    drawTexture = ImageUtil::decode(data, drawWidth, drawHeight);
 }

@@ -1,9 +1,10 @@
 #include "Message.h"
 #include "../ResourceManager.h"
 #include "KeyboardGui.h"
+#include "ImageUtil.h"
 
-Message::Message(Message::MessageType type, std::string messageData, std::string messageUser)
-    : type(type), messageData(messageData), messageUser(messageUser) {
+Message::Message(Message::MessageType type, std::string messageData, std::string messageUser, std::string messsageImage)
+    : type(type), messageData(messageData), messageUser(messageUser), messageImage(messsageImage) {
     bgTexture = (
             type == JOIN_A ? ResourceManager::loadTexture("res/pictochat/messages/joina.png") :
             type == JOIN_B ? ResourceManager::loadTexture("res/pictochat/messages/joinb.png") :
@@ -80,6 +81,13 @@ Message::Message(Message::MessageType type, std::string messageData, std::string
                 userLines = 5;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/5line.png");
             }
+
+            if (!messsageImage.empty()) {
+                userLines = 5;
+                bgTexture = ResourceManager::loadTexture("res/pictochat/messages/5line.png");
+                imageTexture = ImageUtil::decode(messageImage, 230, 80);
+//                printf("%s\n", ImageUtil::encode(imageTexture).c_str());
+            }
         } break;
     }
 }
@@ -122,5 +130,9 @@ void Message::draw(int x, int y) {
             case 1:
                 userLine1->draw(x+63, y+4);
         }
+    }
+
+    if (imageTexture) {
+        imageTexture->draw(x+2, y+3);
     }
 }

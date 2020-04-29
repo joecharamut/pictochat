@@ -33,14 +33,14 @@ private:
     void loadSurfaceData(const std::string &data);
     void drawPixel(int x, int y);
     void drawLine(int x1, int y1, int x2, int y2);
+    void stroke(int x1, int y1, int x2 = -1, int y2 = -1);
 
     ChatState *instance = nullptr;
 
-    SDL_Cursor *handCursor = nullptr;
     bool showClick = false;
     bool surfaceClear = false;
 
-    SDL_Texture *drawSurface = nullptr;
+    std::shared_ptr<Texture> drawTexture;
     const int drawWidth = 230;
     const int drawHeight = 80;
     int lastMouseX = -1;

@@ -3,6 +3,7 @@
 #include "../ResourceManager.h"
 #include "../Input.h"
 #include "GuiMacros.h"
+#include "../util/Base64.h"
 
 ChatState::ChatState() {
     blankTexture = GUI_IMAGE(LoadTexture("res/pictochat/blankscreen.png"), 0, 192);
@@ -22,6 +23,11 @@ void ChatState::update() {
 
         case ERROR: {
             topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Could not connect to server"));
+            state = NOOP;
+        } break;
+
+        case CLOSED: {
+            topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Server closed connection"));
             state = NOOP;
         } break;
 
@@ -144,6 +150,7 @@ void ChatState::socketHandler(Socket::EventData event) {
         case Socket::Close: {
             printf("socket closed\n");
             online = false;
+            state = CLOSED;
         } break;
 
         case Socket::Error: {
@@ -166,12 +173,15 @@ void ChatState::socketHandler(Socket::EventData event) {
             } else if (type == "username") {
                 usernameResponse(parsed["valid"].get<bool>());
             } else if (type == "message") {
+//                printf("%s\n", msgString.c_str());
                 try {
                     auto messageType = (Message::MessageType) parsed["message"]["type"].get<int>();
                     auto messageData = parsed["message"]["data"].get<std::string>();
                     auto messageUser = parsed["message"]["user"].get<std::string>();
+                    auto messageImage = parsed["message"]["image"].is_null() ?
+                            "" : parsed["message"]["image"].get<std::string>();
 
-                    topScreenGui->pushMessage(Message(messageType, messageData, messageUser));
+                    topScreenGui->pushMessage(Message(messageType, messageData, messageUser, messageImage));
                 } catch (std::exception &e) {
                     printf("error: %s\n", e.what());
                 }

@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <memory>
 #include "types/Texture.h"
+#include <map>
 
 class Graphics {
 public:
@@ -16,16 +17,27 @@ public:
     static void setWindowSize(int w, int h);
 
     static SDL_Texture *createTexture(int w, int h);
-    static void textureDrawLine(SDL_Texture *tex, int x1, int y1, int x2, int y2);
-    static void textureDrawPoint(SDL_Texture *tex, int x, int y);
-    static std::shared_ptr<unsigned char> getTexturePixels(SDL_Texture *tex, const int w, const int h);
+    static void textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1, int x2, int y2, int thickness);
+    static void textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y, int thickness);
+    static std::shared_ptr<unsigned char> getTexturePixels(SDL_Texture *tex);
     static void clearTexture(SDL_Texture *tex);
 
+    enum CursorType {
+        Default, Hand, Crosshair
+    };
+    static void setCurosr(CursorType type);
+
 private:
+    static constexpr double pi() { return 3.141592653589793238463; };
+
     static SDL_Window *window;
     static SDL_Renderer *renderer;
 
     static SDL_Color clearColor;
+
+    static std::map<CursorType, SDL_Cursor *> cursors;
+
+    static SDL_Texture *onePixel;
 };
 
 

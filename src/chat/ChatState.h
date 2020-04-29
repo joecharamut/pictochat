@@ -41,7 +41,8 @@ private:
         SETUP,
         SERVER_CONNECT, SERVER_PING, SERVER_WAIT, SERVER_REPLY,
         INPUT_USERNAME, CHECK_USERNAME, WAIT_USERNAME, DONE_USERNAME,
-        ERROR, NOOP
+        ERROR, CLOSED,
+        NOOP
     };
     State state = (State) 0;
 

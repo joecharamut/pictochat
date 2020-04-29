@@ -18,7 +18,7 @@ public:
         SYSTEM_MESSAGE
     };
 
-    Message(MessageType type, std::string messageData, std::string messageUser = "");
+    Message(MessageType type, std::string messageData, std::string messageUser = "", std::string messsageImage = "");
     ~Message();
     int getHeight();
     void draw(int x, int y);
@@ -27,6 +27,7 @@ private:
     MessageType type;
     std::string messageData;
     std::string messageUser;
+    std::string messageImage;
 
     std::shared_ptr<Texture> bgTexture;
     std::shared_ptr<Text> systemText;
@@ -40,6 +41,8 @@ private:
     std::shared_ptr<Text> userLine3;
     std::shared_ptr<Text> userLine4;
     std::shared_ptr<Text> userLine5;
+
+    std::shared_ptr<Texture> imageTexture;
 };
 
 

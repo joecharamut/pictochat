@@ -2,12 +2,16 @@
 #include "Main.h"
 #include "state/StateManager.h"
 #include "types/Color.h"
+#include <cmath>
 
 SDL_Window *Graphics::window;
 SDL_Renderer *Graphics::renderer;
 
 SDL_Color Graphics::clearColor = SDL_Color {0x00, 0x00, 0x00, 0x00};
 
+std::map<Graphics::CursorType, SDL_Cursor *> Graphics::cursors;
+
+SDL_Texture *Graphics::onePixel;
 
 bool Graphics::init() {
     printf("creating window\n");
@@ -25,12 +29,21 @@ bool Graphics::init() {
         return false;
     }
 
+    cursors[Default] = SDL_GetDefaultCursor();
+    cursors[Hand] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+    cursors[Crosshair] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
+
+    onePixel = createTexture(1, 1);
     return true;
 }
 
 void Graphics::unload() {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    for (const auto &pair : cursors) {
+        SDL_FreeCursor(pair.second);
+    }
+    SDL_DestroyTexture(onePixel);
 }
 
 void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *destrect) {
@@ -62,54 +75,66 @@ void Graphics::setWindowSize(int w, int h) {
     SDL_SetWindowSize(window, w, h);
 }
 
-void Graphics::textureDrawLine(SDL_Texture *tex, int x1, int y1, int x2, int y2) {
+#define RENDERTEX_BEGIN(tex) SDL_SetRenderTarget(renderer, tex); unsigned char _r, _g, _b, _a; \
+    SDL_GetRenderDrawColor(renderer, &_r, &_g, &_b, &_a)
+
+#define RENDERTEX_END() SDL_SetRenderDrawColor(renderer, _r, _g, _b, _a); SDL_SetRenderTarget(renderer, nullptr)
+
+void Graphics::textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1, int x2, int y2, int thickness) {
+    RENDERTEX_BEGIN(tex);
+
+    SDL_SetRenderTarget(renderer, onePixel);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderClear(renderer);
     SDL_SetRenderTarget(renderer, tex);
-    unsigned char r, g, b, a;
-    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
+    int length = (int) std::round( std::sqrt( std::pow((x2 - x1), 2) + std::pow((y2 - y1), 2) ) );
+    SDL_Rect rect {x1, y1, length, thickness};
 
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xff);
-    SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
+    double slope = std::atan( (double) (y2 - y1) / (double) (x2 - x1) ) * (180 / pi());
+    if (std::isnan(slope)) {
+        slope = 0;
+    }
 
+    SDL_RenderCopyEx(renderer, onePixel, nullptr, &rect, slope, nullptr, SDL_FLIP_NONE);
 
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
-    SDL_SetRenderTarget(renderer, nullptr);
+    RENDERTEX_END();
 }
 
-void Graphics::textureDrawPoint(SDL_Texture *tex, int x, int y) {
+void Graphics::textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y, int thickness) {
+    RENDERTEX_BEGIN(tex);
+
+    SDL_SetRenderTarget(renderer, onePixel);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderClear(renderer);
     SDL_SetRenderTarget(renderer, tex);
-    unsigned char r, g, b, a;
-    SDL_GetRenderDrawColor(renderer, &r, &g, &b, &a);
 
+    SDL_Rect rect {x + (thickness / 2), y + (thickness / 2), thickness, thickness};
+    SDL_RenderCopy(renderer, onePixel, nullptr, &rect);
 
-    SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xff);
-    SDL_RenderDrawPoint(renderer, x, y);
-
-
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
-    SDL_SetRenderTarget(renderer, nullptr);
+    RENDERTEX_END();
 }
 
-std::shared_ptr<unsigned char> Graphics::getTexturePixels(SDL_Texture *tex, int w, int h) {
-    SDL_SetRenderTarget(renderer, tex);
+std::shared_ptr<unsigned char> Graphics::getTexturePixels(SDL_Texture *tex) {
+    RENDERTEX_BEGIN(tex);
+
+    int w, h;
+    SDL_QueryTexture(tex, nullptr, nullptr, &w, &h);
 
     int pitch = w * 4;
-    void *ptr = nullptr;
-    SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGBA32, ptr, pitch);
-    auto *pixels = (unsigned char *) ptr;
-
     int bytes = w * 4 * h;
 
     auto *mem = new unsigned char[bytes];
-    std::copy(pixels, pixels + bytes, mem);
-    std::shared_ptr<unsigned char> pixelCopy(mem);
+    if (SDL_RenderReadPixels(renderer, nullptr, SDL_PIXELFORMAT_RGBA32, mem, pitch) < 0) {
+        printf("SDL_RenderReadPixels() error: %s\n", SDL_GetError());
+        exit(1);
+    }
 
-    SDL_SetRenderTarget(renderer, nullptr);
-    return pixelCopy;
+    RENDERTEX_END();
+    return std::shared_ptr<unsigned char>(mem);
 }
 
 SDL_Texture *Graphics::createTexture(int w, int h) {
-    printf("%d %d\n", w, h);
     SDL_Texture *tex = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_TARGET, w, h);
 
     if (!tex) {
@@ -121,17 +146,18 @@ SDL_Texture *Graphics::createTexture(int w, int h) {
         printf("createTexture() error: %s\n", SDL_GetError());
         exit(1);
     }
+
     return tex;
 }
 
 void Graphics::clearTexture(SDL_Texture *tex) {
-    SDL_SetRenderTarget(renderer, tex);
+    RENDERTEX_BEGIN(tex);
 
     SDL_RenderClear(renderer);
 
-    SDL_SetRenderTarget(renderer, nullptr);
+    RENDERTEX_END();
 }
 
-
-
-
+void Graphics::setCurosr(Graphics::CursorType type) {
+    SDL_SetCursor(cursors[type]);
+}

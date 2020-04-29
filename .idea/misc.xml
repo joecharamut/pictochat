@@ -8,6 +8,7 @@
     <excludeRoots>
       <file path="$PROJECT_DIR$/cmake-build-release-web" />
       <file path="$PROJECT_DIR$/cmake-build-web" />
+      <file path="$PROJECT_DIR$/external/sdl2_gfx" />
       <file path="$PROJECT_DIR$/server/venv" />
     </excludeRoots>
   </component>
