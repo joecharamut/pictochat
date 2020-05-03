@@ -18,7 +18,8 @@ public:
 
     static SDL_Texture *createTexture(int w, int h);
     static void textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1, int x2, int y2, int thickness);
-    static void textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y, int thickness);
+    static void textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y);
+    static void textureDrawRect(SDL_Texture *tex, SDL_Color color, SDL_Rect rect);
     static std::shared_ptr<unsigned char> getTexturePixels(SDL_Texture *tex);
     static void clearTexture(SDL_Texture *tex);
 

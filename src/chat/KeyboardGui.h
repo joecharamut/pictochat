@@ -31,9 +31,12 @@ private:
     void clearDraw();
     std::string getSurfaceData();
     void loadSurfaceData(const std::string &data);
-    void drawPixel(int x, int y);
-    void drawLine(int x1, int y1, int x2, int y2);
-    void stroke(int x1, int y1, int x2 = -1, int y2 = -1);
+    void drawPixel(int x, int y, bool thick);
+    void drawLine(int x1, int y1, int x2, int y2, bool thick);
+    void stroke(int x1, int y1, int x2, int y2);
+
+    void setThickPen(bool thick);
+    bool thickPen;
 
     ChatState *instance = nullptr;
 
@@ -47,6 +50,10 @@ private:
     int lastMouseY = -1;
 
     std::shared_ptr<GuiImage> keyboardImage;
+    std::shared_ptr<GuiButton> thickButtonOff;
+    std::shared_ptr<GuiButton> thinButtonOff;
+    std::shared_ptr<GuiButton> thickButtonOn;
+    std::shared_ptr<GuiButton> thinButtonOn;
 
     std::string messageText;
     std::shared_ptr<GuiText> nameText;

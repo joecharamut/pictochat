@@ -42,6 +42,38 @@ KeyboardGui::KeyboardGui() {
             clearDraw();
         }
     });
+
+    thickButtonOff = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/thickbutton.png"), 2, 192+71, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setThickPen(true);
+        }
+    });
+
+    thinButtonOff = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/thinbutton.png"), 2, 192+86, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setThickPen(false);
+        }
+    });
+
+    thickButtonOn = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/thickbuttonon.png"), 2, 192+71, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setThickPen(true);
+        }
+    });
+
+    thinButtonOn = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/thinbuttonon.png"), 2, 192+86, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setThickPen(false);
+        }
+    });
 }
 
 KeyboardGui::~KeyboardGui() {
@@ -53,6 +85,7 @@ void KeyboardGui::setup(ChatState *instance) {
     nameText->text->setText(instance->username);
 
     clearDraw();
+    setThickPen(true);
 }
 
 void KeyboardGui::draw() {
@@ -73,6 +106,13 @@ void KeyboardGui::draw() {
     sendButton->draw();
     clearButton->draw();
 //    closeButton->draw();
+    if (thickPen) {
+        thickButtonOn->draw();
+        thinButtonOff->draw();
+    } else {
+        thickButtonOff->draw();
+        thinButtonOn->draw();
+    }
 
     drawTexture->draw(23, 17+192);
 
@@ -187,11 +227,9 @@ void KeyboardGui::updateDraw() {
         int thisMouseY = my - baseY;
 
         if (hasLastMouse && !(thisMouseX == lastMouseX && thisMouseY == lastMouseY)) {
-//            drawLine(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
             stroke(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
         } else {
-//            drawPixel(thisMouseX, thisMouseY);
-            stroke(thisMouseX, thisMouseY);
+            stroke(thisMouseX, thisMouseY, thisMouseX, thisMouseY);
         }
 
         lastMouseX = thisMouseX;
@@ -213,33 +251,38 @@ void KeyboardGui::updateDraw() {
         int thisMouseX = mx - baseX;
         int thisMouseY = my - baseY;
 
-//        drawLine(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
         stroke(lastMouseX, lastMouseY, thisMouseX, thisMouseY);
 
         lastMouseX = -1;
         lastMouseY = -1;
     }
 
+    // clear name area (works?)
+    drawTexture->drawRect(SDL_Color {0x00, 0x00, 0x00, 0x00}, SDL_Rect {0, 0, 60, 19});
 }
 
 void KeyboardGui::stroke(int x1, int y1, int x2, int y2) {
-    if (x2 == -1 && y2 == -1) {
+    if (x1 == x2 && y1 == y2) {
         // point
-        drawPixel(x1, y1);
+        drawPixel(x1, y1, thickPen);
     } else {
         // line
-        drawLine(x1, y1, x2, y2);
+        drawLine(x1, y1, x2, y2, thickPen);
     }
 }
 
-void KeyboardGui::drawPixel(int x, int y) {
+void KeyboardGui::drawPixel(int x, int y, bool thick) {
     surfaceClear = false;
-    drawTexture->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y, 3);
+    if (!thick) {
+        drawTexture->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y);
+    } else {
+        drawTexture->drawLine(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y, x, y, 2);
+    }
 }
 
-void KeyboardGui::drawLine(int x1, int y1, int x2, int y2) {
+void KeyboardGui::drawLine(int x1, int y1, int x2, int y2, bool thick) {
     surfaceClear = false;
-    drawTexture->drawLine(SDL_Color {0x00, 0x00, 0x00, 0xff}, x1, y1, x2, y2, 3);
+    drawTexture->drawLine(SDL_Color{0x00, 0x00, 0x00, 0xff}, x1, y1, x2, y2, (thick ? 3 : 1));
 }
 
 void KeyboardGui::clearDraw() {
@@ -253,4 +296,8 @@ std::string KeyboardGui::getSurfaceData() {
 
 void KeyboardGui::loadSurfaceData(const std::string &data) {
     drawTexture = ImageUtil::decode(data, drawWidth, drawHeight);
+}
+
+void KeyboardGui::setThickPen(bool thick) {
+    thickPen = thick;
 }

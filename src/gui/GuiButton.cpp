@@ -15,10 +15,14 @@ void GuiButton::draw() {
     }
 
     if (mx >= x && mx < x + texture->w && my >= y && my < y + texture->h) {
-        texture->setTint(hoverColor.r, hoverColor.g, hoverColor.b);
+        if (hoverColor.r != 0xff && hoverColor.g != 0xff && hoverColor.b != 0xff) {
+            texture->setTint(hoverColor.r, hoverColor.g, hoverColor.b);
+        }
         eventHandler(clickUp);
     } else {
-        texture->setTint(0xff, 0xff, 0xff);
+        if (hoverColor.r != 0xff && hoverColor.g != 0xff && hoverColor.b != 0xff) {
+            texture->setTint(0xff, 0xff, 0xff);
+        }
     }
 
     texture->draw(x, y);

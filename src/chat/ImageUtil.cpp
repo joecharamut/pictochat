@@ -49,7 +49,7 @@ std::shared_ptr<Texture> ImageUtil::decodeNC(const std::string &base64, int w, i
 
     for (bool b : data) {
         if (b) {
-            tex->drawPixel({0x00, 0x00, 0x00, 0xff}, x, y, 1);
+            tex->drawPixel({0x00, 0x00, 0x00, 0xff}, x, y);
         }
 
         x++;
@@ -112,7 +112,7 @@ std::shared_ptr<Texture> ImageUtil::decodeRLE(const std::string &base64, int w, 
 
         for (int j = 0; j < num; j++) {
             if (theValue) {
-                tex->drawPixel({0x00, 0x00, 0x00, 0xff}, x, y, 1);
+                tex->drawPixel({0x00, 0x00, 0x00, 0xff}, x, y);
             }
 
             x++;
@@ -175,7 +175,7 @@ std::shared_ptr<Texture> ImageUtil::decodeBP(const std::string &base64String, in
             int pixelValue = (workingByte & (1 << j)) != 0 ? 0xff : 0x00;
 
             if (pixelValue) {
-                tex->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y, 1);
+                tex->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y);
             }
 
             x++;

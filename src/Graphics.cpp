@@ -3,6 +3,7 @@
 #include "state/StateManager.h"
 #include "types/Color.h"
 #include <cmath>
+#include <SDL2_gfxPrimitives.h>
 
 SDL_Window *Graphics::window;
 SDL_Renderer *Graphics::renderer;
@@ -83,34 +84,16 @@ void Graphics::setWindowSize(int w, int h) {
 void Graphics::textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1, int x2, int y2, int thickness) {
     RENDERTEX_BEGIN(tex);
 
-    SDL_SetRenderTarget(renderer, onePixel);
-    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderTarget(renderer, tex);
-
-    int length = (int) std::round( std::sqrt( std::pow((x2 - x1), 2) + std::pow((y2 - y1), 2) ) );
-    SDL_Rect rect {x1, y1, length, thickness};
-
-    double slope = std::atan( (double) (y2 - y1) / (double) (x2 - x1) ) * (180 / pi());
-    if (std::isnan(slope)) {
-        slope = 0;
-    }
-
-    SDL_RenderCopyEx(renderer, onePixel, nullptr, &rect, slope, nullptr, SDL_FLIP_NONE);
+    thickLineRGBA(renderer, x1, y1, x2, y2, thickness, color.r, color.g, color.b, color.a);
 
     RENDERTEX_END();
 }
 
-void Graphics::textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y, int thickness) {
+void Graphics::textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y) {
     RENDERTEX_BEGIN(tex);
 
-    SDL_SetRenderTarget(renderer, onePixel);
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderTarget(renderer, tex);
-
-    SDL_Rect rect {x + (thickness / 2), y + (thickness / 2), thickness, thickness};
-    SDL_RenderCopy(renderer, onePixel, nullptr, &rect);
+    SDL_RenderDrawPoint(renderer, x, y);
 
     RENDERTEX_END();
 }
@@ -154,6 +137,15 @@ void Graphics::clearTexture(SDL_Texture *tex) {
     RENDERTEX_BEGIN(tex);
 
     SDL_RenderClear(renderer);
+
+    RENDERTEX_END();
+}
+
+void Graphics::textureDrawRect(SDL_Texture *tex, SDL_Color color, SDL_Rect rect) {
+    RENDERTEX_BEGIN(tex);
+
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderFillRect(renderer, &rect);
 
     RENDERTEX_END();
 }
