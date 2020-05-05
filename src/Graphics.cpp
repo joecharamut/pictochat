@@ -12,8 +12,6 @@ SDL_Color Graphics::clearColor = SDL_Color {0x00, 0x00, 0x00, 0x00};
 
 std::map<Graphics::CursorType, SDL_Cursor *> Graphics::cursors;
 
-SDL_Texture *Graphics::onePixel;
-
 bool Graphics::init() {
     printf("creating window\n");
     window = SDL_CreateWindow("pictochat", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -30,11 +28,12 @@ bool Graphics::init() {
         return false;
     }
 
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
     cursors[Default] = SDL_GetDefaultCursor();
     cursors[Hand] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
     cursors[Crosshair] = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_CROSSHAIR);
 
-    onePixel = createTexture(1, 1);
     return true;
 }
 
@@ -44,7 +43,6 @@ void Graphics::unload() {
     for (const auto &pair : cursors) {
         SDL_FreeCursor(pair.second);
     }
-    SDL_DestroyTexture(onePixel);
 }
 
 void Graphics::drawTexture(SDL_Texture *texture, SDL_Rect *srcrect, SDL_Rect *destrect) {
@@ -84,7 +82,11 @@ void Graphics::setWindowSize(int w, int h) {
 void Graphics::textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1, int x2, int y2, int thickness) {
     RENDERTEX_BEGIN(tex);
 
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
     thickLineRGBA(renderer, x1, y1, x2, y2, thickness, color.r, color.g, color.b, color.a);
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     RENDERTEX_END();
 }
@@ -92,8 +94,12 @@ void Graphics::textureDrawLine(SDL_Texture *tex, SDL_Color color, int x1, int y1
 void Graphics::textureDrawPoint(SDL_Texture *tex, SDL_Color color, int x, int y) {
     RENDERTEX_BEGIN(tex);
 
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderDrawPoint(renderer, x, y);
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     RENDERTEX_END();
 }

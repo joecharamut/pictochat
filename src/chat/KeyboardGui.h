@@ -38,6 +38,9 @@ private:
     void setThickPen(bool thick);
     bool thickPen;
 
+    void setEraser(bool erase);
+    bool eraserEnabled;
+
     ChatState *instance = nullptr;
 
     bool showClick = false;
@@ -50,10 +53,16 @@ private:
     int lastMouseY = -1;
 
     std::shared_ptr<GuiImage> keyboardImage;
+
     std::shared_ptr<GuiButton> thickButtonOff;
     std::shared_ptr<GuiButton> thinButtonOff;
     std::shared_ptr<GuiButton> thickButtonOn;
     std::shared_ptr<GuiButton> thinButtonOn;
+
+    std::shared_ptr<GuiButton> penButtonOff;
+    std::shared_ptr<GuiButton> eraserButtonOff;
+    std::shared_ptr<GuiButton> penButtonOn;
+    std::shared_ptr<GuiButton> eraserButtonOn;
 
     std::string messageText;
     std::shared_ptr<GuiText> nameText;

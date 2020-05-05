@@ -71,6 +71,7 @@ ExternalProject_Add(sdl2-gfx
         SOURCE_DIR ${CMAKE_SOURCE_DIR}/external/sdl2_gfx
         BUILD_IN_SOURCE 1
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/sdl2_gfx
+        PATCH_COMMAND patch -p 0 --forward --binary < ${CMAKE_SOURCE_DIR}/sdl_gfx.patch || true
         CONFIGURE_COMMAND bash -c "source ~/emsdk/emsdk_env.sh && chmod +x configure && emconfigure ./configure --enable-mmx=no"
         BUILD_COMMAND bash -c "source ~/emsdk/emsdk_env.sh && emmake make"
         INSTALL_COMMAND "")

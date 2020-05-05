@@ -37,8 +37,6 @@ private:
     static SDL_Color clearColor;
 
     static std::map<CursorType, SDL_Cursor *> cursors;
-
-    static SDL_Texture *onePixel;
 };
 
 

@@ -74,6 +74,38 @@ KeyboardGui::KeyboardGui() {
             setThickPen(false);
         }
     });
+
+    penButtonOff = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/penciloff.png"), 2, 192+38, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setEraser(false);
+        }
+    });
+
+    penButtonOn = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/pencilon.png"), 2, 192+38, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setEraser(false);
+        }
+    });
+
+    eraserButtonOff = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/eraseroff.png"), 2, 192+52, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setEraser(true);
+        }
+    });
+
+    eraserButtonOn = GUI_BUTTON(LoadTexture("res/pictochat/keyboard/eraseron.png"), 2, 192+52, COLOR(0xff, 0xff, 0xff),
+            [this](bool click) {
+        showClick = true;
+        if (click) {
+            setEraser(true);
+        }
+    });
 }
 
 KeyboardGui::~KeyboardGui() {
@@ -106,12 +138,21 @@ void KeyboardGui::draw() {
     sendButton->draw();
     clearButton->draw();
 //    closeButton->draw();
+
     if (thickPen) {
         thickButtonOn->draw();
         thinButtonOff->draw();
     } else {
         thickButtonOff->draw();
         thinButtonOn->draw();
+    }
+
+    if (eraserEnabled) {
+        eraserButtonOn->draw();
+        penButtonOff->draw();
+    } else {
+        eraserButtonOff->draw();
+        penButtonOn->draw();
     }
 
     drawTexture->draw(23, 17+192);
@@ -273,16 +314,32 @@ void KeyboardGui::stroke(int x1, int y1, int x2, int y2) {
 
 void KeyboardGui::drawPixel(int x, int y, bool thick) {
     surfaceClear = false;
-    if (!thick) {
-        drawTexture->drawPixel(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y);
+
+    SDL_Color drawColor;
+    if (eraserEnabled) {
+        drawColor = {0xff, 0x00, 0x00, 0x00};
     } else {
-        drawTexture->drawLine(SDL_Color {0x00, 0x00, 0x00, 0xff}, x, y, x, y, 2);
+        drawColor = {0x00, 0x00, 0x00, 0xff};
+    }
+
+    if (!thick) {
+        drawTexture->drawPixel(drawColor, x, y);
+    } else {
+        drawTexture->drawLine(drawColor, x, y, x, y, 2);
     }
 }
 
 void KeyboardGui::drawLine(int x1, int y1, int x2, int y2, bool thick) {
     surfaceClear = false;
-    drawTexture->drawLine(SDL_Color{0x00, 0x00, 0x00, 0xff}, x1, y1, x2, y2, (thick ? 3 : 1));
+
+    SDL_Color drawColor;
+    if (eraserEnabled) {
+        drawColor = {0xff, 0x00, 0x00, 0x00};
+    } else {
+        drawColor = {0x00, 0x00, 0x00, 0xff};
+    }
+
+    drawTexture->drawLine(drawColor, x1, y1, x2, y2, (thick ? 3 : 1));
 }
 
 void KeyboardGui::clearDraw() {
@@ -300,4 +357,8 @@ void KeyboardGui::loadSurfaceData(const std::string &data) {
 
 void KeyboardGui::setThickPen(bool thick) {
     thickPen = thick;
+}
+
+void KeyboardGui::setEraser(bool erase) {
+    eraserEnabled = erase;
 }
