@@ -7,6 +7,8 @@ Text::Text(const std::string &text, std::shared_ptr<Font> font, int size, FontMo
         SDL_Color bgColor, int wrap)
         : text(text), font(std::move(font)), size(size), mode(mode), fgColor(fgColor), bgColor(bgColor), wrap(wrap){
     setText(text);
+    // calculate widths
+    getCharWidth('a');
 }
 
 Text::~Text() {
@@ -44,4 +46,8 @@ void Text::draw(SDL_Rect destRect) {
 
 void Text::draw(int x, int y) {
     this->draw((SDL_Rect) {x, y, w, h});
+}
+
+int Text::getCharWidth(char c) {
+    return font->getCharWidth(c, size);
 }

@@ -56,25 +56,43 @@ Message::Message(Message::MessageType type, std::string messageData, std::string
             userLine5 = std::make_shared<Text>("", std::make_shared<Font>("res/pictochat/ds_bios.ttf"), 16,
                     Text::Blended, COLOR_BLACK);
 
-            std::string copy = messageData;
-            copy.append(KeyboardGui::messageLimit - copy.length(), ' ');
-            userLine1->setText(copy.substr(0, KeyboardGui::line1Limit));
-            userLine2->setText(copy.substr(KeyboardGui::line1Limit, KeyboardGui::lineLimit));
-            userLine3->setText(copy.substr(KeyboardGui::line2Limit, KeyboardGui::lineLimit));
-            userLine4->setText(copy.substr(KeyboardGui::line3Limit, KeyboardGui::lineLimit));
-            userLine5->setText(copy.substr(KeyboardGui::line4Limit, KeyboardGui::lineLimit));
+            int line = 1;
+            std::shared_ptr<Text> currentLine = userLine1;
+            int currentWidth = 0;
+            std::string currentLineText;
+
+            for (char c : messageData) {
+                currentWidth += currentLine->getCharWidth(c);
+
+                if (currentWidth >= (line == 1 ? KeyboardGui::line1Width : KeyboardGui::lineWidth)) {
+                    currentWidth = 0;
+                    currentLine->setText(currentLineText);
+                    currentLineText = "";
+
+                    if (line == 1) currentLine = userLine2;
+                    else if (line == 2) currentLine = userLine3;
+                    else if (line == 3) currentLine = userLine4;
+                    else currentLine = userLine5;
+
+                    line++;
+
+                    if (line == 6) break;
+                }
+                currentLineText += c;
+            }
+            currentLine->setText(currentLineText);
 
             int len = messageData.size();
-            if (len >= 0 && len < KeyboardGui::line1Limit) {
+            if (line == 1) {
                 userLines = 1;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/1line.png");
-            } else if (len >= KeyboardGui::line1Limit && len < KeyboardGui::line2Limit) {
+            } else if (line == 2) {
                 userLines = 2;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/2line.png");
-            } else if (len >= KeyboardGui::line2Limit && len < KeyboardGui::line3Limit) {
+            } else if (line == 3) {
                 userLines = 3;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/3line.png");
-            } else if (len >= KeyboardGui::line3Limit && len < KeyboardGui::line4Limit) {
+            } else if (line == 4) {
                 userLines = 4;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/4line.png");
             } else {
@@ -86,7 +104,6 @@ Message::Message(Message::MessageType type, std::string messageData, std::string
                 userLines = 5;
                 bgTexture = ResourceManager::loadTexture("res/pictochat/messages/5line.png");
                 imageTexture = ImageUtil::decode(messageImage, 230, 80);
-//                printf("%s\n", ImageUtil::encode(imageTexture).c_str());
             }
         } break;
     }

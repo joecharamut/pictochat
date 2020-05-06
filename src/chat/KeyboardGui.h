@@ -15,13 +15,8 @@ public:
     void setup(ChatState *instance);
     void draw();
 
-    static const int lineLimit = 38;
-    static const int line1Limit = 28;
-    static const int line2Limit = line1Limit + lineLimit;
-    static const int line3Limit = line2Limit + lineLimit;
-    static const int line4Limit = line3Limit + lineLimit;
-    static const int line5Limit = line4Limit + lineLimit;
-    static const int messageLimit = line1Limit + (lineLimit * 4);
+    static const int line1Width = 168;
+    static const int lineWidth = 224;
 
 private:
     void updateTextLines();

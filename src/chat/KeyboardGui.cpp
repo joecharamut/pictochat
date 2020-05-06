@@ -6,6 +6,7 @@
 #include "../util/Base64.h"
 #include "../Graphics.h"
 #include "ImageUtil.h"
+#include "../util/Util.h"
 
 KeyboardGui::KeyboardGui() {
     drawTexture = std::make_shared<Texture>(Graphics::createTexture(drawWidth, drawHeight));
@@ -183,14 +184,12 @@ void KeyboardGui::sendMessage() {
 
 void KeyboardGui::pollBuffer() {
     Input::enableKeyBuffer();
-    std::string str = Input::popBuffer();
+    std::string str = Input::popBuffer(1);
     if (!str.empty()) {
         for (char c : str) {
-            if (messageText.size() < messageLimit) {
-                // printable ascii
-                if (c >= 0x20 && c < 0x7f) {
-                    messageText += c;
-                }
+            // printable ascii
+            if (c >= 0x20 && c < 0x7f) {
+                messageText += c;
             }
         }
     }
@@ -207,14 +206,42 @@ void KeyboardGui::pollBuffer() {
 }
 
 void KeyboardGui::updateTextLines() {
-    std::string copy = messageText;
-    copy.append(messageLimit - copy.length(), ' ');
+    line1Text->text->setText("");
+    line2Text->text->setText("");
+    line3Text->text->setText("");
+    line4Text->text->setText("");
+    line5Text->text->setText("");
 
-    line1Text->text->setText(copy.substr(0, line1Limit));
-    line2Text->text->setText(copy.substr(line1Limit, lineLimit));
-    line3Text->text->setText(copy.substr(line2Limit, lineLimit));
-    line4Text->text->setText(copy.substr(line3Limit, lineLimit));
-    line5Text->text->setText(copy.substr(line4Limit, lineLimit));
+    int line = 1;
+    std::shared_ptr<GuiText> currentLine = line1Text;
+    int currentWidth = 0;
+    std::string currentLineText;
+    int finalChars = 0;
+
+    for (char c : messageText) {
+        currentWidth += currentLine->text->getCharWidth(c);
+
+        if (currentWidth >= (line == 1 ? line1Width : lineWidth)) {
+            currentWidth = 0;
+            currentLine->text->setText(currentLineText);
+            currentLineText = "";
+
+            if (line == 1) currentLine = line2Text;
+            else if (line == 2) currentLine = line3Text;
+            else if (line == 3) currentLine = line4Text;
+            else currentLine = line5Text;
+
+            line++;
+
+            if (line == 6) break;
+        }
+
+        currentLineText += c;
+        finalChars++;
+    }
+
+    currentLine->text->setText(currentLineText);
+    messageText = messageText.substr(0, finalChars);
 }
 
 void KeyboardGui::updateDraw() {

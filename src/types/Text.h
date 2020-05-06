@@ -21,15 +21,15 @@ public:
     void draw(SDL_Rect destRect);
     void draw(int x, int y);
     void setText(const std::string& newText);
+    int getCharWidth(char c);
 
     int w = -1;
     int h = -1;
 
 private:
-    std::shared_ptr<Texture> texture;
-
-    std::string text;
     std::shared_ptr<Font> font;
+    std::shared_ptr<Texture> texture;
+    std::string text;
     int size;
     FontMode mode;
     SDL_Color fgColor;

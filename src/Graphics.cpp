@@ -150,8 +150,12 @@ void Graphics::clearTexture(SDL_Texture *tex) {
 void Graphics::textureDrawRect(SDL_Texture *tex, SDL_Color color, SDL_Rect rect) {
     RENDERTEX_BEGIN(tex);
 
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
     SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     SDL_RenderFillRect(renderer, &rect);
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     RENDERTEX_END();
 }

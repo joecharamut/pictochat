@@ -44,3 +44,27 @@ TTF_Font *Font::requestFont(int size) {
     fonts[filename][size] = font;
     return font;
 }
+
+int Font::getCharWidth(char c, int size) {
+    if (charSizes.count(size) > 0) {
+        if (charSizes[size].count(c) > 0) {
+            return charSizes[size][c];
+        }
+    }
+
+    TTF_Font *fnt = requestFont(size);
+    char str[] = {0, 0};
+    int w;
+
+    for (char iter = 0x20; iter < 0x7f; iter++) {
+        str[0] = iter;
+        if (TTF_SizeText(fnt, str, &w, nullptr) < 0) {
+            printf("error scanning text size (char: %c, font: %s, size: %d, err: %s)\n", iter, filename.c_str(), size,
+                    SDL_GetError());
+        }
+        charSizes[size][iter] = w;
+//        printf("charsize(%c) = %d\n", iter, w);
+    }
+
+    return charSizes[size][c];
+}
