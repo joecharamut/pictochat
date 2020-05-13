@@ -101,7 +101,16 @@ void ChatState::update() {
 
         case INPUT_USERNAME_MOBILE: {
             if (!MobileTextInput::pollInput()) {
-                username = MobileTextInput::getInput();
+                std::string tmp = MobileTextInput::getInput();
+
+                for (char c : tmp) {
+                    if (username.size() < 10) {
+                        if (isalnum(c)) {
+                            username += c;
+                        }
+                    }
+                }
+
                 usernameText->text->setText(username);
                 state = CHECK_USERNAME;
             }
