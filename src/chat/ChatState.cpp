@@ -4,6 +4,7 @@
 #include "../Input.h"
 #include "GuiMacros.h"
 #include "../util/Base64.h"
+#include "../MobileTextInput.h"
 
 ChatState::ChatState() {
     blankTexture = GUI_IMAGE(LoadTexture("res/pictochat/blankscreen.png"), 0, 192);
@@ -66,6 +67,12 @@ void ChatState::update() {
         } break;
 
         case INPUT_USERNAME: {
+            if (Main::IS_MOBILE) {
+                MobileTextInput::showInput();
+                state = INPUT_USERNAME_MOBILE;
+                break;
+            }
+
             Input::enableKeyBuffer();
             std::string str = Input::popBuffer();
             if (!str.empty()) {
@@ -89,6 +96,14 @@ void ChatState::update() {
                     username.pop_back();
                     usernameText->text->setText(username);
                 }
+            }
+        } break;
+
+        case INPUT_USERNAME_MOBILE: {
+            if (!MobileTextInput::pollInput()) {
+                username = MobileTextInput::getInput();
+                usernameText->text->setText(username);
+                state = CHECK_USERNAME;
             }
         } break;
 

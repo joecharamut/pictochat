@@ -20,13 +20,20 @@
 
 #include <iostream>
 #include <SDL_image.h>
+#include <stdexcept>
 
 const int Main::SCREEN_WIDTH = 256;
 const int Main::SCREEN_HEIGHT = 192*2;
+int Main::IS_MOBILE = false;
+
 bool Main::quit_flag = false;
 
 int main(int argc, char **argv) {
-    return Main::programMain(argc, argv);
+    try {
+        return Main::programMain(argc, argv);
+    } catch (std::exception &e) {
+        printf("caught error: %s\n", e.what());
+    }
 }
 
 bool Main::programMain(int argc, char **argv) {
@@ -40,6 +47,11 @@ bool Main::programMain(int argc, char **argv) {
 
     if (!load()) {
         return EXIT_FAILURE;
+    }
+
+    const char *var = std::getenv("ismobile");
+    if (var) {
+        IS_MOBILE = std::string(var) == "true";
     }
 
 #ifdef __EMSCRIPTEN__

@@ -8,6 +8,7 @@ class Main {
 public:
     static const int SCREEN_WIDTH;
     static const int SCREEN_HEIGHT;
+    static int IS_MOBILE;
 
     static bool programMain(int argc, char **argv);
 

@@ -32,7 +32,7 @@ set(SRCS
         src/net/Socket.cpp src/net/Socket.h
         src/chat/Message.cpp src/chat/Message.h
         src/chat/KeyboardGui.cpp src/chat/KeyboardGui.h
-        src/util/Base64.cpp src/util/Base64.h src/chat/ImageUtil.cpp src/chat/ImageUtil.h)
+        src/util/Base64.cpp src/util/Base64.h src/chat/ImageUtil.cpp src/chat/ImageUtil.h src/MobileTextInput.cpp src/MobileTextInput.h)
 
 add_executable(project ${SRCS})
 add_dependencies(project copy-files)

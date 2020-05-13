@@ -102,10 +102,6 @@
             text-decoration: none;
         }
 
-        #screen-container {
-
-        }
-
         #canvas {
             position: fixed;
             z-index: 1;
@@ -136,9 +132,7 @@
 <body onload="init();">
 <button onclick="$('#canvas').toggleClass('scale200');">Toggle 200% zoom</button>
 <div class="emscripten_border">
-    <div id="screen-container">
-        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
-    </div>
+    <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
 </div>
 
 <div id="modal" onload="testWasm();">
@@ -166,15 +160,20 @@
         <a href="#" id="modalRunButton" style="display: none;" onclick="modalAccept();"><pre>[ Run ]</pre></a>
     </div>
     <div id="modal-mobile" style="display: none;">
-        <pre style="font-size: 18pt;">Mobile browsers are unsupported</pre>
-        <pre>you dont have a physical keyboard sorry</pre>
-        <pre>alternatively, if you do or just dont care <a href="#" onclick="modalAccept();" style="color: lightgray;">click here</a></pre>
+        <pre style="font-size: 18pt;">Mobile is now in b e t a</pre>
+        <pre style="font-size: 18pt;">warning: probably still a little broken</pre>
+        <pre style="font-size: 18pt;"><a href="#" onclick="modalAccept();" style="color: lightgray;">[ Run ]</a></pre>
     </div>
     <div id="modal-unsupported" style="display: none;">
         <pre style="font-size: 18pt;">This browser is unsupported</pre>
         <pre>For whatever reason, the browser you are using does not support WebAssembly</pre>
         <pre>This was all coded in C++ and compiled to WebAssembly, so it wont work.</pre>
         <pre>Update to a newer version of Chrome or Firefox I mean come on</pre>
+    </div>
+    <div id="modal-textinput" style="display: none;">
+        <pre>Enter Text...</pre>
+        <input type="text" id="mobile-text-input">
+        <button onclick="finishTextInput();">Done</button>
     </div>
 </div>
 
@@ -198,6 +197,8 @@
             $("#modal-desktop").css("display", "none");
             $("#modal-mobile").css("display", "initial");
         }
+
+        Module.preRun.push(() => { ENV.ismobile = isMobile; });
     }
 
     function modalAccept() {
@@ -226,6 +227,31 @@
             $("#modal-unsupported").css("display", "inline-block");
             $("#wasmjs").remove();
         }
+    }
+
+    var textWaiting = false;
+    function showTextInput() {
+        textWaiting = true;
+        $("#modal").css("display", "initial");
+        $("#modal-all").css("display", "none");
+        $("#modal-desktop").css("display", "none");
+        $("#modal-mobile").css("display", "none");
+        $("#modal-unsupported").css("display", "none");
+        $("#modal-textinput").css("display", "initial");
+        $("#mobile-text-input").val("");
+    }
+
+    function finishTextInput() {
+        textWaiting = false;
+        $("#modal").css("display", "none");
+    }
+
+    function isTextWaiting() {
+        return textWaiting;
+    }
+
+    function getText() {
+        return $("#mobile-text-input").val();
     }
 
     var Module = {
