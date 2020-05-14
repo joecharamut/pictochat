@@ -24,17 +24,21 @@ private:
     void updateDraw();
     void sendMessage();
     void clearDraw();
+
     std::string getSurfaceData();
     void loadSurfaceData(const std::string &data);
+
     void drawPixel(int x, int y, bool thick);
     void drawLine(int x1, int y1, int x2, int y2, bool thick);
     void stroke(int x1, int y1, int x2, int y2);
 
     void setThickPen(bool thick);
-    bool thickPen;
+    bool thickPen = true;
 
     void setEraser(bool erase);
-    bool eraserEnabled;
+    bool eraserEnabled = false;
+
+    void exitRoom();
 
     ChatState *instance = nullptr;
 

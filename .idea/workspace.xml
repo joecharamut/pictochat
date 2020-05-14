@@ -5,14 +5,14 @@
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="project" targetName="CxxUrl" />
-      <config projectName="project" targetName="copy-web-files" />
       <config projectName="project" targetName="project_wasm_release" />
-      <config projectName="project" targetName="copy-web-build-files" />
-      <config projectName="project" targetName="project" />
-      <config projectName="project" targetName="project_wasm" />
       <config projectName="project" targetName="sdl2-gfx" />
+      <config projectName="project" targetName="copy-web-files" />
+      <config projectName="project" targetName="copy-web-build-files" />
+      <config projectName="project" targetName="project_wasm" />
       <config projectName="project" targetName="copy-files" />
+      <config projectName="project" targetName="project" />
+      <config projectName="project" targetName="CxxUrl" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -23,14 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4752c18b-34a8-4351-805f-66bb10e6b154" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/MobileTextInput.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/MobileTextInput.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chat/ChatState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chat/ChatState.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/ChatState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/KeyboardGui.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/KeyboardGui.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chat/KeyboardGui.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/chat/KeyboardGui.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/web/index.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -69,7 +65,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
+            <state relative-caret-position="1530">
               <caret line="102" column="33" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
             </state>
           </provider>
@@ -78,64 +74,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="164" column="108" selection-start-line="164" selection-start-column="108" selection-end-line="164" selection-end-column="108" />
+            <state relative-caret-position="103">
+              <caret line="144" column="59" selection-start-line="144" selection-start-column="59" selection-end-line="144" selection-end-column="59" />
               <folding>
                 <element signature="e#5601#5625#0" expanded="true" />
                 <element signature="e#5670#5694#0" expanded="true" />
                 <element signature="e#5754#5778#0" expanded="true" />
-                <element signature="e#5993#6015#0" expanded="true" />
-                <element signature="e#6397#6419#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MobileTextInput.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
-              <folding>
-                <element signature="e#78#101#0" expanded="true" />
-                <element signature="e#1084#1105#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MobileTextInput.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
-              <folding>
-                <element signature="e#0#17#0" expanded="true" />
-                <element signature="e#354#377#0" expanded="true" />
-                <element signature="e#386#405#0" expanded="true" />
-                <element signature="e#932#972#0" expanded="true" />
-                <element signature="e#3225#3261#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Main.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-              <folding>
-                <element signature="e#47#67#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chat/ChatState.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="104" column="54" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="54" />
+            <state relative-caret-position="378">
+              <caret line="233" column="32" selection-start-line="233" selection-start-column="32" selection-end-line="233" selection-end-column="32" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -156,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chat/ChatState.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="42" column="47" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
+            <state relative-caret-position="8">
+              <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
               <folding>
                 <element signature="e#58#86#0" expanded="true" />
               </folding>
@@ -168,8 +112,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3270">
-              <caret line="218" column="23" selection-start-line="218" selection-start-column="23" selection-end-line="218" selection-end-column="23" />
+            <state relative-caret-position="83">
+              <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -180,8 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+            <state relative-caret-position="150">
+              <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
               <folding>
                 <element signature="e#61#83#0" expanded="true" />
               </folding>
@@ -284,17 +228,17 @@
         <option value="$PROJECT_DIR$/src/types/Text.h" />
         <option value="$PROJECT_DIR$/src/types/Text.cpp" />
         <option value="$PROJECT_DIR$/src/types/Font.cpp" />
-        <option value="$PROJECT_DIR$/src/chat/KeyboardGui.cpp" />
         <option value="$PROJECT_DIR$/src/chat/Message.cpp" />
-        <option value="$PROJECT_DIR$/src/chat/KeyboardGui.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/net/Socket.cpp" />
         <option value="$PROJECT_DIR$/src/Main.h" />
         <option value="$PROJECT_DIR$/src/chat/ChatState.h" />
-        <option value="$PROJECT_DIR$/src/chat/ChatState.cpp" />
         <option value="$PROJECT_DIR$/src/MobileTextInput.h" />
         <option value="$PROJECT_DIR$/src/Main.cpp" />
         <option value="$PROJECT_DIR$/src/MobileTextInput.cpp" />
+        <option value="$PROJECT_DIR$/src/chat/ChatState.cpp" />
+        <option value="$PROJECT_DIR$/src/chat/KeyboardGui.cpp" />
+        <option value="$PROJECT_DIR$/src/chat/KeyboardGui.h" />
         <option value="$PROJECT_DIR$/web/index.html" />
       </list>
     </option>
@@ -500,21 +444,8 @@
       <workItem from="1588471176618" duration="5286000" />
       <workItem from="1588701280494" duration="11809000" />
       <workItem from="1589251551347" duration="1121000" />
-      <workItem from="1589379838943" duration="4255000" />
-    </task>
-    <task id="LOCAL-00002" summary="move test code out of main">
-      <created>1581302748659</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1581302748659</updated>
-    </task>
-    <task id="LOCAL-00003" summary="beans">
-      <created>1581349915825</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1581349915825</updated>
+      <workItem from="1589379838943" duration="5896000" />
+      <workItem from="1589478440137" duration="1785000" />
     </task>
     <task id="LOCAL-00004" summary="zoop">
       <created>1581356647100</created>
@@ -845,11 +776,25 @@
       <option name="project" value="LOCAL" />
       <updated>1588733139956</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="mobile works a bit more">
+      <created>1589384111020</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1589384111021</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add username checks">
+      <created>1589384525870</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1589384525870</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="502109000" />
+    <option name="totallyTimeSpent" value="505535000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -862,13 +807,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="124" width="1600" height="860" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4860558" visible="true" weight="0.22336328" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4860558" visible="true" weight="0.22593068" />
       <window_info id="Structure" order="1" sideWeight="0.5139442" side_tool="true" weight="0.29525033" />
       <window_info id="Favorites" order="2" sideWeight="0.5055644" side_tool="true" weight="0.24772036" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32793522" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4987163" visible="true" weight="0.33738193" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4987163" weight="0.33738193" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3954116" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -878,7 +824,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5012837" side_tool="true" weight="0.33738193" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49935815" weight="0.32793522" />
       <window_info anchor="bottom" id="CMake" order="11" sideWeight="0.49772036" weight="0.32253712" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49924013" weight="0.317139" />
+      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.49924013" visible="true" weight="0.317139" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -947,8 +893,6 @@
       <path value="$PROJECT_DIR$/cmake/FileInformation" />
       <path value="$PROJECT_DIR$/cmake/cmake-modules" />
     </ignored-roots>
-    <MESSAGE value="requests kinda work now" />
-    <MESSAGE value="coment" />
     <MESSAGE value="soup" />
     <MESSAGE value="filesystem works" />
     <MESSAGE value="move web files" />
@@ -972,7 +916,9 @@
     <MESSAGE value="thicc lines" />
     <MESSAGE value="eraser time" />
     <MESSAGE value="line wrap fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="line wrap fixed" />
+    <MESSAGE value="mobile works a bit more" />
+    <MESSAGE value="add username checks" />
+    <option name="LAST_COMMIT_MESSAGE" value="add username checks" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -1279,42 +1225,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/net/Socket.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="55" column="34" selection-start-line="55" selection-start-column="34" selection-end-line="55" selection-end-column="34" />
-          <folding>
-            <element signature="e#333#972#0" expanded="true" />
-            <element signature="e#1081#1142#0" expanded="true" />
-            <element signature="e#1202#1294#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/net/Socket.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3270">
-          <caret line="218" column="23" selection-start-line="218" selection-start-column="23" selection-end-line="218" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding>
-            <element signature="e#61#83#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1338,46 +1252,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-          <folding>
-            <element signature="e#47#67#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chat/ChatState.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="42" column="47" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="47" />
-          <folding>
-            <element signature="e#58#86#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chat/ChatState.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="104" column="54" selection-start-line="104" selection-start-column="54" selection-end-line="104" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
+        <state relative-caret-position="1530">
           <caret line="102" column="33" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
+        <state relative-caret-position="510">
           <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
@@ -1389,6 +1273,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding>
+            <element signature="e#47#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MobileTextInput.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="e#78#101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/MobileTextInput.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1396,27 +1300,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MobileTextInput.cpp">
+    <entry file="file://$PROJECT_DIR$/src/chat/ChatState.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+        <state relative-caret-position="8">
+          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
           <folding>
-            <element signature="e#78#101#0" expanded="true" />
-            <element signature="e#1084#1105#0" expanded="true" />
+            <element signature="e#58#86#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/net/Socket.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+          <folding>
+            <element signature="e#333#972#0" expanded="true" />
+            <element signature="e#1081#1142#0" expanded="true" />
+            <element signature="e#1202#1294#0" expanded="true" />
+            <element signature="e#1328#2329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/ChatState.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="233" column="32" selection-start-line="233" selection-start-column="32" selection-end-line="233" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chat/KeyboardGui.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
+          <folding>
+            <element signature="e#61#83#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="164" column="108" selection-start-line="164" selection-start-column="108" selection-end-line="164" selection-end-column="108" />
+        <state relative-caret-position="103">
+          <caret line="144" column="59" selection-start-line="144" selection-start-column="59" selection-end-line="144" selection-end-column="59" />
           <folding>
             <element signature="e#5601#5625#0" expanded="true" />
             <element signature="e#5670#5694#0" expanded="true" />
             <element signature="e#5754#5778#0" expanded="true" />
-            <element signature="e#5993#6015#0" expanded="true" />
-            <element signature="e#6397#6419#0" expanded="true" />
           </folding>
         </state>
       </provider>

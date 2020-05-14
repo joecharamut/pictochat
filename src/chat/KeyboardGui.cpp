@@ -20,11 +20,12 @@ KeyboardGui::KeyboardGui() {
     line4Text = GUI_DS_TEXT("", COLOR_BLACK, 24, 192+67);
     line5Text = GUI_DS_TEXT("", COLOR_BLACK, 24, 192+83);
 
-    closeButton = GUI_BUTTON(LoadTexture("res/pictochat/closebutton.png"), 245, 192+2, COLOR(0xaa, 0xaa, 0xaa),
+    closeButton = GUI_BUTTON(LoadTexture("res/pictochat/closebutton.png"), 245, 192+1, COLOR(0xaa, 0xaa, 0xaa),
             [this](bool click) {
         showClick = true;
-        messageText = "";
-        instance->exitRoom();
+        if (click) {
+            exitRoom();
+        }
     });
 
     sendButton = GUI_BUTTON(LoadTexture("res/pictochat/sendbutton.png"), 226, 192+105, COLOR(0xaa, 0xaa, 0xaa),
@@ -138,7 +139,7 @@ void KeyboardGui::draw() {
 
     sendButton->draw();
     clearButton->draw();
-//    closeButton->draw();
+    closeButton->draw();
 
     if (thickPen) {
         thickButtonOn->draw();
@@ -388,4 +389,10 @@ void KeyboardGui::setThickPen(bool thick) {
 
 void KeyboardGui::setEraser(bool erase) {
     eraserEnabled = erase;
+}
+
+void KeyboardGui::exitRoom() {
+    messageText = "";
+    clearDraw();
+    instance->exitRoom();
 }

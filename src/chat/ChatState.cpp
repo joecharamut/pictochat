@@ -229,7 +229,11 @@ void ChatState::setRoom(const std::string &room) {
 }
 
 void ChatState::exitRoom() {
-
+    bottomState = MAIN_MENU;
+    socket->send(((nlohmann::json) {
+            {"action", "leave"},
+            {"room", room}
+    }).dump());
 }
 
 void ChatState::usernameResponse(bool valid) {
