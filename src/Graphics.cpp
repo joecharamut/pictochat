@@ -22,7 +22,7 @@ bool Graphics::init() {
     }
 
     printf("creating renderer\n");
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
         printf("error creating renderer: %s\n", SDL_GetError());
         return false;

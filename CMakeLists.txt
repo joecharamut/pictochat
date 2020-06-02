@@ -56,9 +56,9 @@ add_custom_target(project_wasm_release
 add_dependencies(project_wasm_release copy-web-files)
 
 add_custom_target(copy-web-build-files ALL
-        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.wasm ${CMAKE_BINARY_DIR}/web
-        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.data ${CMAKE_BINARY_DIR}/web
-        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.js ${CMAKE_BINARY_DIR}/web)
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.wasm ${CMAKE_BINARY_DIR}/web | true
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.data ${CMAKE_BINARY_DIR}/web | true
+        COMMAND cp ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.js ${CMAKE_BINARY_DIR}/web | true)
 
 add_library(CxxUrl STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/CxxUrl/url.hpp

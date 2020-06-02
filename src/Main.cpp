@@ -150,6 +150,19 @@ void Main::loop() {
     if (Input::getKeyUp(SDLK_ESCAPE)) {
         quit();
     }
+
+#ifdef __EMSCRIPTEN__
+    int shouldExit = EM_ASM_INT_V({
+        return pictochatGetShouldExit();
+    });
+
+    printf("%d\n", shouldExit);
+
+    if (shouldExit) {
+        quit();
+    }
+#endif
+
 }
 
 void Main::quit() {
@@ -165,6 +178,9 @@ void Main::quit() {
     SDL_Quit();
     quit_flag = true;
 #ifdef __EMSCRIPTEN__
+    EM_ASM({
+        pictochatSetExited();
+    });
     emscripten_force_exit(EXIT_SUCCESS);
 #endif
 }
