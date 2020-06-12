@@ -38,7 +38,7 @@ void ChatState::update() {
             topScreenGui->pushMessage(Message(Message::WELCOME_MESSAGE, ""));
             topScreenGui->pushMessage(Message(Message::SYSTEM_MESSAGE, "Connecting..."));
 
-            socket = std::make_shared<Socket>("ws://lab.spaghetti.rocks:8069",
+            socket = std::make_shared<Socket>("wss://lab.spaghetti.rocks:8069",
                     std::bind(&ChatState::socketHandler, this, std::placeholders::_1));
         } break;
 

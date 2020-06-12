@@ -182,6 +182,9 @@
     var progressElement = document.getElementById('progress');
     var modalId = -1;
 
+    function pictochatGetShouldExit() { return false; }
+    function pictochatSetExited() { }
+
     function setModal() {
         modalId = getUniqueRunDependency(1);
         addRunDependency(modalId);
