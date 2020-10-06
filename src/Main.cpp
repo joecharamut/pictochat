@@ -156,8 +156,6 @@ void Main::loop() {
         return pictochatGetShouldExit();
     });
 
-    printf("%d\n", shouldExit);
-
     if (shouldExit) {
         quit();
     }
